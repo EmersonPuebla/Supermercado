@@ -10,5 +10,9 @@ package modelo;
  * @author Laboratorio
  */
 public class Sucursal {
+    private String id;
+    private String direccion;
+    private String comuna;
+    private String region;
     
 }

@@ -10,5 +10,7 @@ package modelo;
  * @author Laboratorio
  */
 public class Empresa {
-    
+    private String rut;
+    private String nombre;
+    private String direccion;
 }
