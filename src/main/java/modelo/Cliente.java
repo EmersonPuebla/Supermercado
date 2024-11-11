@@ -12,8 +12,9 @@ package modelo;
 public class Cliente extends Persona {
     private int puntos;
 
-    public Cliente(int puntos, String run, String digitoVerificador, String primerNombre, String segundoNombre, String apellidoPaterno, String apellidoMaterno) {
-        super(run, digitoVerificador, primerNombre, segundoNombre, apellidoPaterno, apellidoMaterno);
+    public Cliente(int puntos, String rut, String primerNombre, String segundoNombre, String apellidoPaterno,
+            String apellidoMaterno) {
+        super(rut, primerNombre, segundoNombre, apellidoPaterno, apellidoMaterno);
         this.puntos = puntos;
     }
 
@@ -23,5 +24,10 @@ public class Cliente extends Persona {
 
     public void setPuntos(int puntos) {
         this.puntos = puntos;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "Puntos: " + getPuntos();
     }
 }

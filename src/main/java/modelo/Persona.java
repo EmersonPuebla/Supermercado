@@ -10,36 +10,26 @@ package modelo;
  * @author Laboratorio
  */
 public abstract class Persona {
-    private String run;
-    private String digitoVerificador;
+    private String rut;
     private String primerNombre;
     private String segundoNombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
 
-    public Persona(String run, String digitoVerificador, String primerNombre, String segundoNombre, String apellidoPaterno, String apellidoMaterno) {
-        this.run = run;
-        this.digitoVerificador = digitoVerificador;
+    public Persona(String rut, String primerNombre, String segundoNombre, String apellidoPaterno, String apellidoMaterno) {
+        this.rut = rut;
         this.primerNombre = primerNombre;
         this.segundoNombre = segundoNombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
     }
 
-    public String getRun() {
-        return run;
+    public String getRut() {
+        return rut;
     }
 
-    public void setRun(String run) {
-        this.run = run;
-    }
-
-    public String getDigitoVerificador() {
-        return digitoVerificador;
-    }
-
-    public void setDigitoVerificador(String digitoVerificador) {
-        this.digitoVerificador = digitoVerificador;
+    public void setRut(String rut) {
+        this.rut = rut;
     }
 
     public String getPrimerNombre() {
@@ -74,5 +64,14 @@ public abstract class Persona {
         this.apellidoMaterno = apellidoMaterno;
     }
     
-    
+    @Override
+    public String toString() {
+        return "RUT: " + getRut() + "\n"
+                + "Nombre: "
+                + getPrimerNombre() + " " 
+                + getSegundoNombre() + " "
+                + getApellidoPaterno() + " "
+                + getApellidoMaterno() + "\n";
+                
+    }
 }
