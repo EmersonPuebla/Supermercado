@@ -12,12 +12,10 @@ package modelo;
 public class Categoria {
     private String idCategoria;
     private String nombreCategoria;
-    private String ubicacionCategoria;
 
-    public Categoria(String idCategoria, String nombreCategoria, String ubicacionCategoria) {
+    public Categoria(String idCategoria, String nombreCategoria) {
         this.idCategoria = idCategoria;
         this.nombreCategoria = nombreCategoria;
-        this.ubicacionCategoria = ubicacionCategoria;
     }
 
     public String getIdCategoria() {
@@ -36,13 +34,4 @@ public class Categoria {
         this.nombreCategoria = nombreCategoria;
     }
 
-    public String getUbicacionCategoria() {
-        return ubicacionCategoria;
-    }
-
-    public void setUbicacionCategoria(String ubicacionCategoria) {
-        this.ubicacionCategoria = ubicacionCategoria;
-    }
-    
-    
 }

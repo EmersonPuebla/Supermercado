@@ -18,7 +18,7 @@ public class Producto extends Categoria {
     private int descuento;
 
     public Producto(String codigo, String nombre, String unidadMedida, String marca, int precio, int descuento, String idCategoria, String nombreCategoria, String ubicacionCategoria) {
-        super(idCategoria, nombreCategoria, ubicacionCategoria);
+        super(idCategoria, nombreCategoria);
         this.codigo = codigo;
         this.nombre = nombre;
         this.unidadMedida = unidadMedida;
