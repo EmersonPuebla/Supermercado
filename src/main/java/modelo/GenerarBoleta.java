@@ -1,6 +1,6 @@
 package modelo;
 
-public class Bole {
+public class GenerarBoleta {
 
     Empresa walmart = new Empresa("777-1", "Walmart", "AV. Tupakmamani");
 

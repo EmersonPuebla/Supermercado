@@ -1,7 +1,6 @@
 package modelo;
 
 public class Caja {
-
     public Caja() {
     };
 

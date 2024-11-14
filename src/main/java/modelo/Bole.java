@@ -1,6 +1,6 @@
 package modelo;
 
-public class Caja {
+public class Bole {
 
     Empresa walmart = new Empresa("777-1", "Walmart", "AV. Tupakmamani");
 
