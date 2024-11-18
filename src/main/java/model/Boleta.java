@@ -22,8 +22,8 @@ public class Boleta {
     public Boleta(
             Empleado cajero,
             Producto[] productos,
-            String metodoDePago,
-            int neto
+            String metodoDePago
+
         ) {
         if (!isMetodoDePagoValido(metodoDePago)) {
             throw new IllegalArgumentException("ERROR [BOLETA]: Método de pago inválido");
@@ -36,7 +36,7 @@ public class Boleta {
         this.cajero = cajero;
         this.productos = productos;
         this.metodoDePago = metodoDePago;
-        this.neto = neto;
+        this.neto = calcularNeto(productos);
         this.porcentajeIVA = calcularIVA(neto);
         this.total = neto + porcentajeIVA;
     };
@@ -55,11 +55,12 @@ public class Boleta {
     }
 
     public String getProductos(Producto[] productos) {
-        StringBuilder resultado = new StringBuilder(); 
+        String detalleProductos = "";
+
         for (Producto producto : productos) {
-            resultado.append(producto.toString() + " // ");
+            detalleProductos += " || " + producto.toString();
         }
-        return resultado.toString();
+        return detalleProductos;
     }
     
 
@@ -77,6 +78,19 @@ public class Boleta {
 
     public int getTotal() {
         return total;
+    }
+
+
+    private int calcularNeto(Producto[] productos) {
+        int neto = 0;
+        for (Producto producto : productos) {
+            int precio = calcularPrecioDescuento(
+                                producto.getPrecio(), 
+                                producto.getDescuento()) 
+                        * producto.getCantidad();
+            neto += precio;
+        }
+        return neto;
     }
 
     // ----customs----
@@ -97,6 +111,15 @@ public class Boleta {
         return false;
     }
 
+    public int calcularPuntos(int neto) {
+        return (int) Math.round(neto*0.05);
+    }
+
+    public static int calcularPrecioDescuento(int precioProducto, int descuento) {
+        double foo = (100 - descuento) / 100;
+        return (int) Math.round(precioProducto * foo);
+    }
+
     // ----toString----
     @Override
     public String toString() {
@@ -105,6 +128,7 @@ public class Boleta {
                 "\nFECHA: " + fecha +
                 "\nPRODUCTOS: " + getProductos(productos) +
                 "\nMETODO DE PAGO: " + getMetodoDePago() +
+                "\nPUNTOS: " + calcularPuntos(neto) +
                 "\nNETO: " + neto +
                 "\nIVA: " + porcentajeIVA +
                 "\nTOTAL: " + total;

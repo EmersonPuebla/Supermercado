@@ -1,4 +1,5 @@
 package model;
+import model.Boleta;
 
 public class Producto {
     public static final String[] UNIDADES_DE_MEDIDA = {
@@ -43,7 +44,9 @@ public class Producto {
 
         // TO DO: el id debe ser auto-incremental
         this.id = 1; 
+        this.cantidad = cantidad;
         this.nombre = nombre;
+        this.medida = medida;
         this.unidadMedida = unidadMedida;
         this.precio = precio;
         this.stock = stock;
@@ -79,8 +82,8 @@ public class Producto {
         return stock;
     }
 
-    public String getDescuento() {
-        return descuento + "%";
+    public int getDescuento() {
+        return descuento;
     }
 
     //----setters----
@@ -116,9 +119,10 @@ public class Producto {
         return getId() + " " + 
             getCantidad() + "x " +
             getNombre() +  " " +
-            getMedida() + " " +  
+            getMedida() +  
             getUnidadMedida() + " " +
-            getPrecio() + " ";
+            "$" + getPrecio() + " c/u";
+            // TO DO: falta añadir el -Descuento
     }
 
 }

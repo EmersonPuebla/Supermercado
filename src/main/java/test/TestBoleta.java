@@ -14,9 +14,9 @@ public class TestBoleta {
         boolean[] permissions = { false, false, false, false };
 
         // ----Instanciar 3 productos----
-        Producto producto1 = new Producto(2, "Azúcar", 1, "kg", 1500, 50, 10);
-        Producto producto2 = new Producto(4, "Leche", 1, "l", 3000, 20, 5);
-        Producto producto3 = new Producto(7, "Pan", 1, "u", 100, 100, 0);
+        Producto producto1 = new Producto(2, "Azúcar", 1, "kg", 1000, 50, 20);
+        Producto producto2 = new Producto(4, "Leche", 1, "l", 1000, 20, 50);
+        Producto producto3 = new Producto(7, "Pan", 1, "u", 100, 200, 0);
 
         // ----crear un array de productos----
         Producto[] productos = { producto1, producto2, producto3 };
@@ -32,7 +32,7 @@ public class TestBoleta {
                 permissions);
 
         // ----instancia boleta----
-        Boleta boleta = new Boleta(cajero, productos, "efectivo", 100);
+        Boleta boleta = new Boleta(cajero, productos, "efectivo");
 
         // ----imprime el detalle de la boleta----
         System.out.println(boleta.toString());

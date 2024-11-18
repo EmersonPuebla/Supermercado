@@ -9,7 +9,7 @@ public class TestEmpleado {
         // 1: Reportes
         // 2: Caja
         // 3: Bodega
-        boolean[] permissions = { false, false, false, false };
+        boolean[] permissions = { false, false, true, true };
 
         //----instancia empleado----
         Empleado empleado = new Empleado(

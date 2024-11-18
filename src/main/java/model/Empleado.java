@@ -21,7 +21,7 @@ public class Empleado extends Persona implements IPermissions {
         super(rut, primerNombre, segundoNombre, apellidoPaterno, apellidoMaterno);
 
         this.id = 1;
-        this.username = primerNombre.substring(0, 1) + apellidoPaterno;
+        this.username = crearUsername(primerNombre, apellidoPaterno);
         this.password = hashString(password); // La password se almacena hacheada
         this.permissions = permissions;
 
@@ -117,6 +117,11 @@ public class Empleado extends Persona implements IPermissions {
         String Hash = hashString(textoOriginal);
         return Hash.equals(hash);
         // devuelve true/false dependiendo de si es igual o no
+    }
+
+    private String crearUsername(String primerNombre, String apellidoPaterno){
+        String username = primerNombre.substring(0, 1) + apellidoPaterno;
+        return username.toLowerCase();
     }
 
     //----toDelete----
