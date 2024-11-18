@@ -1,4 +1,4 @@
-package src.main.java.model;
+package model;
 
 public class Producto {
     public static final String[] UNIDADES_DE_MEDIDA = {

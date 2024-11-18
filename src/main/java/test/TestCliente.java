@@ -1,5 +1,5 @@
-package src.main.java.test;
-import src.main.java.model.*;
+package test;
+import model.*;
 
 public class TestCliente {
     public static void main(String[] args) {

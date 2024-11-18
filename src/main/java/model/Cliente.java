@@ -1,4 +1,4 @@
-package src.main.java.model;
+package model;
 
 public class Cliente extends Persona {
     private int puntos;

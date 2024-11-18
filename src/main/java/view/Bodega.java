@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package src.main.java.view;
+package view;
 
 public class Bodega extends javax.swing.JFrame {
 

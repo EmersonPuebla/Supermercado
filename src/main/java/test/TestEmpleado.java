@@ -1,6 +1,6 @@
-package src.main.java.test;
+package test;
 
-import src.main.java.model.Empleado;
+import model.Empleado;
 
 public class TestEmpleado {
     public static void main(String[] args) {

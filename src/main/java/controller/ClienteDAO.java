@@ -1,5 +1,5 @@
-package src.main.java.controller;
-import src.main.java.model.*;
+package controller;
+import model.*;
 
 public class ClienteDAO {
     public static void agregar() {

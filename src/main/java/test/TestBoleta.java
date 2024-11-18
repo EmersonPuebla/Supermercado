@@ -1,8 +1,8 @@
-package src.main.java.test;
+package test;
 
-import src.main.java.model.Empleado;
-import src.main.java.model.Producto;
-import src.main.java.model.Boleta;
+import model.Empleado;
+import model.Producto;
+import model.Boleta;
 
 public class TestBoleta {
     public static void main(String[] args) {
