@@ -129,6 +129,14 @@ public class Empleado extends Persona implements IPermissions {
         return password;
     }
 
+    public static boolean compararUsername(String input, String saved) {
+        if (input == saved) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     //----toString----
     @Override
     public String toString() {
