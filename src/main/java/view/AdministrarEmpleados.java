@@ -12,6 +12,7 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
      */
     public AdministrarEmpleados() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

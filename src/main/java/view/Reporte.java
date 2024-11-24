@@ -16,6 +16,7 @@ public class Reporte extends javax.swing.JFrame {
      */
     public Reporte() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -30,6 +31,7 @@ public class Reporte extends javax.swing.JFrame {
         jButtonVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Reportes");
 
         jButtonVolver.setText("Volver");
         jButtonVolver.addActionListener(new java.awt.event.ActionListener() {

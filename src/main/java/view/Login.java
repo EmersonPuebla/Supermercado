@@ -4,9 +4,10 @@
  */
 package view;
 
+import java.awt.event.KeyEvent;
 import model.Empleado;
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
+import model.LoginSystem;
 
 /**
  *
@@ -19,6 +20,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -39,16 +41,35 @@ public class Login extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login");
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         jTextFieldUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldUsernameActionPerformed(evt);
             }
         });
+        jTextFieldUsername.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldUsernameKeyPressed(evt);
+            }
+        });
 
         jPasswordFieldPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jPasswordFieldPasswordActionPerformed(evt);
+            }
+        });
+        jPasswordFieldPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPasswordFieldPasswordKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jPasswordFieldPasswordKeyTyped(evt);
             }
         });
 
@@ -129,49 +150,39 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jPasswordFieldPasswordActionPerformed
 
     private void jButtonIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIngresarActionPerformed
-
-        
-       //Test 
-        
-
-       // Supuestamente esta almacenado en la base de datos
-        String username = "cgarcia";
-        String password = "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3";
-        
-       // -----------------------------------------------------
-        String inputUsername = (String) jTextFieldUsername.getText();
-        char[] charInputPassword = jPasswordFieldPassword.getPassword();
-        String inputPassword = new String(charInputPassword);
-
-
-        String hashedPassword = Empleado.hashString(inputPassword);
-
-
-        System.out.println(username);
-        System.out.println("input USERNAME ==> " + inputUsername );
-        System.out.println("PASSWORD ==> " + inputPassword );
-        System.out.println("PASSWORD HACHEADO ==> " +  hashedPassword );
-        
-
-        // Por alguna razon del universo que desconozco no es capaz de comparar un puto string.... gracias
-        // minions, en terminos de login... no tenemos login
-        if (Empleado.compararHash(inputPassword, password)) {
-            System.out.println("PASOOOOOO");
-            
-            Hub hubWindow = new Hub(); 
+        if (LoginSystem.login(jTextFieldUsername.getText(), jPasswordFieldPassword.getPassword())) {
+            Hub hubWindow = new Hub();
             hubWindow.setVisible(true);
             this.dispose();
-             
-        } else {
-                        JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
-            System.out.println("NIIIOOOOOOOOOO");
-        };
-        
+        }  
     }//GEN-LAST:event_jButtonIngresarActionPerformed
 
     private void jButtonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalirActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButtonSalirActionPerformed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+    }//GEN-LAST:event_formKeyPressed
+
+    private void jPasswordFieldPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordFieldPasswordKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPasswordFieldPasswordKeyTyped
+
+    private void jTextFieldUsernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldUsernameKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jPasswordFieldPassword.requestFocus(); // Mueve el enfoque al JPasswordField
+        }
+    }//GEN-LAST:event_jTextFieldUsernameKeyPressed
+
+    private void jPasswordFieldPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordFieldPasswordKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (LoginSystem.login(jTextFieldUsername.getText(),jPasswordFieldPassword.getPassword())) {
+                Hub hubWindow = new Hub();
+                hubWindow.setVisible(true);
+                this.dispose();
+            }
+        }
+    }//GEN-LAST:event_jPasswordFieldPasswordKeyPressed
 
     /**
      * @param args the command line arguments
