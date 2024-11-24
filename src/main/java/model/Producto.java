@@ -1,5 +1,4 @@
 package model;
-import model.Boleta;
 
 public class Producto {
     public static final String[] UNIDADES_DE_MEDIDA = {
@@ -16,6 +15,7 @@ public class Producto {
     private int id;
     private int cantidad;
     private String nombre;
+    private String marca;
     private int medida;
     private String unidadMedida;
     private int precio;
@@ -24,6 +24,7 @@ public class Producto {
 
     public Producto(int cantidad,
             String nombre,
+            String marca,
             int medida,
             String unidadMedida,
             int precio, 
@@ -46,6 +47,7 @@ public class Producto {
         this.id = 1; 
         this.cantidad = cantidad;
         this.nombre = nombre;
+        this.marca = marca;
         this.medida = medida;
         this.unidadMedida = unidadMedida;
         this.precio = precio;
@@ -64,6 +66,10 @@ public class Producto {
 
     public String getNombre() {
         return nombre;
+    }
+
+    public String getMarca() {
+        return marca;
     }
 
     public int getMedida() {
@@ -89,6 +95,10 @@ public class Producto {
     //----setters----
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
     }
 
     public void setUnidadMedida(String unidadMedida) {

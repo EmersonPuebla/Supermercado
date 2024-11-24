@@ -1,6 +1,20 @@
 -- Crear la base de datos
 
 -- Crear tabla PRODUCTO
+INSERT INTO producto 
+VALUES (
+    1,
+    -- 20,
+    'Ketchup',
+    1,
+    'kg',
+    2500,
+    50,
+    0
+)
+
+INSERT INTO 
+
 -- Crear tabla EMPLEADO 
 -- Crear tabla CLIENTE
 -- Crear tabla VENTA

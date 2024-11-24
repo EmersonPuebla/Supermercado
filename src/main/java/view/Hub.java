@@ -31,13 +31,24 @@ public class Hub extends javax.swing.JFrame {
         jButtonAdministrarEmpleados = new javax.swing.JButton();
         jButtonReportes = new javax.swing.JButton();
         jButtonCerrarSesion = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hub");
 
         jButtonCaja.setText("Caja");
+        jButtonCaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCajaActionPerformed(evt);
+            }
+        });
 
         jButtonBodega.setText("Bodega");
+        jButtonBodega.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBodegaActionPerformed(evt);
+            }
+        });
 
         jButtonAdministrarEmpleados.setText("Admin. Empleados");
         jButtonAdministrarEmpleados.addActionListener(new java.awt.event.ActionListener() {
@@ -47,16 +58,32 @@ public class Hub extends javax.swing.JFrame {
         });
 
         jButtonReportes.setText("Reportes");
+        jButtonReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonReportesActionPerformed(evt);
+            }
+        });
 
         jButtonCerrarSesion.setText("Cerrar Sesion");
+        jButtonCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCerrarSesionActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/logo-mini.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(38, 38, 38)
+                .addComponent(jLabel3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonCaja, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -64,17 +91,16 @@ public class Hub extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonAdministrarEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(92, Short.MAX_VALUE)
-                .addComponent(jButtonCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(92, Short.MAX_VALUE))
+                        .addComponent(jButtonReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonCerrarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(105, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCaja, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonBodega, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -91,8 +117,41 @@ public class Hub extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAdministrarEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdministrarEmpleadosActionPerformed
-        // TODO add your handling code here:
+        AdministrarEmpleados empleadosWindow = new AdministrarEmpleados();
+        
+        empleadosWindow.setVisible(true);
+        
+        this.dispose();
+        
+        
     }//GEN-LAST:event_jButtonAdministrarEmpleadosActionPerformed
+
+    private void jButtonCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCajaActionPerformed
+                                         
+        Caja cajaWindow = new Caja(); 
+        cajaWindow.setVisible(true);
+        this.dispose();
+    
+    }//GEN-LAST:event_jButtonCajaActionPerformed
+
+    private void jButtonBodegaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBodegaActionPerformed
+  
+        Bodega bodegaWindow = new Bodega(); 
+        bodegaWindow.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButtonBodegaActionPerformed
+
+    private void jButtonReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReportesActionPerformed
+        Reporte reporteWindow = new Reporte(); 
+        reporteWindow.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButtonReportesActionPerformed
+
+    private void jButtonCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarSesionActionPerformed
+        Login loginWindow = new Login(); 
+        loginWindow.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButtonCerrarSesionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -135,5 +194,6 @@ public class Hub extends javax.swing.JFrame {
     private javax.swing.JButton jButtonCaja;
     private javax.swing.JButton jButtonCerrarSesion;
     private javax.swing.JButton jButtonReportes;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }
