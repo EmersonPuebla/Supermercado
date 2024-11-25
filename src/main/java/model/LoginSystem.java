@@ -5,9 +5,7 @@
  */
 package model;
 
-import controller.BaseDeDatos;
 import controller.EmpleadoDAO;
-import java.sql.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import javax.swing.JOptionPane;
