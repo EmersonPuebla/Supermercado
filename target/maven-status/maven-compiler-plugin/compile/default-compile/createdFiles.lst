@@ -1,7 +1,17 @@
 model\LoginSystem.class
+view\Reporte$5.class
+view\Caja$6.class
+view\Caja$8.class
+view\NewJFrame$1.class
 view\Hub$7.class
+view\Caja$5.class
 view\Login$8.class
 view\Login$7.class
+view\Reporte$4.class
+view\Caja$7.class
 test\TestBaseDeDatos.class
+view\NewJFrame.class
+view\Reporte$3.class
 view\Login$6.class
 test\TestEmpleadoSQL.class
+view\Reporte$6.class

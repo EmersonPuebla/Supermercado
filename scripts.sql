@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS empleado (
 	segundoNombre VARCHAR(50) NOT NULL,
 	apellidoPaterno VARCHAR(50) NOT NULL,
 	apellidoMaterno VARCHAR(50) NOT NULL,
+    username VARCHAR(50) NOT NULL,
 	password VARCHAR(64) NOT NULL,
 	isAdministrador BOOLEAN NOT NULL,
 	isReporte BOOLEAN NOT NULL,
@@ -123,6 +124,10 @@ INSERT INTO producto VALUES
 --
 --
 INSERT INTO empleado VALUES
+('1-0', 'Cristian', 'Orlando', 'Garcia', 'Gutierrez', 'cgarcia', 'f7b329ab23764ab6b02193ade03a7a2685c087c8eb7365f87d4d8475e1c33c6c', true, true, true, true, true),
+('9-7', 'Alan', 'Alexander', 'Pinto', 'Ureta', 'apinto', '9ebed9eec702a7cdf6aca0e9ab37bdc54008785c26098e92fe1aae9a6953bcbd', false, true, false, false, true),
+('2-5', 'Luis', 'Antonio', 'Alvarez', 'Requejo', 'lalavarez', '428ce3114b825c4f482e483a90f2871fbfb6f680fb9b81cfa92f9187d8550da2', false, false, true, false, true),
+('1-3', 'Emerson', 'Flavio', 'Puebla', 'Diaz', 'epuebla', '9861f2f84d77de92617b630913481d8baf70b6c4cf1fb1724eb56f59b890823e', false, false, false, true, true),
 ('1-1', 'Juan', 'Pedro', 'González', 'Pérez', 'jperez', '9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', true, true, false, false, true),
 ('2-1', 'María', 'José', 'Sánchez', 'López', 'msanchez', '9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', false, false, true, false, true),
 ('3-1', 'Carlos', 'Alberto', 'Muñoz', 'Silva', 'cmuños', '9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', false, false, false, true, true),
@@ -142,7 +147,7 @@ INSERT INTO empleado VALUES
 ('17-1', 'Miguel', 'Ángel', 'Valenzuela', 'Cruz',  'mvalenzuela','9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', false, false, true, false, true),
 ('18-1', 'Carolina', 'Isabel', 'Medina', 'Guerrero', 'cmedina', '9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', false, false, false, true, true),
 ('19-1', 'Héctor', 'Manuel', 'Navarro', 'Romero', 'hnavarro','9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', true, false, true, false, true),
-('20-1', 'Verónica', 'Alejandra', 'Poblete', 'Castro', 'vpoblete','9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', false, true, false, false, true);
+('20-1', 'Verónica', 'Alejandra', 'Poblete', 'Castro', 'vpoblete','9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', false, true, false, false, true)
 
 -- Insertar CLIENTE (20 registros)
 INSERT INTO cliente VALUES
