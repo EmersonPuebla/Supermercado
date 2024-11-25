@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package view;
+import controller.VentaDAO;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import model.LoginSystem;
@@ -22,6 +23,7 @@ public class Caja extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         jLabelFecha.setText("Fecha: " + formattedDate);
         jLabelCajero.setText("Cajero: " + LoginSystem.getNombreEmpleado() + " " + LoginSystem.getApellidoEmpleado());
+        jLabelFolio.setText("Folio: " + VentaDAO.obtenerFolio());
     }
 
     /**

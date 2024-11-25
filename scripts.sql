@@ -117,27 +117,32 @@ INSERT INTO producto VALUES
 (40, 'Esponjas', 'Virutex', 3, 'u', 890, 150, 0);
 
 -- Insertar EMPLEADO (20 registros)
+-- todo el resto su pass es pass123 
+--
+-- CORREGIR ESTO
+--
+--
 INSERT INTO empleado VALUES
-('1-1', 'Juan', 'Pedro', 'González', 'Pérez', 'pass123', true, true, false, false, true),
-('2-1', 'María', 'José', 'Sánchez', 'López', 'pass124', false, false, true, false, true),
-('3-1', 'Carlos', 'Alberto', 'Muñoz', 'Silva', 'pass125', false, false, false, true, true),
-('4-1', 'Ana', 'María', 'Rojas', 'Torres', 'pass126', true, true, true, false, true),
-('5-1', 'Luis', 'Miguel', 'Castro', 'Morales', 'pass127', false, true, false, false, true),
-('6-1', 'Paula', 'Andrea', 'Vargas', 'Reyes', 'pass128', false, false, true, false, true),
-('7-1', 'Diego', 'Alejandro', 'Flores', 'Campos', 'pass129', false, false, false, true, true),
-('8-1', 'Carmen', 'Gloria', 'Herrera', 'Vega', 'pass130', true, false, true, false, true),
-('9-1', 'Roberto', 'Carlos', 'Mendoza', 'Ruiz', 'pass131', false, true, false, false, true),
-('10-1', 'Claudia', 'Patricia', 'Núñez', 'Jiménez', 'pass132', false, false, true, false, true),
-('11-1', 'Fernando', 'José', 'Araya', 'Pizarro', 'pass133', false, false, false, true, true),
-('12-1', 'Marcela', 'Andrea', 'Vergara', 'Soto', 'pass134', true, true, false, false, true),
-('13-1', 'Ricardo', 'Antonio', 'Miranda', 'Bravo', 'pass135', false, false, true, false, true),
-('14-1', 'Patricia', 'Carolina', 'Lagos', 'Díaz', 'pass136', false, false, false, true, true),
-('15-1', 'Jorge', 'Luis', 'Ortiz', 'Fuentes', 'pass137', true, true, true, false, true),
-('16-1', 'Sandra', 'Beatriz', 'Espinoza', 'Ramos', 'pass138', false, true, false, false, false),
-('17-1', 'Miguel', 'Ángel', 'Valenzuela', 'Cruz', 'pass139', false, false, true, false, true),
-('18-1', 'Carolina', 'Isabel', 'Medina', 'Guerrero', 'pass140', false, false, false, true, true),
-('19-1', 'Héctor', 'Manuel', 'Navarro', 'Romero', 'pass141', true, false, true, false, true),
-('20-1', 'Verónica', 'Alejandra', 'Poblete', 'Castro', 'pass142', false, true, false, false, true);
+('1-1', 'Juan', 'Pedro', 'González', 'Pérez', 'jperez', '9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', true, true, false, false, true),
+('2-1', 'María', 'José', 'Sánchez', 'López', 'msanchez', '9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', false, false, true, false, true),
+('3-1', 'Carlos', 'Alberto', 'Muñoz', 'Silva', 'cmuños', '9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', false, false, false, true, true),
+('4-1', 'Ana', 'María', 'Rojas', 'Torres', 'arojas', '9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', true, true, true, false, true),
+('5-1', 'Luis', 'Miguel', 'Castro', 'Morales', 'lcastro', '9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', false, true, false, false, true),
+('6-1', 'Paula', 'Andrea', 'Vargas', 'Reyes', 'pvargas','9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', false, false, true, false, true),
+('7-1', 'Diego', 'Alejandro', 'Flores', 'Campos', 'dflores', '9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', false, false, false, true, true),
+('8-1', 'Carmen', 'Gloria', 'Herrera', 'Vega', 'cherrera', '9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', true, false, true, false, true),
+('9-1', 'Roberto', 'Carlos', 'Mendoza', 'Ruiz', 'rmendoza', '9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', false, true, false, false, true),
+('10-1', 'Claudia', 'Patricia', 'Núñez', 'Jiménez', 'cnuñes','9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', false, false, true, false, true),
+('11-1', 'Fernando', 'José', 'Araya', 'Pizarro', 'faraya','9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', false, false, false, true, true),
+('12-1', 'Marcela', 'Andrea', 'Vergara', 'Soto', 'mvergara','9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', true, true, false, false, true),
+('13-1', 'Ricardo', 'Antonio', 'Miranda', 'Bravo', 'rmiranda','9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', false, false, true, false, true),
+('14-1', 'Patricia', 'Carolina', 'Lagos', 'Díaz', 'plagos' ,'9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', false, false, false, true, true),
+('15-1', 'Jorge', 'Luis', 'Ortiz', 'Fuentes', 'jortiz' ,'9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', true, true, true, false, true),
+('16-1', 'Sandra', 'Beatriz', 'Espinoza', 'Ramos', 'sespinoza' ,'9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', false, true, false, false, false),
+('17-1', 'Miguel', 'Ángel', 'Valenzuela', 'Cruz',  'mvalenzuela','9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', false, false, true, false, true),
+('18-1', 'Carolina', 'Isabel', 'Medina', 'Guerrero', 'cmedina', '9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', false, false, false, true, true),
+('19-1', 'Héctor', 'Manuel', 'Navarro', 'Romero', 'hnavarro','9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', true, false, true, false, true),
+('20-1', 'Verónica', 'Alejandra', 'Poblete', 'Castro', 'vpoblete','9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c', false, true, false, false, true);
 
 -- Insertar CLIENTE (20 registros)
 INSERT INTO cliente VALUES
