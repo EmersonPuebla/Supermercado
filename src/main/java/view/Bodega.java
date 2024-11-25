@@ -8,15 +8,23 @@ package view;
 import controller.ProductoDAO;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.Producto;
 
 public class Bodega extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Bodega
-     */
-    public Bodega() {
-        initComponents();
-        setLocationRelativeTo(null);
+    public void vaciarCasillas() {
+        jTextFieldCodigo.setText("");
+        jTextFieldNombre.setText("");
+        jTextFieldMarca.setText("");
+        jTextFieldMedida.setText("");
+        jTextFieldUnidadMedida.setText("");
+        jTextFieldStock.setText("");
+        jTextFieldPrecio.setText("");
+        jTextFieldDescuento.setText("");    
+    }
+    
+    public void volverEstadoDefault() {
+        jTextFieldCodigo.setEnabled(true);
         jTextFieldNombre.setEnabled(false);
         jTextFieldMarca.setEnabled(false);
         jTextFieldMedida.setEnabled(false);
@@ -24,6 +32,22 @@ public class Bodega extends javax.swing.JFrame {
         jTextFieldStock.setEnabled(false);
         jTextFieldPrecio.setEnabled(false);
         jTextFieldDescuento.setEnabled(false);
+        jButtonActualizar.setEnabled(false);
+        jButtonEliminar.setEnabled(false);
+    }
+    
+    
+    /**
+     * Creates new form Bodega
+     */
+    int estadoAgregar = 0;
+    
+ 
+    public Bodega() {
+        initComponents();
+        setLocationRelativeTo(null);
+        volverEstadoDefault();
+        
     }
 
     /**
@@ -75,8 +99,18 @@ public class Bodega extends javax.swing.JFrame {
         });
 
         jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarActionPerformed(evt);
+            }
+        });
 
         jButtonActualizar.setText("Actualizar");
+        jButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonActualizarActionPerformed(evt);
+            }
+        });
 
         jButtonBuscar.setText("Buscar");
         jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -86,6 +120,11 @@ public class Bodega extends javax.swing.JFrame {
         });
 
         jButtonAgregar.setText("Agregar");
+        jButtonAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -301,8 +340,143 @@ public class Bodega extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldMarcaActionPerformed
-        // TODO add your handling code here:
+            
     }//GEN-LAST:event_jTextFieldMarcaActionPerformed
+
+    private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
+        
+        
+        if (estadoAgregar == 0){
+        
+            int opcion = JOptionPane.showConfirmDialog(null, 
+        "¿Seguro que deseas agregar un producto?", 
+        "Confirmación", 
+        JOptionPane.YES_NO_OPTION);
+            if (opcion == JOptionPane.YES_OPTION) {
+                estadoAgregar++;
+            }
+            
+        } else if (estadoAgregar == 1) {
+            vaciarCasillas();        
+            
+            estadoAgregar ++;
+            jTextFieldCodigo.setEnabled(false);
+            jTextFieldNombre.setEnabled(true);
+            jTextFieldMarca.setEnabled(true);
+            jTextFieldMedida.setEnabled(true);
+            jTextFieldUnidadMedida.setEnabled(true);
+            jTextFieldStock.setEnabled(true);
+            jTextFieldPrecio.setEnabled(true);
+            jTextFieldDescuento.setEnabled(true);
+
+            jButtonBuscar.setEnabled(false);
+            jButtonActualizar.setEnabled(false);
+            jButtonEliminar.setEnabled(false);
+
+            JOptionPane.showMessageDialog(null, "Ingresa los datos del producto a agregar y presiona nuevamente el boton", "Información", JOptionPane.INFORMATION_MESSAGE);
+        } else if (estadoAgregar == 2) {     
+            try {
+            
+            // Obtiene todos los datos de las casillas
+            String nombre = jTextFieldNombre.getText();
+            String marca = jTextFieldMarca.getText();
+            String medida = jTextFieldMedida.getText();
+            String unidadMedida = jTextFieldUnidadMedida.getText();
+            String stock = jTextFieldStock.getText();
+            String precio = jTextFieldPrecio.getText();
+            String descuento = jTextFieldDescuento.getText();
+
+            
+            // Comprueba si alguno esta vacio
+            boolean faltaDato = nombre.isEmpty() || marca.isEmpty() || medida.isEmpty() || 
+                    unidadMedida.isEmpty() || stock.isEmpty() || precio.isEmpty() || 
+                    descuento.isEmpty();
+
+            
+            // Si existe alguno vacio lo informa
+            if (faltaDato) {
+                JOptionPane.showMessageDialog(null, "Porfavor rellena los campos faltantes", "Error", JOptionPane.ERROR_MESSAGE);
+                
+            // Confirma si la unidad de medida es valida
+            } else if (!Producto.isUnidadMedidaValido(unidadMedida)) {
+                JOptionPane.showMessageDialog(null, "Información invalida, la unidad de medida es erronea", "Error",
+            JOptionPane.ERROR_MESSAGE);
+            
+            // Pero si no queda ninguno por completar envia la info
+            } else if (Integer.parseInt(medida) > 0 && Integer.parseInt(stock) > 0 && Integer.parseInt(precio) > 0 && Integer.parseInt(descuento) >= 0 && Integer.parseInt(descuento) <= 100) {
+                ProductoDAO.agregarProducto(nombre,marca,Integer.parseInt(medida), unidadMedida,Integer.parseInt(stock),  Integer.parseInt(precio),  Integer.parseInt(descuento));
+                
+                JOptionPane.showMessageDialog(null, "El producto se ha agregado exitosamente!", "Información", JOptionPane.INFORMATION_MESSAGE);
+
+                volverEstadoDefault();
+                estadoAgregar = 0;
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "Información invalida, vuelva a ingresar la información", "Error",
+            JOptionPane.ERROR_MESSAGE);
+            }
+        
+         } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Información invalida, vuelva a ingresar la información", "Error",
+            JOptionPane.ERROR_MESSAGE);
+        }
+        
+       }
+    }//GEN-LAST:event_jButtonAgregarActionPerformed
+
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+        
+        
+        try {
+        int codigo = Integer.parseInt(jTextFieldCodigo.getText());
+        
+         int opcion = JOptionPane.showConfirmDialog(null, 
+        "¿Seguro que deseas eliminar este producto?", 
+        "Confirmación", 
+        JOptionPane.YES_NO_OPTION);
+            if (opcion == JOptionPane.YES_OPTION) {
+                if (ProductoDAO.eliminarProducto(codigo)) {
+                    vaciarCasillas();
+                    volverEstadoDefault();
+                    JOptionPane.showMessageDialog(null, "El producto se ha eliminado exitosamente!", "Información", JOptionPane.INFORMATION_MESSAGE);
+                
+                }
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "No hay nada que eliminar", "Error",
+            JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
+
+    private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
+         // Obtiene todos los datos de las casillas
+        String id = jTextFieldCodigo.getText();
+        String nombre = jTextFieldNombre.getText();
+        String marca = jTextFieldMarca.getText();
+        String medida = jTextFieldMedida.getText();
+        String unidadMedida = jTextFieldUnidadMedida.getText();
+        String stock = jTextFieldStock.getText();
+        String precio = jTextFieldPrecio.getText();
+        String descuento = jTextFieldDescuento.getText();
+        
+        ProductoDAO.actualizarProducto(
+                Integer.parseInt(id),
+                nombre,
+                marca,
+                Integer.parseInt(medida),
+                unidadMedida,
+                Integer.parseInt(stock),
+                Integer.parseInt(precio),
+                Integer.parseInt(descuento)
+        );
+        
+        
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_jButtonActualizarActionPerformed
 
     private void jButtonVolverActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonVolverActionPerformed
         Hub hubWindow = new Hub();
@@ -350,6 +524,8 @@ public class Bodega extends javax.swing.JFrame {
                 jTextFieldStock.setEnabled(true);
                 jTextFieldPrecio.setEnabled(true);
                 jTextFieldDescuento.setEnabled(true);
+                jButtonActualizar.setEnabled(true);
+                jButtonEliminar.setEnabled(true);
                 
                 
             }

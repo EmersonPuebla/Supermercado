@@ -3,13 +3,11 @@ package model;
 public class Producto {
     public static final String[] UNIDADES_DE_MEDIDA = {
         "mg",    // Miligramos
-        "g",     // Gramos
+        "gr",     // Gramos
         "kg",    // Kilogramos
         "l",     // Litros
         "ml",    // Mililitros
-        "u"      // Unidad ??  
-    
-        // TO DO: Revisar si queda alguna por añadir
+        "u"      // Unidad  
     };
 
     private int id;
