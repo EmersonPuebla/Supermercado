@@ -5,6 +5,8 @@
  */
 package view;
 
+import controller.EmpleadoDAO;
+
 public class AdministrarEmpleados extends javax.swing.JFrame {
 
     /**
@@ -34,13 +36,11 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
         jTextAreaSalida = new javax.swing.JTextArea();
         jPanel3 = new javax.swing.JPanel();
         jLabelDescuento = new javax.swing.JLabel();
-        jLabelPrecio = new javax.swing.JLabel();
         jLabelNombre = new javax.swing.JLabel();
         jLabelRut = new javax.swing.JLabel();
         jTextFieldRut = new javax.swing.JTextField();
         jTextFieldUsername = new javax.swing.JTextField();
         jTextFieldNombre = new javax.swing.JTextField();
-        jTextFieldId = new javax.swing.JTextField();
         jTextFieldPassword = new javax.swing.JTextField();
         jLabelDescuento1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -65,8 +65,18 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
         jButtonActualizar.setText("Actualizar");
 
         jButtonBuscar.setText("Buscar");
+        jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarActionPerformed(evt);
+            }
+        });
 
         jButtonAgregar.setText("Agregar");
+        jButtonAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -115,9 +125,6 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
         jLabelDescuento.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabelDescuento.setText("Username");
 
-        jLabelPrecio.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabelPrecio.setText("ID");
-
         jLabelNombre.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabelNombre.setText("Nombre");
 
@@ -136,17 +143,15 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextFieldNombre)
                     .addComponent(jTextFieldRut)
-                    .addComponent(jTextFieldId)
                     .addComponent(jTextFieldUsername)
                     .addComponent(jTextFieldPassword)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelRut)
                             .addComponent(jLabelNombre)
-                            .addComponent(jLabelPrecio)
                             .addComponent(jLabelDescuento)
                             .addComponent(jLabelDescuento1))
-                        .addContainerGap(201, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,10 +164,6 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
                 .addComponent(jLabelNombre)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelPrecio)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelDescuento)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -235,7 +236,7 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addContainerGap())
             .addComponent(jSeparator1)
@@ -271,6 +272,23 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
         hubWindow.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButtonVolverActionPerformed
+
+    private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
+        
+        
+        
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_jButtonAgregarActionPerformed
+
+    private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
+        
+        String rut = jTextFieldRut.getText();
+            
+    }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -321,7 +339,6 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelDescuento;
     private javax.swing.JLabel jLabelDescuento1;
     private javax.swing.JLabel jLabelNombre;
-    private javax.swing.JLabel jLabelPrecio;
     private javax.swing.JLabel jLabelRut;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -330,7 +347,6 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextArea jTextAreaSalida;
-    private javax.swing.JTextField jTextFieldId;
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JTextField jTextFieldPassword;
     private javax.swing.JTextField jTextFieldRut;

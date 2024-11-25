@@ -6,8 +6,54 @@ public class EmpleadoDAO {
 
     public static void agregar() {}
 
+    
+    
+    
+    
+    
+    
+    
     public static void editar() {}
 
+    
+    public static String[] buscar(String rut) {
+        String username = getUsernameAlt(rut);
+        String[] nombreCompleto = getNombre(username);
+        
+        
+        return nombreCompleto;
+        
+    }
+    
+    public static String getUsernameAlt(String Rut) {
+        String query = "SELECT rut FROM empleado WHERE username = ?";
+        String username = null;
+
+        try (Connection con = BaseDeDatos.conectar(); 
+             PreparedStatement ps = con.prepareStatement(query)) {
+
+            ps.setString(1, Rut);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) { 
+                username = rs.getString("username");
+            } else {
+                System.out.println("No se encontró un usuario con el rut: " + Rut);
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR [SQL]: No se pudo leer el stock del producto");
+            e.printStackTrace();
+        }
+        return username;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 public static String[] getNombre(String inputUsername) {
     String query = "SELECT primerNombre, segundoNombre, apellidoPaterno, apellidoMaterno FROM empleado WHERE username = ?";
     

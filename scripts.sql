@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS devolucion (
 -- Insertar 20 registros CLIENTE -- LISTO!!
 -- Insertar 40 registros VENTA -- LISTO!!
 -- Insertar registros PRODUCTO_VENTA
--- Insertar 5 registros DEVOLUCION
+-- Insertar 5 registros DEVOLUCION -- to delete
 
 -- Insertar PRODUCTO (40 registros)
 INSERT INTO producto VALUES

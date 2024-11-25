@@ -83,14 +83,14 @@ public static boolean actualizarProducto(
 
         // Preparar la consulta de actualización
         PreparedStatement psUpdate = con.prepareStatement(queryUpdate);
-        psUpdate.setString(1, nombre);
-        psUpdate.setString(2, marca);
-        psUpdate.setInt(3, medida);
-        psUpdate.setString(4, unidadMedida);
-        psUpdate.setInt(5, precio);
-        psUpdate.setInt(6, stock);
-        psUpdate.setInt(7, descuento);
-        psUpdate.setInt(8, id_producto);  // Establecer el id_producto del producto que se desea actualizar
+        psUpdate.setString(1, nombre);          // Asigna el nombre del producto
+        psUpdate.setString(2, marca);           // Asigna la marca del producto
+        psUpdate.setInt(3, medida);             // Asigna la medida del producto
+        psUpdate.setString(4, unidadMedida);    // Asigna la unidad de medida
+        psUpdate.setInt(5, precio);             // Asigna el precio del producto
+        psUpdate.setInt(6, stock);              // Asigna el stock disponible
+        psUpdate.setInt(7, descuento);          // Asigna el descuento aplicable
+        psUpdate.setInt(8, id_producto);        // Asigna el ID del producto a actualizar
 
         // Ejecutar la actualización
         int rowsAffected = psUpdate.executeUpdate();
@@ -109,6 +109,7 @@ public static boolean actualizarProducto(
         return false;
     }
 }
+
 
     
     public static String getNombre(int codigo) {
