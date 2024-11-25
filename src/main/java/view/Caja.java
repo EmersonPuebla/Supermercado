@@ -4,9 +4,11 @@
  * and open the template in the editor.
  */
 package view;
+import controller.ProductoDAO;
 import controller.VentaDAO;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.table.DefaultTableModel;
 import model.LoginSystem;
 
 public class Caja extends javax.swing.JFrame {
@@ -24,6 +26,7 @@ public class Caja extends javax.swing.JFrame {
         jLabelFecha.setText("Fecha: " + formattedDate);
         jLabelCajero.setText("Cajero: " + LoginSystem.getNombreEmpleado() + " " + LoginSystem.getApellidoEmpleado());
         jLabelFolio.setText("Folio: " + VentaDAO.obtenerFolio());
+        jButtonCobrar.setEnabled(false);
     }
 
     /**
@@ -42,10 +45,10 @@ public class Caja extends javax.swing.JFrame {
         jButtonConfirmar = new javax.swing.JButton();
         jComboBoxMetodoDePago = new javax.swing.JComboBox<>();
         jLabelMetodoDePago = new javax.swing.JLabel();
-        jTextFieldCodigo = new javax.swing.JTextField();
         jLabelRut1 = new javax.swing.JLabel();
-        jTextFieldCantidad = new javax.swing.JTextField();
         jLabelCantidad = new javax.swing.JLabel();
+        jFormattedTextFieldCodigo = new javax.swing.JFormattedTextField();
+        jSpinnerCantidad = new javax.swing.JSpinner();
         jPanel2 = new javax.swing.JPanel();
         jButtonAgregar = new javax.swing.JButton();
         jButtonEliminar = new javax.swing.JButton();
@@ -61,7 +64,7 @@ public class Caja extends javax.swing.JFrame {
         jButtonCobrar = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableDetalle = new javax.swing.JTable();
         jLabelCajero = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -75,11 +78,22 @@ public class Caja extends javax.swing.JFrame {
             }
         });
 
+        jTextFieldRut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldRutActionPerformed(evt);
+            }
+        });
+
         jLabelRut.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabelRut.setText("RUT");
 
         jButtonConfirmar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jButtonConfirmar.setText("Confirmar");
+        jButtonConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConfirmarActionPerformed(evt);
+            }
+        });
 
         jComboBoxMetodoDePago.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jComboBoxMetodoDePago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Debito", "Credito", "Efectivo", "Edenred" }));
@@ -93,6 +107,13 @@ public class Caja extends javax.swing.JFrame {
         jLabelCantidad.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabelCantidad.setText("Cantidad");
 
+        jFormattedTextFieldCodigo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        jFormattedTextFieldCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFormattedTextFieldCodigoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -100,21 +121,20 @@ public class Caja extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldCodigo)
-                    .addComponent(jComboBoxMetodoDePago, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBoxMetodoDePago, javax.swing.GroupLayout.Alignment.TRAILING, 0, 304, Short.MAX_VALUE)
                     .addComponent(jTextFieldRut)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelRut)
                             .addComponent(jLabelMetodoDePago)
                             .addComponent(jLabelRut1))
-                        .addGap(0, 201, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jFormattedTextFieldCodigo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabelCantidad)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jButtonConfirmar, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                        .addComponent(jTextFieldCantidad)))
+                    .addComponent(jButtonConfirmar, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                    .addComponent(jSpinnerCantidad))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -135,13 +155,18 @@ public class Caja extends javax.swing.JFrame {
                     .addComponent(jLabelCantidad))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextFieldCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                    .addComponent(jTextFieldCodigo))
+                    .addComponent(jSpinnerCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                    .addComponent(jFormattedTextFieldCodigo))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jButtonAgregar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jButtonAgregar.setText("Agregar");
+        jButtonAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarActionPerformed(evt);
+            }
+        });
 
         jButtonEliminar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jButtonEliminar.setText("Eliminar");
@@ -253,12 +278,12 @@ public class Caja extends javax.swing.JFrame {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableDetalle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Codigo", "Descripcion", "Unidad", "Precio", "Total"
+                "Codigo", "Descripcion", "Cantidad", "Precio unitario", "Precio fila"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -269,7 +294,8 @@ public class Caja extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jTableDetalle.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(jTableDetalle);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -352,6 +378,50 @@ public class Caja extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonCobrarActionPerformed
 
+    private void jFormattedTextFieldCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextFieldCodigoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFormattedTextFieldCodigoActionPerformed
+
+    private void jTextFieldRutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldRutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldRutActionPerformed
+
+    private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
+   
+        jButtonCobrar.setEnabled(true);
+        
+        
+        
+        
+        System.out.println("");
+        
+        
+        String metodoDePago = (String) jComboBoxMetodoDePago.getSelectedItem();
+        int codigo = Integer.parseInt(jFormattedTextFieldCodigo.getText());
+        int cantidad = (int) jSpinnerCantidad.getValue();
+        
+        System.out.println(metodoDePago + " " + codigo + " " + cantidad);
+        
+        // Obtener el modelo directamente del JTable
+        DefaultTableModel modelo = (DefaultTableModel) jTableDetalle.getModel();
+        
+        
+        String descripcion = ProductoDAO.getNombre(codigo) + " " + ProductoDAO.getMarca(codigo) + " " + ProductoDAO.getMedida(codigo) + ProductoDAO.getUnidadMedida(codigo);
+        int precio_unitario = ProductoDAO.getPrecio(codigo);
+        int precio_fila = precio_unitario * cantidad;
+        
+        modelo.addRow(new Object[]{codigo, descripcion, cantidad, precio_unitario, precio_fila});
+        
+        
+        
+    }//GEN-LAST:event_jButtonAgregarActionPerformed
+
+    private void jButtonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmarActionPerformed
+       String rut = jTextFieldRut.getText();
+       
+        System.out.println(rut);
+    }//GEN-LAST:event_jButtonConfirmarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -394,6 +464,7 @@ public class Caja extends javax.swing.JFrame {
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonVolver;
     private javax.swing.JComboBox<String> jComboBoxMetodoDePago;
+    private javax.swing.JFormattedTextField jFormattedTextFieldCodigo;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelCajero;
     private javax.swing.JLabel jLabelCantidad;
@@ -414,9 +485,8 @@ public class Caja extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextFieldCantidad;
-    private javax.swing.JTextField jTextFieldCodigo;
+    private javax.swing.JSpinner jSpinnerCantidad;
+    private javax.swing.JTable jTableDetalle;
     private javax.swing.JTextField jTextFieldRut;
     // End of variables declaration//GEN-END:variables
 }
