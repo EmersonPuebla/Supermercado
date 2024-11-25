@@ -8,10 +8,6 @@ package view;
 import model.LoginSystem;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author TUTE
- */
 public class Hub extends javax.swing.JFrame {
 
     /**
@@ -20,6 +16,10 @@ public class Hub extends javax.swing.JFrame {
     public Hub() {
         initComponents();
         setLocationRelativeTo(null);
+        jButtonCaja.setEnabled(LoginSystem.getPermisos()[2]);
+        jButtonBodega.setEnabled(LoginSystem.getPermisos()[3]);
+        jButtonAdministrarEmpleados.setEnabled(LoginSystem.getPermisos()[0]);
+        jButtonReportes.setEnabled(LoginSystem.getPermisos()[1]);
     }
 
     /**
@@ -140,15 +140,14 @@ public class Hub extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAdministrarEmpleadosActionPerformed
 
     private void jButtonCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCajaActionPerformed
-        
-        Caja cajaWindow = new Caja(); 
-        cajaWindow.setVisible(true);
-        this.dispose();
+       Caja cajaWindow = new Caja(); 
+       cajaWindow.setVisible(true);
+       this.dispose();
     
     }//GEN-LAST:event_jButtonCajaActionPerformed
 
     private void jButtonBodegaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBodegaActionPerformed
-  
+
         Bodega bodegaWindow = new Bodega(); 
         bodegaWindow.setVisible(true);
         this.dispose();

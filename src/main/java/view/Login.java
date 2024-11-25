@@ -5,8 +5,6 @@
 package view;
 
 import java.awt.event.KeyEvent;
-import model.Empleado;
-import javax.swing.JOptionPane;
 import model.LoginSystem;
 
 /**
