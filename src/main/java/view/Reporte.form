@@ -198,7 +198,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelDesde">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Desde"/>
+            <Property name="text" type="java.lang.String" value="Desde (a&#xf1;o/mes/dia)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="jFormattedTextFieldHasta">
@@ -213,7 +213,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelHasta">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Hasta"/>
+            <Property name="text" type="java.lang.String" value="Hasta (a&#xf1;o/mes/dia)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonBuscar">

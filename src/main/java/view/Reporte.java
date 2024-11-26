@@ -146,7 +146,7 @@ public class Reporte extends javax.swing.JFrame {
             }
         });
 
-        jLabelDesde.setText("Desde");
+        jLabelDesde.setText("Desde (año/mes/dia)");
 
         try {
             jFormattedTextFieldHasta.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####/##/##")));
@@ -159,7 +159,7 @@ public class Reporte extends javax.swing.JFrame {
             }
         });
 
-        jLabelHasta.setText("Hasta");
+        jLabelHasta.setText("Hasta (año/mes/dia)");
 
         jButtonBuscar.setText("Buscar");
         jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -428,6 +428,14 @@ public class Reporte extends javax.swing.JFrame {
             case 3: // Buscar por rut_cliente
                 String rutCliente = jFormattedTextFieldRutCliente.getText();
                 ventas = ReporteDAO.getFilasVentaPorRutCliente(rutCliente);
+                break;
+            case 4:
+                String rutVendedor = jFormattedTextFieldRutCajero.getText();
+                ventas = ReporteDAO.getFilasVentaPorRutVendedor(rutVendedor);
+                break;
+            case 5:
+                String metodoPago = jComboBoxMetodoPago.getSelectedItem().toString();
+                ventas = ReporteDAO.getFilasVentaPorMetodoPago(metodoPago);
                 break;
         }
 
