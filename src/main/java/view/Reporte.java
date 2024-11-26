@@ -35,14 +35,15 @@ public class Reporte extends javax.swing.JFrame {
         // Limpiar los campos de texto
         jFormattedTextFieldDesde.setText("");
         jFormattedTextFieldHasta.setText("");
-        jFormattedTextFieldFolio.setText("");
+
         jSpinnerDesdeMonto.setValue(0);
+        jSpinnerHastaMonto.setValue(0);
+
+        jFormattedTextFieldFolio.setText("");
+        jComboBoxMetodoPago.setSelectedIndex(0);
+
         jFormattedTextFieldRutCliente.setText("");
         jFormattedTextFieldRutCajero.setText("");
-
-        // no se si es necesario esto porque igual esta de mas
-        //    jComboBoxMetodoPago.setSelectedIndex(0); 
-        //    jComboBoxFiltrarPor.setSelectedIndex(0);  
     }
 
     public void actualizarEstadoFiltros() {
@@ -50,11 +51,15 @@ public class Reporte extends javax.swing.JFrame {
         Map<JComponent, Boolean> fields = new HashMap<>();
         fields.put(jFormattedTextFieldDesde, false);
         fields.put(jFormattedTextFieldHasta, false);
-        fields.put(jFormattedTextFieldFolio, false);
+
         fields.put(jSpinnerDesdeMonto, false);
+        fields.put(jSpinnerHastaMonto, false);
+
+        fields.put(jFormattedTextFieldFolio, false);
+        fields.put(jComboBoxMetodoPago, false);
+
         fields.put(jFormattedTextFieldRutCliente, false);
         fields.put(jFormattedTextFieldRutCajero, false);
-        fields.put(jComboBoxMetodoPago, false);
 
         // Obtener el índice de la selección en el combo box
         int index = jComboBoxFiltrarPor.getSelectedIndex();
@@ -66,18 +71,23 @@ public class Reporte extends javax.swing.JFrame {
                 fields.put(jFormattedTextFieldHasta, true);
                 break;
             case 1:
-                fields.put(jFormattedTextFieldFolio, true);
+                fields.put(jSpinnerDesdeMonto, true);
+                fields.put(jSpinnerHastaMonto, true);
                 break;
             case 2:
-                fields.put(jSpinnerDesdeMonto, true);
+                fields.put(jFormattedTextFieldFolio, true);
                 break;
             case 3:
-                fields.put(jFormattedTextFieldRutCliente, true);
+                fields.put(jComboBoxMetodoPago, true);
                 break;
             case 4:
+                fields.put(jFormattedTextFieldRutCliente, true);
+                break;
+
+            case 5:
                 fields.put(jFormattedTextFieldRutCajero, true);
                 break;
-            case 5:
+            case 6:
                 fields.put(jComboBoxMetodoPago, true);
                 break;
         }
@@ -191,7 +201,7 @@ public class Reporte extends javax.swing.JFrame {
             }
         });
 
-        jComboBoxFiltrarPor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Rango de fecha", "Folio", "Monto", "RUT Cliente", "RUT Cajero", "Metodo de Pago" }));
+        jComboBoxFiltrarPor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Rango de Fecha", "Rango de Precio", "Folio", "Metodo de Pago", "RUT Cliente", "RUT Cajero" }));
         jComboBoxFiltrarPor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxFiltrarPorActionPerformed(evt);
@@ -234,42 +244,50 @@ public class Reporte extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jSpinnerDesdeMonto)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabelDesde, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jFormattedTextFieldDesde, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                            .addComponent(jFormattedTextFieldDesde, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelHasta)
+                            .addComponent(jFormattedTextFieldHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabelFolio, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jFormattedTextFieldRutCliente, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jFormattedTextFieldFolio, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
                             .addComponent(jLabelRutCliente, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addComponent(jLabelDesdeMonto)))
-                .addGap(26, 26, 26)
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBoxMetodoPago, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jFormattedTextFieldRutCajero)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelRutCajero)
+                                    .addComponent(jLabelMetodoPago))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabelDesdeMonto)
+                                .addGap(73, 73, 73))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jSpinnerDesdeMonto)
+                                .addGap(26, 26, 26)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSpinnerHastaMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelHastaMonto))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabelHasta)
-                                .addComponent(jFormattedTextFieldHasta, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                                .addComponent(jLabelRutCajero)
-                                .addComponent(jFormattedTextFieldRutCajero)
-                                .addComponent(jComboBoxMetodoPago, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabelMetodoPago))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jComboBoxFiltrarPor, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelFiltrarPor))
-                        .addGap(14, 14, 14))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelHastaMonto)
-                            .addComponent(jSpinnerHastaMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxFiltrarPor, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelFiltrarPor))
+                .addGap(14, 14, 14))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,9 +299,25 @@ public class Reporte extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabelFiltrarPor)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxFiltrarPor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jFormattedTextFieldDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jFormattedTextFieldHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(2, 2, 2)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelDesdeMonto)
+                            .addComponent(jLabelHastaMonto))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jSpinnerDesdeMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSpinnerHastaMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelFolio)
@@ -291,33 +325,17 @@ public class Reporte extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jFormattedTextFieldFolio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBoxMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabelRutCliente)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jFormattedTextFieldRutCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabelRutCajero)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jFormattedTextFieldRutCajero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jComboBoxMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabelFiltrarPor)
+                        .addComponent(jLabelRutCliente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBoxFiltrarPor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelHastaMonto)
-                    .addComponent(jLabelDesdeMonto))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jSpinnerDesdeMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinnerHastaMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jFormattedTextFieldRutCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabelRutCajero)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jFormattedTextFieldRutCajero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -413,33 +431,38 @@ public class Reporte extends javax.swing.JFrame {
         List<String[]> ventas = new ArrayList<>();
 
         switch (jComboBoxFiltrarPor.getSelectedIndex()) {
-            case 0: // Buscar por rango de fechas
+            case 0: 
                 String fechaDesde = jFormattedTextFieldDesde.getText();  // Fecha desde
                 String fechaHasta = jFormattedTextFieldHasta.getText();  // Fecha hasta
                 ventas = ReporteDAO.obtenerFilasVentaPorRangoFechas(fechaDesde, fechaHasta);
                 break;
-            case 1: // Buscar por id_venta
+            
+            case 1:
+                
+                int desdeMonto = (int) jSpinnerDesdeMonto.getValue();
+                int hastaMonto = (int) jSpinnerHastaMonto.getValue();
+                ventas = ReporteDAO.getFilasVentaPorRangoMonto(desdeMonto, hastaMonto);
+                break;
+            
+            case 2: 
                 int folio = Integer.parseInt(jFormattedTextFieldFolio.getText());
                 ventas = ReporteDAO.getFilasVentaPorIdVenta(folio);
                 break;
 
-            case 2: // Buscar por monto
-                String monto = (String) jSpinnerDesdeMonto.getValue();
-                ventas = ReporteDAO.getFilasVentaPorMonto(monto);
-                break;
-
-            case 3: // Buscar por rut_cliente
-                String rutCliente = jFormattedTextFieldRutCliente.getText();
-                ventas = ReporteDAO.getFilasVentaPorRutCliente(rutCliente);
-                break;
-            case 4:
-                String rutVendedor = jFormattedTextFieldRutCajero.getText();
-                ventas = ReporteDAO.getFilasVentaPorRutVendedor(rutVendedor);
-                break;
-            case 5:
+            case 3:
                 String metodoPago = jComboBoxMetodoPago.getSelectedItem().toString();
                 ventas = ReporteDAO.getFilasVentaPorMetodoPago(metodoPago);
                 break;
+
+            case 4: 
+                String rutCliente = jFormattedTextFieldRutCliente.getText();
+                ventas = ReporteDAO.getFilasVentaPorRutCliente(rutCliente);
+                break;
+            case 5:
+                String rutVendedor = jFormattedTextFieldRutCajero.getText();
+                ventas = ReporteDAO.getFilasVentaPorRutVendedor(rutVendedor);
+                break;
+            
         }
 
         // Si se encontraron ventas, agregarlas a la tabla
@@ -453,11 +476,10 @@ public class Reporte extends javax.swing.JFrame {
 
             // Agregar la fila al modelo de la tabla
             modelo.addRow(new Object[]{folio, rut_cliente, rut_vendedor, fecha, metodo_pago, monto});
+            jButtonLimpiar.setEnabled(true);
         }
 
-        // Limpiar filtros después de la búsqueda
-        limpiarFiltros();
-        jButtonLimpiar.setEnabled(true);
+        
 
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 

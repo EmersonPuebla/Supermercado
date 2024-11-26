@@ -79,55 +79,68 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="jSpinnerDesdeMonto" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="jLabelDesde" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jFormattedTextFieldDesde" alignment="0" pref="130" max="32767" attributes="0"/>
+                              <Component id="jFormattedTextFieldDesde" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabelHasta" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jFormattedTextFieldHasta" alignment="0" min="-2" pref="140" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
                               <Component id="jLabelFolio" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jFormattedTextFieldRutCliente" alignment="0" max="32767" attributes="0"/>
                               <Component id="jFormattedTextFieldFolio" alignment="1" pref="130" max="32767" attributes="0"/>
                               <Component id="jLabelRutCliente" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jLabelDesdeMonto" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jLabelHasta" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jFormattedTextFieldHasta" alignment="0" pref="140" max="32767" attributes="0"/>
-                                  <Component id="jLabelRutCajero" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jFormattedTextFieldRutCajero" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jComboBoxMetodoPago" max="32767" attributes="0"/>
+                              <Component id="jComboBoxMetodoPago" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jFormattedTextFieldRutCajero" alignment="0" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabelRutCajero" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabelMetodoPago" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="jLabelMetodoPago" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="47" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jButtonLimpiar" min="-2" pref="140" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jButtonBuscar" min="-2" pref="140" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="jComboBoxFiltrarPor" min="-2" pref="298" max="-2" attributes="0"/>
-                              <Component id="jLabelFiltrarPor" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="jLabelDesdeMonto" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="jSpinnerDesdeMonto" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabelHastaMonto" min="-2" max="-2" attributes="0"/>
                               <Component id="jSpinnerHastaMonto" min="-2" pref="140" max="-2" attributes="0"/>
+                              <Component id="jLabelHastaMonto" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace pref="47" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jButtonLimpiar" min="-2" pref="140" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jButtonBuscar" min="-2" pref="140" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="jComboBoxFiltrarPor" min="-2" pref="298" max="-2" attributes="0"/>
+                      <Component id="jLabelFiltrarPor" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -142,9 +155,29 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
+                          <Component id="jLabelFiltrarPor" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jComboBoxFiltrarPor" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jButtonBuscar" alignment="3" min="-2" pref="68" max="-2" attributes="0"/>
+                              <Component id="jButtonLimpiar" alignment="3" min="-2" pref="68" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jFormattedTextFieldDesde" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jFormattedTextFieldHasta" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabelDesdeMonto" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelHastaMonto" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jSpinnerDesdeMonto" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jSpinnerHastaMonto" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -156,40 +189,20 @@
                               <Component id="jFormattedTextFieldFolio" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jComboBoxMetodoPago" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="jLabelRutCliente" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jFormattedTextFieldRutCliente" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="jLabelRutCajero" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jFormattedTextFieldRutCajero" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <Component id="jLabelFiltrarPor" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jComboBoxFiltrarPor" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jButtonBuscar" alignment="3" min="-2" pref="68" max="-2" attributes="0"/>
-                              <Component id="jButtonLimpiar" alignment="3" min="-2" pref="68" max="-2" attributes="0"/>
-                          </Group>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabelHastaMonto" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabelDesdeMonto" alignment="0" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jSpinnerDesdeMonto" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jSpinnerHastaMonto" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="jLabelRutCliente" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jFormattedTextFieldRutCliente" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="jLabelRutCajero" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jFormattedTextFieldRutCajero" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -263,12 +276,12 @@
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="6">
-                <StringItem index="0" value="Rango de fecha"/>
-                <StringItem index="1" value="Folio"/>
-                <StringItem index="2" value="Monto"/>
-                <StringItem index="3" value="RUT Cliente"/>
-                <StringItem index="4" value="RUT Cajero"/>
-                <StringItem index="5" value="Metodo de Pago"/>
+                <StringItem index="0" value="Rango de Fecha"/>
+                <StringItem index="1" value="Rango de Precio"/>
+                <StringItem index="2" value="Folio"/>
+                <StringItem index="3" value="Metodo de Pago"/>
+                <StringItem index="4" value="RUT Cliente"/>
+                <StringItem index="5" value="RUT Cajero"/>
               </StringArray>
             </Property>
           </Properties>
