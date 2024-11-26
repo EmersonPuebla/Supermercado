@@ -4,7 +4,6 @@ view\Caja$9.class
 view\Reporte$9.class
 view\Reporte$5.class
 view\Caja$6.class
-view\AboutDialog.class
 view\Caja$8.class
 view\Reporte$10.class
 view\AdministrarEmpleados$5.class
@@ -18,10 +17,10 @@ view\Login$7.class
 view\Reporte$4.class
 view\Caja$7.class
 view\Caja$10.class
-sound\SoundManager.class
 test\TestBaseDeDatos.class
 model\Validador.class
 view\Reporte$3.class
 view\Login$6.class
 test\TestEmpleadoSQL.class
+model\SoundManager.class
 view\Reporte$6.class

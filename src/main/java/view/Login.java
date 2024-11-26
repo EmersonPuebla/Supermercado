@@ -208,7 +208,7 @@ public class Login extends javax.swing.JFrame {
         String message = "<html>"
             + "<div style='text-align: center;'>"
             + "<a href='https://github.com/EmersonPuebla/Supermercado'>Supermercado</a> © 2024<br>"
-            + "por Luis Álvarez y Emerson Puebla<br>"
+            + "por Luis Alvarez y Emerson Puebla<br>"
             + "Este software está bajo la <a href='https://opensource.org/licenses/MIT'>Licencia MIT</a>."
             + "</div>"
             + "</html>";

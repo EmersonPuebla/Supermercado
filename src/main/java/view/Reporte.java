@@ -13,7 +13,7 @@ import java.util.Map;
 import javax.swing.JComponent;
 import javax.swing.table.DefaultTableModel;
 import model.Validador;
-import sound.SoundManager;
+import model.SoundManager;
 
 public class Reporte extends javax.swing.JFrame {
 

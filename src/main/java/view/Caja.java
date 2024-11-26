@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import model.Boleta;
 import model.LoginSystem;
 import model.Validador;
-import sound.SoundManager;
+import model.SoundManager;
 
 public class Caja extends javax.swing.JFrame {
 
