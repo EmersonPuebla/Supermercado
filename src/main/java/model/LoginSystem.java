@@ -53,7 +53,7 @@ public class LoginSystem {
                JOptionPane.showMessageDialog(null, "Porfavor rellena los campos faltantes", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
                return false;
 
-            } else if (hashed.equals(objPassword) && username.equals(objUsername)) {       
+            } else if (hashed.equals(objPassword) && username.toLowerCase().equals(objUsername.toLowerCase())) {       
                 if (permisos[4] == false) {
                     JOptionPane.showMessageDialog(null, "No tienes permiso para ingresar al sistema", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);  
                     return false;

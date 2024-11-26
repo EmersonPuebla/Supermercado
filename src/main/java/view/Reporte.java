@@ -36,7 +36,7 @@ public class Reporte extends javax.swing.JFrame {
         jFormattedTextFieldDesde.setText("");
         jFormattedTextFieldHasta.setText("");
         jFormattedTextFieldFolio.setText("");
-        jFormattedTextFieldMonto.setText("");
+        jSpinnerDesdeMonto.setValue(0);
         jFormattedTextFieldRutCliente.setText("");
         jFormattedTextFieldRutCajero.setText("");
 
@@ -51,7 +51,7 @@ public class Reporte extends javax.swing.JFrame {
         fields.put(jFormattedTextFieldDesde, false);
         fields.put(jFormattedTextFieldHasta, false);
         fields.put(jFormattedTextFieldFolio, false);
-        fields.put(jFormattedTextFieldMonto, false);
+        fields.put(jSpinnerDesdeMonto, false);
         fields.put(jFormattedTextFieldRutCliente, false);
         fields.put(jFormattedTextFieldRutCajero, false);
         fields.put(jComboBoxMetodoPago, false);
@@ -69,7 +69,7 @@ public class Reporte extends javax.swing.JFrame {
                 fields.put(jFormattedTextFieldFolio, true);
                 break;
             case 2:
-                fields.put(jFormattedTextFieldMonto, true);
+                fields.put(jSpinnerDesdeMonto, true);
                 break;
             case 3:
                 fields.put(jFormattedTextFieldRutCliente, true);
@@ -111,14 +111,16 @@ public class Reporte extends javax.swing.JFrame {
         jButtonLimpiar = new javax.swing.JButton();
         jComboBoxFiltrarPor = new javax.swing.JComboBox<>();
         jLabelFiltrarPor = new javax.swing.JLabel();
-        jFormattedTextFieldMonto = new javax.swing.JFormattedTextField();
-        jLabelMonto = new javax.swing.JLabel();
+        jLabelDesdeMonto = new javax.swing.JLabel();
         jFormattedTextFieldRutCliente = new javax.swing.JFormattedTextField();
         jLabelRutCliente = new javax.swing.JLabel();
         jFormattedTextFieldRutCajero = new javax.swing.JFormattedTextField();
         jLabelRutCajero = new javax.swing.JLabel();
         jComboBoxMetodoPago = new javax.swing.JComboBox<>();
         jLabelMetodoPago = new javax.swing.JLabel();
+        jLabelHastaMonto = new javax.swing.JLabel();
+        jSpinnerDesdeMonto = new javax.swing.JSpinner();
+        jSpinnerHastaMonto = new javax.swing.JSpinner();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableSalida = new javax.swing.JTable();
@@ -198,19 +200,7 @@ public class Reporte extends javax.swing.JFrame {
 
         jLabelFiltrarPor.setText("Filtrar por");
 
-        jFormattedTextFieldMonto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        jFormattedTextFieldMonto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextFieldMontoActionPerformed(evt);
-            }
-        });
-        jFormattedTextFieldMonto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jFormattedTextFieldMontoKeyTyped(evt);
-            }
-        });
-
-        jLabelMonto.setText("Monto");
+        jLabelDesdeMonto.setText("Desde el monto");
 
         try {
             jFormattedTextFieldRutCliente.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#-#")));
@@ -232,30 +222,40 @@ public class Reporte extends javax.swing.JFrame {
 
         jLabelMetodoPago.setText("Metodo de pago");
 
+        jLabelHastaMonto.setText("Hasta el monto");
+
+        jSpinnerDesdeMonto.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+
+        jSpinnerHastaMonto.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jSpinnerDesdeMonto)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabelDesde, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jFormattedTextFieldDesde, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                            .addComponent(jLabelFolio, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jFormattedTextFieldRutCliente, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jFormattedTextFieldFolio, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                            .addComponent(jLabelRutCliente, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addComponent(jLabelDesdeMonto)))
+                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabelDesde)
-                                .addComponent(jFormattedTextFieldDesde, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                                .addComponent(jLabelFolio)
-                                .addComponent(jFormattedTextFieldRutCliente))
-                            .addComponent(jFormattedTextFieldFolio, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelRutCliente))
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabelHasta)
-                            .addComponent(jFormattedTextFieldHasta, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                            .addComponent(jLabelMonto)
-                            .addComponent(jFormattedTextFieldMonto)
-                            .addComponent(jLabelRutCajero)
-                            .addComponent(jFormattedTextFieldRutCajero))
+                                .addComponent(jLabelHasta)
+                                .addComponent(jFormattedTextFieldHasta, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                                .addComponent(jLabelRutCajero)
+                                .addComponent(jFormattedTextFieldRutCajero)
+                                .addComponent(jComboBoxMetodoPago, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabelMetodoPago))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -266,10 +266,9 @@ public class Reporte extends javax.swing.JFrame {
                             .addComponent(jLabelFiltrarPor))
                         .addGap(14, 14, 14))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jComboBoxMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabelMetodoPago)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelHastaMonto)
+                            .addComponent(jSpinnerHastaMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -286,13 +285,13 @@ public class Reporte extends javax.swing.JFrame {
                             .addComponent(jFormattedTextFieldDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jFormattedTextFieldHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelFolio)
-                            .addComponent(jLabelMonto))
+                            .addComponent(jLabelMetodoPago))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jFormattedTextFieldFolio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jFormattedTextFieldMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jComboBoxMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -311,11 +310,15 @@ public class Reporte extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(2, 2, 2)
-                .addComponent(jLabelMetodoPago)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBoxMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelHastaMonto)
+                    .addComponent(jLabelDesdeMonto))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jSpinnerDesdeMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSpinnerHastaMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         jTableSalida.setModel(new javax.swing.table.DefaultTableModel(
@@ -421,7 +424,7 @@ public class Reporte extends javax.swing.JFrame {
                 break;
 
             case 2: // Buscar por monto
-                String monto = jFormattedTextFieldMonto.getText();
+                String monto = (String) jSpinnerDesdeMonto.getValue();
                 ventas = ReporteDAO.getFilasVentaPorMonto(monto);
                 break;
 
@@ -485,18 +488,6 @@ public class Reporte extends javax.swing.JFrame {
         Validador.bloquearLetras(evt);
     }//GEN-LAST:event_jFormattedTextFieldFolioKeyTyped
 
-    private void jFormattedTextFieldMontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextFieldMontoActionPerformed
-
-        int monto = Integer.parseInt(jFormattedTextFieldMonto.getText());
-
-
-    }//GEN-LAST:event_jFormattedTextFieldMontoActionPerformed
-
-    private void jFormattedTextFieldMontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextFieldMontoKeyTyped
-        Validador.bloquearSimbolos(evt);
-        Validador.bloquearLetras(evt);
-    }//GEN-LAST:event_jFormattedTextFieldMontoKeyTyped
-
     /**
      * @param args the command line arguments
      */
@@ -541,22 +532,24 @@ public class Reporte extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jFormattedTextFieldDesde;
     private javax.swing.JFormattedTextField jFormattedTextFieldFolio;
     private javax.swing.JFormattedTextField jFormattedTextFieldHasta;
-    private javax.swing.JFormattedTextField jFormattedTextFieldMonto;
     private javax.swing.JFormattedTextField jFormattedTextFieldRutCajero;
     private javax.swing.JFormattedTextField jFormattedTextFieldRutCliente;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelDesde;
+    private javax.swing.JLabel jLabelDesdeMonto;
     private javax.swing.JLabel jLabelFiltrarPor;
     private javax.swing.JLabel jLabelFolio;
     private javax.swing.JLabel jLabelHasta;
+    private javax.swing.JLabel jLabelHastaMonto;
     private javax.swing.JLabel jLabelMetodoPago;
-    private javax.swing.JLabel jLabelMonto;
     private javax.swing.JLabel jLabelRutCajero;
     private javax.swing.JLabel jLabelRutCliente;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSpinner jSpinnerDesdeMonto;
+    private javax.swing.JSpinner jSpinnerHastaMonto;
     private javax.swing.JTable jTableSalida;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,3 +1,14 @@
+-- CREDENCIALES
+-- username /// password
+-- Cristian ==> Un2PalLibro 
+-- Luis     ==> Serj67 
+-- Emerson  ==> PanConQueso123 
+-- Joaquin  ==> MostBimural8
+-- Martin   ==> Martin1990
+-- Catalina ==> Guiyu11
+-- Alan     ==> Fish2002 
+-- Susana   ==> PqSiempr3Yo
+
 -- Crear la base de datos
 CREATE DATABASE IF NOT EXISTS supermercado;
 USE supermercado;
@@ -61,40 +72,36 @@ CREATE TABLE IF NOT EXISTS venta_producto (
 	FOREIGN KEY (id_producto) REFERENCES producto(id_producto)
 );
 
---------------------------
----- SOLO SI QUEDA TIEMPO
---------------------------
+-- SOLO SI QUEDA TIEMPO
 -- Crear tabla DEVOLUCION
-CREATE TABLE IF NOT EXISTS devolucion (
-	id_devolución INTEGER PRIMARY KEY,
-	id_venta INTEGER NOT NULL,
-	fecha_devolucion DATE NOT NULL,
-	monto INTEGER NOT NULL, 
-	FOREIGN KEY (id_venta) REFERENCES venta(id_venta)
-);
+-- CREATE TABLE IF NOT EXISTS devolucion (
+-- id_devolución INTEGER PRIMARY KEY,
+-- id_venta INTEGER NOT NULL,
+-- fecha_devolucion DATE NOT NULL,
+-- monto INTEGER NOT NULL, 
+-- FOREIGN KEY (id_venta) REFERENCES venta(id_venta)
+-- );
 
 -- Crear tabla DEVOLUCION_PRODUCTO
-CREATE TABLE IF NOT EXISTS devolucion_producto (
-	id_devolucion INTEGER NOT NULL,
-	id_producto INTEGER NOT NULL,
-	cantidad INTEGER NOT NULL,
-	precio_unitario INTEGER NOT NULL,
-	descuento INTEGER DEFAULT 0 NOT NULL,
-	
-	PRIMARY KEY (id_devolucion, id_producto),
-	FOREIGN KEY (id_devolucion) REFERENCES devolucion(id_devolucion),
-	FOREIGN KEY (id_producto) REFERENCES producto(id_producto)
-	
-);
----- 
+-- CREATE TABLE IF NOT EXISTS devolucion_producto (
+-- id_devolucion INTEGER NOT NULL,
+-- id_producto INTEGER NOT NULL,
+-- cantidad INTEGER NOT NULL,
+-- precio_unitario INTEGER NOT NULL,
+-- descuento INTEGER DEFAULT 0 NOT NULL,
+-- 
+-- PRIMARY KEY (id_devolucion, id_producto),
+-- FOREIGN KEY (id_devolucion) REFERENCES devolucion(id_devolucion),
+-- FOREIGN KEY (id_producto) REFERENCES producto(id_producto)	
+-- );
+-- 
 
----- NUEVO CONTENIDO TABLAS (Basado en la rubrica)
+-- NUEVO CONTENIDO TABLAS (Basado en la rubrica)
 -- Insertar 10 registros CLIENTE ✓✓
 -- Insertar  5 registros EMPLEADO (usuarios === EMPLEADO) ✓✓
 -- Insertar 20 registros PRODUCTO ✓✓
 -- Insertar 10 registros VENTA
 -- Insertar registros VENTA_PRODUCTO por cada venta (detalle venta === VENTA_PRODUCTO)
-----
 
 -- Insertar 10 registros CLIENTE
 INSERT INTO cliente VALUES
@@ -109,7 +116,7 @@ INSERT INTO cliente VALUES
 ('0-8', 'Valentina', 'Andrea',  'Reyes',    'Herrera',   1600),
 ('0-9', 'Francisco', 'Javier',  'Morales',  'Flores',    2500),
 ('1-1', 'Catalina',  'Paz',     'Vega',     'Mendoza',    900),
--- Adicionales (Opcional)
+-- X
 ('1-2', 'Rodrigo',  'Alberto', 'Jiménez',  'Núñez',     1800),
 ('1-3', 'Daniela',  'Fernanda','Pizarro',  'Araya',     2200),
 ('1-4', 'Antonio',  'Miguel',  'Soto',     'Vergara',   1100),
@@ -124,15 +131,15 @@ INSERT INTO cliente VALUES
 
 -- Insertar 5 registros Empleado 
 INSERT INTO empleado VALUES 
--- RUT/ 1rNombre/   2do Nombre/ 1rApellido / 2doApellido/ username/      password/   AdminEm/ Reporte/ Caja/  Bodega/   Habilitado?
-('1-0', 'Cristian', 'Orlando',  'Garcia',   'Gutierrez',  'cgarcia',     'hashAqui', true,    true,    true,  true,     true),
-('2-0', 'Luis',     'Antonio',  'Alvarez',  'Requejo',    'lalvarez',    'hashAqui', false,   true,    false, false,    true),
-('3-0', 'Emerson',  'Flavio',   'Puebla',   'Diaz',       'epuebla',     'hashAqui', false,   false,   true,  false,    true),
-('4-0', 'Joaquin',  'Andres',   'Gonzales', 'Soto',       'jgonzales',   'hashAqui', false,   false,   true,  false,    true),
-('5-0', 'Martin',   'Ignacio',  'Perez',    'Rojas',      'mperez',      'hashAqui', false,   false,   true,  false,    true),
-('6-0', 'Catalina', 'Fernanda', 'Silva',    'Herrera',    'csilva',      'hashAqui', false,   false,   true,  false,   false),
-('7-0', 'Alan',     'Alexander','Pinto',    'Ureta',      'apinto',      'hashAqui', false,   false,   false, true,     true),
-('8-0', 'Susana',   'Paz',      'Cruz',     'Valenzuela'  'svalenzuela', 'hashAqui', false,   false,   false, false,   false);
+-- RUT/ 1rNombre/   2do Nombre/ 1rApellido / 2doApellido/ username/      password/                                                           AdminEm/ Reporte/ Caja/  Bodega/   Habilitado?
+('1-0', 'Cristian', 'Orlando',  'Garcia',   'Gutierrez',  'cgarcia',     'bfc8782c3b9efaf7bdb0363b5f5c92835510ef858de5c59133eb05570ba35dbd', true,    true,    true,  true,     true),
+('2-0', 'Luis',     'Antonio',  'Alvarez',  'Requejo',    'lalvarez',    'cb9902e2db5b287fcd53344ded42a79f7bd2271f5488d876851cc80886408737', false,   true,    false, false,    true),
+('3-0', 'Emerson',  'Flavio',   'Puebla',   'Diaz',       'epuebla',     '9861f2f84d77de92617b630913481d8baf70b6c4cf1fb1724eb56f59b890823e', false,   false,   true,  false,    true),
+('4-0', 'Joaquin',  'Andres',   'Gonzales', 'Soto',       'jgonzales',   '6422005f97e32c218f04bea4d8639cafb15e3c540221e8bef869e014d73a5e18', false,   false,   true,  false,    true),
+('5-0', 'Martin',   'Ignacio',  'Perez',    'Rojas',      'mperez',      '5f647d5bbbe7e377ac0ded9c78079af3cf6a1c52bac7413c39b266b8fb66a5e3', false,   false,   true,  false,    true),
+('6-0', 'Catalina', 'Fernanda', 'Silva',    'Herrera',    'csilva',      '530485f3357ecc94d2dd5ac0496d43527b8821003787d02edc9fcc6c592f209d', false,   false,   true,  false,   false),
+('7-0', 'Alan',     'Alexander','Pinto',    'Ureta',      'apinto',      '9ebed9eec702a7cdf6aca0e9ab37bdc54008785c26098e92fe1aae9a6953bcbd', false,   false,   false, true,     true),
+('8-0', 'Susana',   'Paz',      'Cruz',     'Valenzuela', 'svalenzuela', 'e3412ae3150fae62da63443bc0fa9525c843771a4c187cfaddb6ce67b31762ff', false,   false,   false, false,   false);
 
 -- Insertar 20 registros PRODUCTO 
 INSERT INTO producto VALUES
@@ -157,7 +164,7 @@ INSERT INTO producto VALUES
 (18,   'Papel Higiénico', 'Confort',          12,    'u',     4990,   150,  10),
 (19,   'Jabón',           'Dove',             90,   'gr',      990,   100,   0),
 (20,   'Shampoo',         'Head&Shoulders',  400,   'ml',     3990,    70,   0),
--- Adicionales (Opcional)
+-- X
 (21,   'Pasta Dental',    'Colgate',          90, 'gr',       1990,   120,   5),
 (22,   'Cerveza',         'Cristal',         350, 'ml',        890,   200,   0),
 (23,   'Bebida',          'Coca-Cola',      1500, 'ml',       1690,   180,  10),
@@ -181,12 +188,31 @@ INSERT INTO producto VALUES
 
 -- Insertar 10 registros VENTA
 INSERT INTO venta VALUES 
--- ID/ Cliente/ Vendedor/ Fecha/        MetodoPago/ Monto
-(1,    '0-5',   '1-0',    '2024-01-01', 'Debito',   11871);
+-- ID/ Cliente/ Vendedor/  YYYY-MM-DD/  MetodoPago/ Monto
+(1,    '0-5',   '3-0',    '2024-01-18', 'Debito',   11871),
+(2,    '1-4',   '5-0',    '2024-01-19', 'Efectivo',  7180),
+(3,    '0-2',   '6-0',    '2024-01-19', 'Debito',    5242‬),
+(4,    '2-1',   '6-0',    '2024-01-20', 'Credito',   3411‬),
+(5,    '1-3',   '4-0',    '2024-01-20', 'Efectivo',  3206);
+-- agregar +5 aqui
 
 -- Insertar registros VENTA_PRODUCTO por cada venta
 INSERT INTO venta_producto VALUES
 -- id_venta/ id_producto/ Cantidad/ Precio/ Descuento
 (1, 21, 5, 1990, 5),
 (1, 20, 2, 3990, 0),
-(1, 17, 1, 5990, 0);
+(1, 17, 1, 5990, 0),
+
+(2, 7,  1, 4990, 0),
+(2, 14, 1, 2190, 10),
+
+(3, 11, 1, 1990, 5),
+(3, 9,  1, 2290, 10),
+(3, 24, 1, 1290, 0),
+
+(4, 23, 1, 1690, 10),
+(4, 27, 2, 1890, 0),
+
+(5, 31, 1, 1290, 5),
+(5, 32, 2, 990, 0);
+-- agregar detalle de +5 ventas aqui

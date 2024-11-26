@@ -79,28 +79,34 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jLabelDesde" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jFormattedTextFieldDesde" pref="130" max="32767" attributes="0"/>
-                                  <Component id="jLabelFolio" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jFormattedTextFieldRutCliente" max="32767" attributes="0"/>
-                              </Group>
-                              <Component id="jFormattedTextFieldFolio" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="jSpinnerDesdeMonto" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="jLabelDesde" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jFormattedTextFieldDesde" alignment="0" pref="130" max="32767" attributes="0"/>
+                              <Component id="jLabelFolio" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jFormattedTextFieldRutCliente" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jFormattedTextFieldFolio" alignment="1" pref="130" max="32767" attributes="0"/>
                               <Component id="jLabelRutCliente" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jLabelHasta" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jFormattedTextFieldHasta" alignment="0" pref="140" max="32767" attributes="0"/>
-                              <Component id="jLabelMonto" min="-2" max="-2" attributes="0"/>
-                              <Component id="jFormattedTextFieldMonto" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabelRutCajero" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jFormattedTextFieldRutCajero" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jLabelDesdeMonto" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jLabelHasta" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jFormattedTextFieldHasta" alignment="0" pref="140" max="32767" attributes="0"/>
+                                  <Component id="jLabelRutCajero" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jFormattedTextFieldRutCajero" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jComboBoxMetodoPago" max="32767" attributes="0"/>
+                              </Group>
+                              <Component id="jLabelMetodoPago" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="47" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -114,12 +120,11 @@
                           </Group>
                           <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jComboBoxMetodoPago" min="-2" pref="296" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabelMetodoPago" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabelHastaMonto" min="-2" max="-2" attributes="0"/>
+                              <Component id="jSpinnerHastaMonto" min="-2" pref="140" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -142,14 +147,14 @@
                               <Component id="jFormattedTextFieldHasta" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabelFolio" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabelMonto" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabelFolio" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelMetodoPago" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jFormattedTextFieldFolio" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jFormattedTextFieldMonto" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jComboBoxMetodoPago" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
@@ -176,11 +181,17 @@
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                  <Component id="jLabelMetodoPago" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jComboBoxMetodoPago" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLabelHastaMonto" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelDesdeMonto" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jSpinnerDesdeMonto" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jSpinnerHastaMonto" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -273,20 +284,9 @@
             <Property name="text" type="java.lang.String" value="Filtrar por"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JFormattedTextField" name="jFormattedTextFieldMonto">
+        <Component class="javax.swing.JLabel" name="jLabelDesdeMonto">
           <Properties>
-            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-              <Format format="#0" subtype="-1" type="0"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jFormattedTextFieldMontoActionPerformed"/>
-            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jFormattedTextFieldMontoKeyTyped"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabelMonto">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Monto"/>
+            <Property name="text" type="java.lang.String" value="Desde el monto"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="jFormattedTextFieldRutCliente">
@@ -331,6 +331,25 @@
         <Component class="javax.swing.JLabel" name="jLabelMetodoPago">
           <Properties>
             <Property name="text" type="java.lang.String" value="Metodo de pago"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelHastaMonto">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Hasta el monto"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JSpinner" name="jSpinnerDesdeMonto">
+          <Properties>
+            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+              <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JSpinner" name="jSpinnerHastaMonto">
+          <Properties>
+            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+              <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
+            </Property>
           </Properties>
         </Component>
       </SubComponents>

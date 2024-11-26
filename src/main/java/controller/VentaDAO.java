@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class VentaDAO {
 public static int obtenerFolio() {
     String query = "SELECT MAX(id_venta) FROM venta";  // Consulta para obtener el id_venta máximo
-    int siguienteId = 0;  // Valor predeterminado en caso de que no existan registros en la tabla
+    int siguienteId = 1;  // Valor predeterminado
 
     try {
         // Establecer conexión a la base de datos
@@ -36,8 +36,9 @@ public static int obtenerFolio() {
         }
 
     } catch (SQLException ex) {
-        System.out.println("ERROR [SQL]: No se pudo obtener el siguiente id_venta");
-        ex.printStackTrace();
+        System.out.println("ERROR [SQL vDAO]: No se pudo obtener el siguiente id_venta");
+    } catch (java.lang.NullPointerException npe) {
+        System.out.println("ERROR [SQL vDAO]: No se logro conectar con la base de datos");
     }
 
     return siguienteId;
