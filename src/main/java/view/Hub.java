@@ -7,6 +7,7 @@ package view;
 
 import model.LoginSystem;
 import javax.swing.JOptionPane;
+import sound.SoundManager;
 
 public class Hub extends javax.swing.JFrame {
 
@@ -20,6 +21,7 @@ public class Hub extends javax.swing.JFrame {
         jButtonBodega.setEnabled(LoginSystem.getPermisos()[3]);
         jButtonAdministrarEmpleados.setEnabled(LoginSystem.getPermisos()[0]);
         jButtonReportes.setEnabled(LoginSystem.getPermisos()[1]);
+        SoundManager.reproducirSonido("login");
     }
 
     /**

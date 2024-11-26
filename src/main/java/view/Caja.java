@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import model.Boleta;
 import model.LoginSystem;
 import model.Validador;
+import sound.SoundManager;
 
 public class Caja extends javax.swing.JFrame {
 
@@ -443,6 +444,7 @@ public class Caja extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverActionPerformed
+        SoundManager.reproducirSonido("question");
         int opcion = JOptionPane.showConfirmDialog(null,
                 "¿Seguro que deseas terminar y cancelar la compra?\nsí confirmas la informacion de la compra en curso se perderá",
                 "Confirmación",
@@ -467,6 +469,7 @@ public class Caja extends javax.swing.JFrame {
 
         if (opcion == JOptionPane.YES_OPTION) {
             System.out.println("Seleccionaste Aceptar");
+            SoundManager.reproducirSonido("cobrar");
         } else if (opcion == JOptionPane.NO_OPTION) {
             System.out.println("Seleccionaste Cancelar");
         }
@@ -525,11 +528,13 @@ public class Caja extends javax.swing.JFrame {
                 modelo.addRow(new Object[]{codigo, descripcion, cantidad, precio_unitario, precio_a_descontar, precio_fila});
             }
 
+            SoundManager.reproducirSonido("addProducto");
             actualizarDetalleCompra(modelo);
             switchActivarBotonCobrar(modelo);
             limpiarFieldCodigo();
             reiniciarSpinnerCantidad();
             focusFieldCodigo();
+
         }
     }//GEN-LAST:event_jButtonAgregarActionPerformed
 

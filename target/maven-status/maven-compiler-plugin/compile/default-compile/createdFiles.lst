@@ -10,6 +10,7 @@ view\Login$7.class
 view\Reporte$4.class
 view\Caja$7.class
 view\Caja$10.class
+sound\SoundManager.class
 test\TestBaseDeDatos.class
 model\Validador.class
 view\Reporte$3.class
