@@ -100,7 +100,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel1.setText("Usuario");
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/logo-mini.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/logo-mini.png"))); // NOI18N
 
         jMenuAcercaDe.setText("Acerca de");
         jMenuAcercaDe.addMouseListener(new java.awt.event.MouseAdapter() {

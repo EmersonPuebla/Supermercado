@@ -205,7 +205,7 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
                 .addContainerGap(33, Short.MAX_VALUE))
         );
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/logo-mini.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/logo-mini.png"))); // NOI18N
 
         jTableSalida.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
