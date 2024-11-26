@@ -35,11 +35,11 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
         jLabelDescuento = new javax.swing.JLabel();
         jLabelNombre = new javax.swing.JLabel();
         jLabelRut = new javax.swing.JLabel();
-        jTextFieldRut = new javax.swing.JTextField();
         jTextFieldUsername = new javax.swing.JTextField();
         jTextFieldNombre = new javax.swing.JTextField();
-        jTextFieldPassword = new javax.swing.JTextField();
         jLabelDescuento1 = new javax.swing.JLabel();
+        jPasswordFieldPassword = new javax.swing.JPasswordField();
+        jFormattedTextFieldRut = new javax.swing.JFormattedTextField();
         jPanel4 = new javax.swing.JPanel();
         jCheckBoxHabilitado = new javax.swing.JCheckBox();
         jCheckBoxCaja = new javax.swing.JCheckBox();
@@ -48,7 +48,7 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
         jCheckBoxReportes = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableSalida = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Administrar Empleados");
@@ -113,6 +113,12 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
         jLabelDescuento1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabelDescuento1.setText("Password");
 
+        try {
+            jFormattedTextFieldRut.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#-#")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -120,17 +126,17 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jFormattedTextFieldRut)
+                    .addComponent(jPasswordFieldPassword)
                     .addComponent(jTextFieldNombre)
-                    .addComponent(jTextFieldRut)
                     .addComponent(jTextFieldUsername)
-                    .addComponent(jTextFieldPassword)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelRut)
                             .addComponent(jLabelNombre)
                             .addComponent(jLabelDescuento)
                             .addComponent(jLabelDescuento1))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(253, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,7 +144,7 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabelRut)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldRut, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jFormattedTextFieldRut, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelNombre)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -150,7 +156,7 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelDescuento1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPasswordFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -201,7 +207,7 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/logo-mini.png"))); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableSalida.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -217,8 +223,8 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(jTable1);
+        jTableSalida.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(jTableSalida);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -287,7 +293,7 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
         
-        String rut = jTextFieldRut.getText();
+
             
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
@@ -336,6 +342,7 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBoxCaja;
     private javax.swing.JCheckBox jCheckBoxHabilitado;
     private javax.swing.JCheckBox jCheckBoxReportes;
+    private javax.swing.JFormattedTextField jFormattedTextFieldRut;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelDescuento;
     private javax.swing.JLabel jLabelDescuento1;
@@ -344,12 +351,11 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPasswordField jPasswordFieldPassword;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableSalida;
     private javax.swing.JTextField jTextFieldNombre;
-    private javax.swing.JTextField jTextFieldPassword;
-    private javax.swing.JTextField jTextFieldRut;
     private javax.swing.JTextField jTextFieldUsername;
     // End of variables declaration//GEN-END:variables
 }
