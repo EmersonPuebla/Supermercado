@@ -47,6 +47,10 @@ public class SoundManager {
                 sonido("/sound/orale.mp3");
                 break;
                 
+            case "clean":
+                sonido("/sound/clean.mp3");
+                break;
+                
             default:
                 System.err.println("Sonido no reconocido: " + nombreSonido);
         }

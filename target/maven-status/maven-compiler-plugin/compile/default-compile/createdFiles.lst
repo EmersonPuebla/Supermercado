@@ -4,8 +4,11 @@ view\Reporte$5.class
 view\Caja$6.class
 view\Caja$8.class
 view\Hub$7.class
+view\Reporte$8.class
 view\Caja$5.class
 view\Login$8.class
+controller\ReporteDAO.class
+view\Reporte$7.class
 view\Login$7.class
 view\Reporte$4.class
 view\Caja$7.class
