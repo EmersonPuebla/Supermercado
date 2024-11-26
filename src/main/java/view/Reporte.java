@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Validador;
 import model.SoundManager;
@@ -138,6 +139,7 @@ public class Reporte extends javax.swing.JFrame {
         jSpinnerDesdeMonto = new javax.swing.JSpinner();
         jSpinnerHastaMonto = new javax.swing.JSpinner();
         jSpinnerFolio = new javax.swing.JSpinner();
+        jButtonVerDetalle = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableSalida = new javax.swing.JTable();
@@ -235,6 +237,13 @@ public class Reporte extends javax.swing.JFrame {
 
         jSpinnerFolio.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
 
+        jButtonVerDetalle.setText("Ver detalle");
+        jButtonVerDetalle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVerDetalleActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -277,13 +286,14 @@ public class Reporte extends javax.swing.JFrame {
                             .addComponent(jSpinnerHastaMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelHastaMonto))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jComboBoxFiltrarPor, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelFiltrarPor))
+                    .addComponent(jComboBoxFiltrarPor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelFiltrarPor)
+                    .addComponent(jButtonVerDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(14, 14, 14))
         );
         jPanel1Layout.setVerticalGroup(
@@ -323,16 +333,22 @@ public class Reporte extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jComboBoxMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jSpinnerFolio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabelRutCliente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jFormattedTextFieldRutCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabelRutCliente)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jFormattedTextFieldRutCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabelRutCajero)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jFormattedTextFieldRutCajero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabelRutCajero)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jFormattedTextFieldRutCajero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(14, 14, 14)
+                        .addComponent(jButtonVerDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -428,20 +444,20 @@ public class Reporte extends javax.swing.JFrame {
         List<String[]> ventas = new ArrayList<>();
 
         switch (jComboBoxFiltrarPor.getSelectedIndex()) {
-            case 0: 
+            case 0:
                 String fechaDesde = jFormattedTextFieldDesde.getText();  // Fecha desde
                 String fechaHasta = jFormattedTextFieldHasta.getText();  // Fecha hasta
                 ventas = ReporteDAO.obtenerFilasVentaPorRangoFechas(fechaDesde, fechaHasta);
                 break;
-            
+
             case 1:
-                
+
                 int desdeMonto = (int) jSpinnerDesdeMonto.getValue();
                 int hastaMonto = (int) jSpinnerHastaMonto.getValue();
                 ventas = ReporteDAO.getFilasVentaPorRangoMonto(desdeMonto, hastaMonto);
                 break;
-            
-            case 2: 
+
+            case 2:
                 int folio = (int) jSpinnerFolio.getValue();
                 ventas = ReporteDAO.getFilasVentaPorIdVenta(folio);
                 break;
@@ -451,7 +467,7 @@ public class Reporte extends javax.swing.JFrame {
                 ventas = ReporteDAO.getFilasVentaPorMetodoPago(metodoPago);
                 break;
 
-            case 4: 
+            case 4:
                 String rutCliente = jFormattedTextFieldRutCliente.getText();
                 ventas = ReporteDAO.getFilasVentaPorRutCliente(rutCliente);
                 break;
@@ -459,7 +475,7 @@ public class Reporte extends javax.swing.JFrame {
                 String rutVendedor = jFormattedTextFieldRutCajero.getText();
                 ventas = ReporteDAO.getFilasVentaPorRutVendedor(rutVendedor);
                 break;
-            
+
         }
 
         // Si se encontraron ventas, agregarlas a la tabla
@@ -476,7 +492,6 @@ public class Reporte extends javax.swing.JFrame {
             jButtonLimpiar.setEnabled(true);
         }
 
-        
 
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
@@ -496,6 +511,24 @@ public class Reporte extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jComboBoxFiltrarPorActionPerformed
+
+    private void jButtonVerDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerDetalleActionPerformed
+        DefaultTableModel modelo = (DefaultTableModel) jTableSalida.getModel();
+        int filaSeleccionada = jTableSalida.getSelectedRow();
+
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(null,
+                    "Debes seleccionar una venta de la tabla para ver su detalle",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+
+        }
+        DetalleVenta detalleWindow = new DetalleVenta();
+        detalleWindow.setVisible(true);
+
+
+    }//GEN-LAST:event_jButtonVerDetalleActionPerformed
 
     /**
      * @param args the command line arguments
@@ -535,6 +568,7 @@ public class Reporte extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonLimpiar;
+    private javax.swing.JButton jButtonVerDetalle;
     private javax.swing.JButton jButtonVolver;
     private javax.swing.JComboBox<String> jComboBoxFiltrarPor;
     private javax.swing.JComboBox<String> jComboBoxMetodoPago;
