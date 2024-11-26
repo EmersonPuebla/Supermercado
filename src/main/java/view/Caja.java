@@ -224,7 +224,7 @@ public class Caja extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jSpinnerCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
                     .addComponent(jFormattedTextFieldCodigo))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jButtonAgregar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -257,7 +257,7 @@ public class Caja extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(148, 148, 148)
+                .addGap(151, 151, 151)
                 .addComponent(jButtonAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
@@ -528,6 +528,12 @@ public class Caja extends javax.swing.JFrame {
                 modelo.addRow(new Object[]{codigo, descripcion, cantidad, precio_unitario, precio_a_descontar, precio_fila});
             }
 
+            
+            if (codigo == 41 && ProductoDAO.getNombre(codigo).equals("Nacho Taco Chimichanga")){
+                SoundManager.reproducirSonido("orale");
+            }
+            
+            
             SoundManager.reproducirSonido("addProducto");
             actualizarDetalleCompra(modelo);
             switchActivarBotonCobrar(modelo);
