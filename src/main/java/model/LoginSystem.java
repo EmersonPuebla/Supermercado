@@ -40,33 +40,41 @@ public class LoginSystem {
     }
     
     public static boolean login(String username, char[] passwordChar) {
-        String password = new String(passwordChar);   
-        String hashed = hashString(password);
         
-        String objUsername = EmpleadoDAO.getUsername(username);
-        String objPassword = EmpleadoDAO.getPassword(username);
-        permisos = EmpleadoDAO.getPermisos(username);
-        
-        if (password.length() == 0 || username.length() == 0) {
-           JOptionPane.showMessageDialog(null, "Porfavor rellena los campos faltantes", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
-           return false;
-           
-        } else if (hashed.equals(objPassword) && username.equals(objUsername)) {       
-            if (permisos[4] == false) {
-                JOptionPane.showMessageDialog(null, "No tienes permiso para ingresar al sistema", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);  
-                return false;
-            }
-            
-            setNombreEmpleado(EmpleadoDAO.getNombre(username)[0]);
-            setApellidoEmpleado(EmpleadoDAO.getNombre(username)[2]);
-            setPermisos(EmpleadoDAO.getPermisos(username)); 
+        try {
+            String password = new String(passwordChar);   
+            String hashed = hashString(password);
 
-            return true;
-            
-        } else {
-            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);  
+            String objUsername = EmpleadoDAO.getUsername(username);
+            String objPassword = EmpleadoDAO.getPassword(username);
+            permisos = EmpleadoDAO.getPermisos(username);
+
+            if (password.length() == 0 || username.length() == 0) {
+               JOptionPane.showMessageDialog(null, "Porfavor rellena los campos faltantes", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
+               return false;
+
+            } else if (hashed.equals(objPassword) && username.equals(objUsername)) {       
+                if (permisos[4] == false) {
+                    JOptionPane.showMessageDialog(null, "No tienes permiso para ingresar al sistema", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);  
+                    return false;
+                }
+
+                setNombreEmpleado(EmpleadoDAO.getNombre(username)[0]);
+                setApellidoEmpleado(EmpleadoDAO.getNombre(username)[2]);
+                setPermisos(EmpleadoDAO.getPermisos(username)); 
+
+                return true;
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);  
+                return false;
+
+            }
+        } catch (NullPointerException npe) {
+            JOptionPane.showMessageDialog(null, "No se pudo conectar con la base de datos",
+            "Error de inicio de sesión",
+            JOptionPane.ERROR_MESSAGE);  
             return false;
-        
         }
     }
     

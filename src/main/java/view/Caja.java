@@ -4,12 +4,17 @@
  * and open the template in the editor.
  */
 package view;
+
 import controller.ProductoDAO;
 import controller.VentaDAO;
+import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.Boleta;
 import model.LoginSystem;
+import model.Validador;
 
 public class Caja extends javax.swing.JFrame {
 
@@ -19,7 +24,52 @@ public class Caja extends javax.swing.JFrame {
     Date now = new Date();
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     String formattedDate = sdf.format(now);
+
+    public void switchActivarBotonCobrar(DefaultTableModel modelo) {
+        if (modelo.getRowCount() > 0) {
+            jButtonCobrar.setEnabled(true);
+        } else {
+            jButtonCobrar.setEnabled(false);
+        }
+    }
+
+    public void actualizarDetalleCompra(DefaultTableModel modelo) {
+        // Actualizar los totales
+        int descuento_total = 0;
+        int neto = 0;
+
+        // Recorrer las filas y sumar los valores de "Precio fila"
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            Object cantidad_x = modelo.getValueAt(i, 2);
+            Object descuento = modelo.getValueAt(i, 4);
+            Object total_fila = modelo.getValueAt(i, 5); // Obtener el valor de la celda
+            descuento_total += (int) descuento * (int) cantidad_x;
+            neto += (int) total_fila;    // Convertirlo a double y sumarlo
+        }
+        int iva = Boleta.calcularIVA(neto);
+        int total = neto + iva;
+        int puntos = Boleta.calcularPuntos(neto);
+
+        jLabelPuntos.setText("Puntos: +" + puntos);
+        jLabelDescuento.setText("Descuento: -$" + descuento_total);
+        jLabelNeto.setText("Neto: $" + neto);
+        jLabelIva.setText("IVA: $" + iva);
+        jLabelTotal.setText("TOTAL: $" + total);
+
+    }
     
+    public void limpiarFieldCodigo() {
+        jFormattedTextFieldCodigo.setText("");
+    }
+    
+    public void reiniciarSpinnerCantidad(){
+       jSpinnerCantidad.setValue(1);
+    }
+    
+    public void focusFieldCodigo() {
+        jFormattedTextFieldCodigo.requestFocus(); 
+    }
+
     public Caja() {
         initComponents();
         setLocationRelativeTo(null);
@@ -27,6 +77,7 @@ public class Caja extends javax.swing.JFrame {
         jLabelCajero.setText("Cajero: " + LoginSystem.getNombreEmpleado() + " " + LoginSystem.getApellidoEmpleado());
         jLabelFolio.setText("Folio: " + VentaDAO.obtenerFolio());
         jButtonCobrar.setEnabled(false);
+        jFormattedTextFieldCodigo.requestFocus();
     }
 
     /**
@@ -40,7 +91,6 @@ public class Caja extends javax.swing.JFrame {
         jButtonVolver = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
-        jTextFieldRut = new javax.swing.JTextField();
         jLabelRut = new javax.swing.JLabel();
         jButtonConfirmar = new javax.swing.JButton();
         jComboBoxMetodoDePago = new javax.swing.JComboBox<>();
@@ -49,6 +99,7 @@ public class Caja extends javax.swing.JFrame {
         jLabelCantidad = new javax.swing.JLabel();
         jFormattedTextFieldCodigo = new javax.swing.JFormattedTextField();
         jSpinnerCantidad = new javax.swing.JSpinner();
+        jFormattedTextFieldRut = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         jButtonAgregar = new javax.swing.JButton();
         jButtonEliminar = new javax.swing.JButton();
@@ -58,10 +109,10 @@ public class Caja extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabelPuntos = new javax.swing.JLabel();
         jLabelNeto = new javax.swing.JLabel();
-        jLabelDescuento = new javax.swing.JLabel();
         jLabelIva = new javax.swing.JLabel();
         jLabelTotal = new javax.swing.JLabel();
         jButtonCobrar = new javax.swing.JButton();
+        jLabelDescuento = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableDetalle = new javax.swing.JTable();
@@ -75,12 +126,6 @@ public class Caja extends javax.swing.JFrame {
         jButtonVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonVolverActionPerformed(evt);
-            }
-        });
-
-        jTextFieldRut.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldRutActionPerformed(evt);
             }
         });
 
@@ -113,6 +158,27 @@ public class Caja extends javax.swing.JFrame {
                 jFormattedTextFieldCodigoActionPerformed(evt);
             }
         });
+        jFormattedTextFieldCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jFormattedTextFieldCodigoKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jFormattedTextFieldCodigoKeyTyped(evt);
+            }
+        });
+
+        jSpinnerCantidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        jSpinnerCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jSpinnerCantidadKeyTyped(evt);
+            }
+        });
+
+        try {
+            jFormattedTextFieldRut.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#-#")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -121,15 +187,15 @@ public class Caja extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBoxMetodoDePago, javax.swing.GroupLayout.Alignment.TRAILING, 0, 304, Short.MAX_VALUE)
-                    .addComponent(jTextFieldRut)
+                    .addComponent(jComboBoxMetodoDePago, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jFormattedTextFieldCodigo)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelRut)
                             .addComponent(jLabelMetodoDePago)
                             .addComponent(jLabelRut1))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jFormattedTextFieldCodigo))
+                    .addComponent(jFormattedTextFieldRut))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabelCantidad)
@@ -144,7 +210,7 @@ public class Caja extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButtonConfirmar, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                    .addComponent(jTextFieldRut))
+                    .addComponent(jFormattedTextFieldRut))
                 .addGap(5, 5, 5)
                 .addComponent(jLabelMetodoDePago)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -157,7 +223,7 @@ public class Caja extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jSpinnerCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
                     .addComponent(jFormattedTextFieldCodigo))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         jButtonAgregar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -170,6 +236,11 @@ public class Caja extends javax.swing.JFrame {
 
         jButtonEliminar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -179,7 +250,7 @@ public class Caja extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
+                    .addComponent(jButtonEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -225,9 +296,6 @@ public class Caja extends javax.swing.JFrame {
         jLabelNeto.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabelNeto.setText("Neto:");
 
-        jLabelDescuento.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabelDescuento.setText("%Descuento: ");
-
         jLabelIva.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabelIva.setText("IVA: ");
 
@@ -242,6 +310,9 @@ public class Caja extends javax.swing.JFrame {
             }
         });
 
+        jLabelDescuento.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabelDescuento.setText("Descuento:");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -253,27 +324,29 @@ public class Caja extends javax.swing.JFrame {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelPuntos)
                             .addComponent(jLabelNeto)
-                            .addComponent(jLabelDescuento)
                             .addComponent(jLabelIva)
                             .addComponent(jLabelTotal))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jButtonCobrar, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addGap(69, 69, 69))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jButtonCobrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabelDescuento)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jLabelPuntos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelNeto)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelDescuento)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelNeto)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelIva)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
                 .addComponent(jLabelTotal)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
                 .addComponent(jButtonCobrar, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
@@ -283,11 +356,11 @@ public class Caja extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo", "Descripcion", "Cantidad", "Precio unitario", "Precio fila"
+                "Codigo", "Descripcion", "Cantidad", "Precio unitario", "Descuento", "Precio fila"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -301,7 +374,7 @@ public class Caja extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -321,24 +394,25 @@ public class Caja extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabelCajero)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 207, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addContainerGap())
             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelCajero)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -369,58 +443,194 @@ public class Caja extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverActionPerformed
-        Hub hubWindow = new Hub(); 
-        hubWindow.setVisible(true);
-        this.dispose();
+        int opcion = JOptionPane.showConfirmDialog(null,
+                "¿Seguro que deseas terminar y cancelar la compra?\nsí confirmas la informacion de la compra en curso se perderá",
+                "Confirmación",
+                JOptionPane.YES_NO_OPTION);
+
+        if (opcion == JOptionPane.YES_OPTION) {
+            System.out.println("Seleccionaste Aceptar");
+            Hub hubWindow = new Hub();
+            hubWindow.setVisible(true);
+            this.dispose();
+
+        } else if (opcion == JOptionPane.NO_OPTION) {
+            System.out.println("Seleccionaste Cancelar");
+        }
     }//GEN-LAST:event_jButtonVolverActionPerformed
 
     private void jButtonCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCobrarActionPerformed
-        // TODO add your handling code here:
+        int opcion = JOptionPane.showConfirmDialog(null,
+                "¿Seguro que deseas terminar y cobrar la compra?",
+                "Confirmación",
+                JOptionPane.YES_NO_OPTION);
+
+        if (opcion == JOptionPane.YES_OPTION) {
+            System.out.println("Seleccionaste Aceptar");
+        } else if (opcion == JOptionPane.NO_OPTION) {
+            System.out.println("Seleccionaste Cancelar");
+        }
+
     }//GEN-LAST:event_jButtonCobrarActionPerformed
 
     private void jFormattedTextFieldCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextFieldCodigoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jFormattedTextFieldCodigoActionPerformed
 
-    private void jTextFieldRutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldRutActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldRutActionPerformed
-
     private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
-   
-        jButtonCobrar.setEnabled(true);
-        
-        
-        
-        
-        System.out.println("");
-        
-        
-        String metodoDePago = (String) jComboBoxMetodoDePago.getSelectedItem();
+        if (jFormattedTextFieldCodigo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Porfavor ingresa el codigo del producto",
+                    "Error agregar producto", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         int codigo = Integer.parseInt(jFormattedTextFieldCodigo.getText());
-        int cantidad = (int) jSpinnerCantidad.getValue();
-        
-        System.out.println(metodoDePago + " " + codigo + " " + cantidad);
-        
-        // Obtener el modelo directamente del JTable
-        DefaultTableModel modelo = (DefaultTableModel) jTableDetalle.getModel();
-        
-        
-        String descripcion = ProductoDAO.getNombre(codigo) + " " + ProductoDAO.getMarca(codigo) + " " + ProductoDAO.getMedida(codigo) + ProductoDAO.getUnidadMedida(codigo);
-        int precio_unitario = ProductoDAO.getPrecio(codigo);
-        int precio_fila = precio_unitario * cantidad;
-        
-        modelo.addRow(new Object[]{codigo, descripcion, cantidad, precio_unitario, precio_fila});
-        
-        
-        
+
+        if (ProductoDAO.getNombre(codigo) == null) {
+            JOptionPane.showMessageDialog(null, "No se ha encontrado el producto en la base de datos",
+                    "Error agregar producto", JOptionPane.ERROR_MESSAGE);
+        } else {
+
+            String metodoDePago = (String) jComboBoxMetodoDePago.getSelectedItem();
+            int cantidad = (int) jSpinnerCantidad.getValue();
+            String descripcion = ProductoDAO.getNombre(codigo) + " " + ProductoDAO.getMarca(codigo) + " " + ProductoDAO.getMedida(codigo) + ProductoDAO.getUnidadMedida(codigo);
+            int precio_unitario = ProductoDAO.getPrecio(codigo);
+            int porcentaje_descuento = ProductoDAO.getDescuento(codigo);
+            int precio_con_descuento = Boleta.calcularPrecioDescuento(precio_unitario, porcentaje_descuento);
+            int precio_a_descontar = precio_unitario - precio_con_descuento;
+            int precio_fila = (precio_unitario - precio_a_descontar) * cantidad;
+
+            // Obtener el modelo directamente del JTable
+            DefaultTableModel modelo = (DefaultTableModel) jTableDetalle.getModel();
+
+            boolean productoExistente = false;
+
+            // Buscar si el producto ya está en la tabla
+            for (int i = 0; i < modelo.getRowCount(); i++) {
+                int codigoExistente = (int) modelo.getValueAt(i, 0); // Obtener el código del producto existente
+                if (codigoExistente == codigo) {
+                    // Si el producto ya existe, actualizar la cantidad y el precio de la fila
+                    int cantidadExistente = (int) modelo.getValueAt(i, 2); // Obtener la cantidad actual
+                    int nuevaCantidad = cantidadExistente + cantidad;
+                    modelo.setValueAt(nuevaCantidad, i, 2); // Actualizar la cantidad
+                    int nuevoPrecioFila = (precio_unitario - precio_a_descontar) * nuevaCantidad;
+                    modelo.setValueAt(nuevoPrecioFila, i, 5); // Actualizar el precio fila
+                    productoExistente = true;
+                    break;
+                }
+            }
+
+            // Si el producto no existe, agregarlo como nueva fila
+            if (!productoExistente) {
+                modelo.addRow(new Object[]{codigo, descripcion, cantidad, precio_unitario, precio_a_descontar, precio_fila});
+            }
+
+            actualizarDetalleCompra(modelo);
+            switchActivarBotonCobrar(modelo);
+            limpiarFieldCodigo();
+            reiniciarSpinnerCantidad();
+            focusFieldCodigo();
+        }
     }//GEN-LAST:event_jButtonAgregarActionPerformed
 
     private void jButtonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmarActionPerformed
-       String rut = jTextFieldRut.getText();
        
-        System.out.println(rut);
+
+
     }//GEN-LAST:event_jButtonConfirmarActionPerformed
+
+    private void jFormattedTextFieldCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextFieldCodigoKeyTyped
+        Validador.bloquearLetras(evt);
+        Validador.bloquearSimbolos(evt);
+    }//GEN-LAST:event_jFormattedTextFieldCodigoKeyTyped
+
+    private void jSpinnerCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jSpinnerCantidadKeyTyped
+        Validador.bloquearLetras(evt);
+        Validador.bloquearSimbolos(evt);
+    }//GEN-LAST:event_jSpinnerCantidadKeyTyped
+
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+        // Obtener el modelo de la tabla
+        DefaultTableModel modelo = (DefaultTableModel) jTableDetalle.getModel();
+        int filaSeleccionada = jTableDetalle.getSelectedRow();
+
+        // Verificar que hay una fila seleccionada
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(null, "Por favor selecciona un producto de la tabla para eliminar.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Obtener el código del producto de la fila seleccionada
+        int codigoProducto = (int) modelo.getValueAt(filaSeleccionada, 0);
+
+        // Mostrar ventana emergente para eliminar completamente o modificar cantidad
+        Object[] options = {"Eliminar producto", "Eliminar cantidad", "Cancelar"};
+        int opcionSeleccionada = JOptionPane.showOptionDialog(
+                null,
+                "¿Qué acción deseas realizar?",
+                "Eliminar producto o cantidad especifica",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                options,
+                options[2] // Por defecto "Cancelar"
+        );
+
+        if (opcionSeleccionada == 0) {
+            // Eliminar la fila completamente
+            modelo.removeRow(filaSeleccionada);
+            actualizarDetalleCompra(modelo);
+            switchActivarBotonCobrar(modelo);
+            limpiarFieldCodigo();
+            reiniciarSpinnerCantidad();
+            focusFieldCodigo();
+            
+        } else if (opcionSeleccionada == 1) {
+            // Modificar la cantidad del producto
+            String cantidadStr = JOptionPane.showInputDialog("Ingresa la cantidad a eliminar:");
+            if (cantidadStr != null && !cantidadStr.isEmpty()) {
+                try {
+                    int cantidadEliminar = Integer.parseInt(cantidadStr);
+                    int cantidadActual = (int) modelo.getValueAt(filaSeleccionada, 2);
+
+                    if (cantidadEliminar < cantidadActual) {
+                        // Reducir la cantidad de la fila
+                        int nuevaCantidad = cantidadActual - cantidadEliminar;
+                        modelo.setValueAt(nuevaCantidad, filaSeleccionada, 2);  // Actualizar la cantidad en la tabla
+
+                        // Recalcular el precio fila
+                        int precioUnitario = (int) modelo.getValueAt(filaSeleccionada, 3);
+                        int descuento = (int) modelo.getValueAt(filaSeleccionada, 4);
+                        int precioConDescuento = (precioUnitario - descuento) * nuevaCantidad;
+                        modelo.setValueAt(precioConDescuento, filaSeleccionada, 5);  // Actualizar el precio fila
+
+                        actualizarDetalleCompra(modelo);
+                        switchActivarBotonCobrar(modelo);
+                        limpiarFieldCodigo();
+                        reiniciarSpinnerCantidad();
+                        focusFieldCodigo();
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La cantidad a eliminar no puede ser mayor a la cantidad actual.",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Por favor ingresa un número válido para la cantidad.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+
+
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
+
+    private void jFormattedTextFieldCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextFieldCodigoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jSpinnerCantidad.requestFocus(); 
+        }
+    }//GEN-LAST:event_jFormattedTextFieldCodigoKeyPressed
 
     /**
      * @param args the command line arguments
@@ -465,6 +675,7 @@ public class Caja extends javax.swing.JFrame {
     private javax.swing.JButton jButtonVolver;
     private javax.swing.JComboBox<String> jComboBoxMetodoDePago;
     private javax.swing.JFormattedTextField jFormattedTextFieldCodigo;
+    private javax.swing.JFormattedTextField jFormattedTextFieldRut;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelCajero;
     private javax.swing.JLabel jLabelCantidad;
@@ -487,6 +698,5 @@ public class Caja extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSpinner jSpinnerCantidad;
     private javax.swing.JTable jTableDetalle;
-    private javax.swing.JTextField jTextFieldRut;
     // End of variables declaration//GEN-END:variables
 }
