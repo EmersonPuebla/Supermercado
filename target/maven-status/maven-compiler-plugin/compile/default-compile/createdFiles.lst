@@ -1,8 +1,11 @@
 model\LoginSystem.class
 view\Caja$9.class
+view\Reporte$9.class
+view\Reporte$11.class
 view\Reporte$5.class
 view\Caja$6.class
 view\Caja$8.class
+view\Reporte$10.class
 view\Hub$7.class
 view\Reporte$8.class
 view\Caja$5.class
@@ -12,6 +15,7 @@ view\Reporte$7.class
 view\Login$7.class
 view\Reporte$4.class
 view\Caja$7.class
+view\Reporte$12.class
 view\Caja$10.class
 sound\SoundManager.class
 test\TestBaseDeDatos.class

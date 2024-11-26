@@ -6,7 +6,13 @@
 package view;
 
 import controller.ReporteDAO;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.JComponent;
 import javax.swing.table.DefaultTableModel;
+import model.Validador;
 import sound.SoundManager;
 
 public class Reporte extends javax.swing.JFrame {
@@ -24,20 +30,61 @@ public class Reporte extends javax.swing.JFrame {
     public static void limpiarTabla(DefaultTableModel modelo) {
         modelo.setRowCount(0);
     }
-    
-    public void actualizarEstadoFiltros(){
+
+    public void limpiarFiltros() {
+        // Limpiar los campos de texto
+        jFormattedTextFieldDesde.setText("");
+        jFormattedTextFieldHasta.setText("");
+        jFormattedTextFieldFolio.setText("");
+        jFormattedTextFieldMonto.setText("");
+        jFormattedTextFieldRutCliente.setText("");
+        jFormattedTextFieldRutCajero.setText("");
+
+        // no se si es necesario esto porque igual esta de mas
+        //    jComboBoxMetodoPago.setSelectedIndex(0); 
+        //    jComboBoxFiltrarPor.setSelectedIndex(0);  
+    }
+
+    public void actualizarEstadoFiltros() {
+        // Deshabilitar todos los campos por defecto
+        Map<JComponent, Boolean> fields = new HashMap<>();
+        fields.put(jFormattedTextFieldDesde, false);
+        fields.put(jFormattedTextFieldHasta, false);
+        fields.put(jFormattedTextFieldFolio, false);
+        fields.put(jFormattedTextFieldMonto, false);
+        fields.put(jFormattedTextFieldRutCliente, false);
+        fields.put(jFormattedTextFieldRutCajero, false);
+        fields.put(jComboBoxMetodoPago, false);
+
+        // Obtener el índice de la selección en el combo box
         int index = jComboBoxFiltrarPor.getSelectedIndex();
+
+        // Establecer el estado de los campos según el índice seleccionado
         switch (index) {
             case 0:
-                jFormattedTextFieldDesde.setEnabled(true);
-                jFormattedTextFieldHasta.setEnabled(true);
-                jFormattedTextFieldFolio.setEnabled(false);
+                fields.put(jFormattedTextFieldDesde, true);
+                fields.put(jFormattedTextFieldHasta, true);
                 break;
             case 1:
-                jFormattedTextFieldDesde.setEnabled(false);
-                jFormattedTextFieldHasta.setEnabled(false);
-                jFormattedTextFieldFolio.setEnabled(true);
+                fields.put(jFormattedTextFieldFolio, true);
                 break;
+            case 2:
+                fields.put(jFormattedTextFieldMonto, true);
+                break;
+            case 3:
+                fields.put(jFormattedTextFieldRutCliente, true);
+                break;
+            case 4:
+                fields.put(jFormattedTextFieldRutCajero, true);
+                break;
+            case 5:
+                fields.put(jComboBoxMetodoPago, true);
+                break;
+        }
+
+        // Actualizar los componentes en función de los valores del mapa
+        for (Map.Entry<JComponent, Boolean> entry : fields.entrySet()) {
+            entry.getKey().setEnabled(entry.getValue());
         }
     }
 
@@ -60,10 +107,18 @@ public class Reporte extends javax.swing.JFrame {
         jLabelHasta = new javax.swing.JLabel();
         jButtonBuscar = new javax.swing.JButton();
         jFormattedTextFieldFolio = new javax.swing.JFormattedTextField();
-        jLabelDesde1 = new javax.swing.JLabel();
+        jLabelFolio = new javax.swing.JLabel();
         jButtonLimpiar = new javax.swing.JButton();
         jComboBoxFiltrarPor = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelFiltrarPor = new javax.swing.JLabel();
+        jFormattedTextFieldMonto = new javax.swing.JFormattedTextField();
+        jLabelMonto = new javax.swing.JLabel();
+        jFormattedTextFieldRutCliente = new javax.swing.JFormattedTextField();
+        jLabelRutCliente = new javax.swing.JLabel();
+        jFormattedTextFieldRutCajero = new javax.swing.JFormattedTextField();
+        jLabelRutCajero = new javax.swing.JLabel();
+        jComboBoxMetodoPago = new javax.swing.JComboBox<>();
+        jLabelMetodoPago = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableSalida = new javax.swing.JTable();
@@ -113,9 +168,19 @@ public class Reporte extends javax.swing.JFrame {
             }
         });
 
-        jFormattedTextFieldFolio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jFormattedTextFieldFolio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        jFormattedTextFieldFolio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFormattedTextFieldFolioActionPerformed(evt);
+            }
+        });
+        jFormattedTextFieldFolio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jFormattedTextFieldFolioKeyTyped(evt);
+            }
+        });
 
-        jLabelDesde1.setText("Folio");
+        jLabelFolio.setText("Folio");
 
         jButtonLimpiar.setText("Limpiar");
         jButtonLimpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -124,14 +189,48 @@ public class Reporte extends javax.swing.JFrame {
             }
         });
 
-        jComboBoxFiltrarPor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Rango de fecha", "Folio" }));
+        jComboBoxFiltrarPor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Rango de fecha", "Folio", "Monto", "RUT Cliente", "RUT Cajero", "Metodo de Pago" }));
         jComboBoxFiltrarPor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxFiltrarPorActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("Filtrar por");
+        jLabelFiltrarPor.setText("Filtrar por");
+
+        jFormattedTextFieldMonto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        jFormattedTextFieldMonto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFormattedTextFieldMontoActionPerformed(evt);
+            }
+        });
+        jFormattedTextFieldMonto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jFormattedTextFieldMontoKeyTyped(evt);
+            }
+        });
+
+        jLabelMonto.setText("Monto");
+
+        try {
+            jFormattedTextFieldRutCliente.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#-#")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        jLabelRutCliente.setText("RUT Cliente");
+
+        try {
+            jFormattedTextFieldRutCajero.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#-#")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        jLabelRutCajero.setText("RUT Cajero");
+
+        jComboBoxMetodoPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Debito", "Credito", "Efectivo", "Edenred" }));
+
+        jLabelMetodoPago.setText("Metodo de pago");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -139,52 +238,84 @@ public class Reporte extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabelDesde)
-                    .addComponent(jFormattedTextFieldDesde, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                    .addComponent(jLabelDesde1)
-                    .addComponent(jFormattedTextFieldFolio))
-                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelHasta)
-                    .addComponent(jFormattedTextFieldHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jComboBoxFiltrarPor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jLabel1))
-                .addGap(16, 16, 16))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabelDesde)
+                                .addComponent(jFormattedTextFieldDesde, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                                .addComponent(jLabelFolio)
+                                .addComponent(jFormattedTextFieldRutCliente))
+                            .addComponent(jFormattedTextFieldFolio, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelRutCliente))
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabelHasta)
+                            .addComponent(jFormattedTextFieldHasta, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                            .addComponent(jLabelMonto)
+                            .addComponent(jFormattedTextFieldMonto)
+                            .addComponent(jLabelRutCajero)
+                            .addComponent(jFormattedTextFieldRutCajero))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jComboBoxFiltrarPor, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelFiltrarPor))
+                        .addGap(14, 14, 14))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jComboBoxMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabelMetodoPago)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabelDesde))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBoxFiltrarPor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabelHasta)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jFormattedTextFieldHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFormattedTextFieldDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelDesde)
+                    .addComponent(jLabelHasta))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelDesde1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jFormattedTextFieldDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jFormattedTextFieldHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelFolio)
+                            .addComponent(jLabelMonto))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jFormattedTextFieldFolio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jFormattedTextFieldMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabelRutCliente)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jFormattedTextFieldRutCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabelRutCajero)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jFormattedTextFieldRutCajero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabelFiltrarPor)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxFiltrarPor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(2, 2, 2)
+                .addComponent(jLabelMetodoPago)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jFormattedTextFieldFolio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jComboBoxMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37))
         );
 
         jTableSalida.setModel(new javax.swing.table.DefaultTableModel(
@@ -271,17 +402,50 @@ public class Reporte extends javax.swing.JFrame {
     }//GEN-LAST:event_jFormattedTextFieldHastaActionPerformed
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
-        int folio = Integer.parseInt(jFormattedTextFieldFolio.getText());
-        String rut_cliente = ReporteDAO.getRutCliente(folio);
-        String rut_vendedor = ReporteDAO.getRutVendedor(folio);
-        String fecha = ReporteDAO.getFechaVenta(folio);
-        String metodo_pago = ReporteDAO.getMetodoPago(folio);
-        String monto = ReporteDAO.getMontoVenta(folio);
-
-        // Obtener el modelo directamente del JTable
+        // Limpiar cualquier dato anterior en la tabla
         DefaultTableModel modelo = (DefaultTableModel) jTableSalida.getModel();
+        modelo.setRowCount(0);  // Limpiamos la tabla antes de agregar los nuevos datos
 
-        modelo.addRow(new Object[]{folio, rut_cliente, rut_vendedor, fecha, metodo_pago, monto});
+        // Dependiendo de la selección, obtener los resultados
+        List<String[]> ventas = new ArrayList<>();
+
+        switch (jComboBoxFiltrarPor.getSelectedIndex()) {
+            case 0: // Buscar por rango de fechas
+                String fechaDesde = jFormattedTextFieldDesde.getText();  // Fecha desde
+                String fechaHasta = jFormattedTextFieldHasta.getText();  // Fecha hasta
+                ventas = ReporteDAO.obtenerFilasVentaPorRangoFechas(fechaDesde, fechaHasta);
+                break;
+            case 1: // Buscar por id_venta
+                int folio = Integer.parseInt(jFormattedTextFieldFolio.getText());
+                ventas = ReporteDAO.getFilasVentaPorIdVenta(folio);
+                break;
+
+            case 2: // Buscar por monto
+                String monto = jFormattedTextFieldMonto.getText();
+                ventas = ReporteDAO.getFilasVentaPorMonto(monto);
+                break;
+
+            case 3: // Buscar por rut_cliente
+                String rutCliente = jFormattedTextFieldRutCliente.getText();
+                ventas = ReporteDAO.getFilasVentaPorRutCliente(rutCliente);
+                break;
+        }
+
+        // Si se encontraron ventas, agregarlas a la tabla
+        for (String[] venta : ventas) {
+            String folio = venta[0];
+            String rut_cliente = venta[1];
+            String rut_vendedor = venta[2];
+            String fecha = venta[3];
+            String metodo_pago = venta[4];
+            String monto = venta[5];
+
+            // Agregar la fila al modelo de la tabla
+            modelo.addRow(new Object[]{folio, rut_cliente, rut_vendedor, fecha, metodo_pago, monto});
+        }
+
+        // Limpiar filtros después de la búsqueda
+        limpiarFiltros();
         jButtonLimpiar.setEnabled(true);
 
     }//GEN-LAST:event_jButtonBuscarActionPerformed
@@ -291,16 +455,39 @@ public class Reporte extends javax.swing.JFrame {
         DefaultTableModel modelo = (DefaultTableModel) jTableSalida.getModel();
         limpiarTabla(modelo);
         SoundManager.reproducirSonido("clean");
+        limpiarFiltros();
         jButtonLimpiar.setEnabled(false);
+
 
     }//GEN-LAST:event_jButtonLimpiarActionPerformed
 
     private void jComboBoxFiltrarPorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFiltrarPorActionPerformed
         actualizarEstadoFiltros();
-        
-        
-        
+
+
     }//GEN-LAST:event_jComboBoxFiltrarPorActionPerformed
+
+    private void jFormattedTextFieldFolioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextFieldFolioActionPerformed
+
+
+    }//GEN-LAST:event_jFormattedTextFieldFolioActionPerformed
+
+    private void jFormattedTextFieldFolioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextFieldFolioKeyTyped
+        Validador.bloquearSimbolos(evt);
+        Validador.bloquearLetras(evt);
+    }//GEN-LAST:event_jFormattedTextFieldFolioKeyTyped
+
+    private void jFormattedTextFieldMontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextFieldMontoActionPerformed
+
+        int monto = Integer.parseInt(jFormattedTextFieldMonto.getText());
+
+
+    }//GEN-LAST:event_jFormattedTextFieldMontoActionPerformed
+
+    private void jFormattedTextFieldMontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextFieldMontoKeyTyped
+        Validador.bloquearSimbolos(evt);
+        Validador.bloquearLetras(evt);
+    }//GEN-LAST:event_jFormattedTextFieldMontoKeyTyped
 
     /**
      * @param args the command line arguments
@@ -342,14 +529,22 @@ public class Reporte extends javax.swing.JFrame {
     private javax.swing.JButton jButtonLimpiar;
     private javax.swing.JButton jButtonVolver;
     private javax.swing.JComboBox<String> jComboBoxFiltrarPor;
+    private javax.swing.JComboBox<String> jComboBoxMetodoPago;
     private javax.swing.JFormattedTextField jFormattedTextFieldDesde;
     private javax.swing.JFormattedTextField jFormattedTextFieldFolio;
     private javax.swing.JFormattedTextField jFormattedTextFieldHasta;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JFormattedTextField jFormattedTextFieldMonto;
+    private javax.swing.JFormattedTextField jFormattedTextFieldRutCajero;
+    private javax.swing.JFormattedTextField jFormattedTextFieldRutCliente;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelDesde;
-    private javax.swing.JLabel jLabelDesde1;
+    private javax.swing.JLabel jLabelFiltrarPor;
+    private javax.swing.JLabel jLabelFolio;
     private javax.swing.JLabel jLabelHasta;
+    private javax.swing.JLabel jLabelMetodoPago;
+    private javax.swing.JLabel jLabelMonto;
+    private javax.swing.JLabel jLabelRutCajero;
+    private javax.swing.JLabel jLabelRutCliente;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

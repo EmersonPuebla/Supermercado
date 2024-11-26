@@ -1,117 +1,94 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controller;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReporteDAO {
-
-    public static String getRutCliente(int folio) {
-        String query = "SELECT rut_cliente FROM venta WHERE id_venta = ?";
-        String rut_cliente = null;
-
-        try (Connection con = BaseDeDatos.conectar(); PreparedStatement ps = con.prepareStatement(query)) {
-
-            ps.setInt(1, folio);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                rut_cliente = rs.getString("rut_cliente");
-            } else {
-                System.out.println("No se encontró una venta con el folio: " + folio);
-            }
-        } catch (SQLException e) {
-            System.out.println("ERROR [SQL]: No se pudo leer la venta");
-            e.printStackTrace();
-        }
-        return rut_cliente;
-    }
-
-    public static String getRutVendedor(int folio) {
-        String query = "SELECT rut_vendedor FROM venta WHERE id_venta = ?";
-        String rut_vendedor = null;
+        // Método genérico para obtener todas las filas de la venta por un rango de fechas
+    public static List<String[]> obtenerFilasVentaPorRangoFechas(String fechaDesde, String fechaHasta) {
+        String query = "SELECT id_venta, rut_cliente, rut_vendedor, fecha_venta, metodo_pago, monto FROM venta WHERE fecha_venta BETWEEN ? AND ?";
+        List<String[]> filas = new ArrayList<>();
 
         try (Connection con = BaseDeDatos.conectar(); PreparedStatement ps = con.prepareStatement(query)) {
-
-            ps.setInt(1, folio);
+            ps.setString(1, fechaDesde);  // Fecha de inicio
+            ps.setString(2, fechaHasta);  // Fecha de fin
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                rut_vendedor = rs.getString("rut_vendedor");
-            } else {
-                System.out.println("No se encontró una venta con el folio: " + folio);
+            while (rs.next()) {
+                // Asignamos los valores de la fila a un arreglo de String
+                String[] fila = new String[6];  // Hay 6 columnas en la consulta
+                fila[0] = rs.getString("id_venta");
+                fila[1] = rs.getString("rut_cliente");
+                fila[2] = rs.getString("rut_vendedor");
+                fila[3] = rs.getString("fecha_venta");
+                fila[4] = rs.getString("metodo_pago");
+                fila[5] = rs.getString("monto");
+                filas.add(fila);  // Agregamos la fila a la lista
+            }
+            if (filas.isEmpty()) {
+                System.out.println("No se encontraron ventas entre las fechas " + fechaDesde + " y " + fechaHasta);
             }
         } catch (SQLException e) {
-            System.out.println("ERROR [SQL]: No se pudo leer la venta");
+            System.out.println("ERROR [SQL]: No se pudo leer las ventas");
             e.printStackTrace();
         }
-        return rut_vendedor;
+        return filas;
     }
-
-    public static String getFechaVenta(int folio) {
-        String query = "SELECT fecha_venta FROM venta WHERE id_venta = ?";
-        String fecha_venta = null;
+    
+    // Método genérico para obtener todas las filas de la venta como una lista de String[]
+    public static List<String[]> obtenerFilasVentaPorCampo(String campoBusqueda, String valorBusqueda) {
+        String query = "SELECT id_venta, rut_cliente, rut_vendedor, fecha_venta, metodo_pago, monto FROM venta WHERE " + campoBusqueda + " = ?";
+        List<String[]> filas = new ArrayList<>();
 
         try (Connection con = BaseDeDatos.conectar(); PreparedStatement ps = con.prepareStatement(query)) {
-
-            ps.setInt(1, folio);
+            ps.setString(1, valorBusqueda);  // Usamos el valor de búsqueda para el PreparedStatement
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                fecha_venta = rs.getString("fecha_venta");
-            } else {
-                System.out.println("No se encontró una venta con el folio: " + folio);
+            while (rs.next()) {
+                // Asignamos los valores de la fila a un arreglo de String
+                String[] fila = new String[6];  // Hay 6 columnas en la consulta
+                fila[0] = rs.getString("id_venta");
+                fila[1] = rs.getString("rut_cliente");
+                fila[2] = rs.getString("rut_vendedor");
+                fila[3] = rs.getString("fecha_venta");
+                fila[4] = rs.getString("metodo_pago");
+                fila[5] = rs.getString("monto");
+                filas.add(fila);  // Agregamos la fila a la lista
+            }
+            if (filas.isEmpty()) {
+                System.out.println("No se encontraron ventas con " + campoBusqueda + ": " + valorBusqueda);
             }
         } catch (SQLException e) {
-            System.out.println("ERROR [SQL]: No se pudo leer la venta");
+            System.out.println("ERROR [SQL]: No se pudo leer las ventas");
             e.printStackTrace();
         }
-        return fecha_venta;
+        return filas;
     }
 
-    public static String getMetodoPago(int folio) {
-        String query = "SELECT metodo_pago FROM venta WHERE id_venta = ?";
-        String metodo_pago = null;
-
-        try (Connection con = BaseDeDatos.conectar(); PreparedStatement ps = con.prepareStatement(query)) {
-
-            ps.setInt(1, folio);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                metodo_pago = rs.getString("metodo_pago");
-            } else {
-                System.out.println("No se encontró una venta con el folio: " + folio);
-            }
-        } catch (SQLException e) {
-            System.out.println("ERROR [SQL]: No se pudo leer la venta");
-            e.printStackTrace();
-        }
-        return metodo_pago;
+    // Métodos específicos para obtener las filas completas por distintos campos
+    public static List<String[]> getFilasVentaPorIdVenta(int id_venta) {
+        return obtenerFilasVentaPorCampo("id_venta", String.valueOf(id_venta));
     }
 
-    public static String getMontoVenta(int folio) {
-        String query = "SELECT monto FROM venta WHERE id_venta = ?";
-        String monto = null;
-
-        try (Connection con = BaseDeDatos.conectar(); PreparedStatement ps = con.prepareStatement(query)) {
-
-            ps.setInt(1, folio);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                monto = rs.getString("monto");
-            } else {
-                System.out.println("No se encontró una venta con el folio: " + folio);
-            }
-        } catch (SQLException e) {
-            System.out.println("ERROR [SQL]: No se pudo leer la venta");
-            e.printStackTrace();
-        }
-        return monto;
+    public static List<String[]> getFilasVentaPorRutCliente(String rut_cliente) {
+        return obtenerFilasVentaPorCampo("rut_cliente", rut_cliente);
     }
 
-    public static void filtrarRangoFecha() {
+    public static List<String[]> getFilasVentaPorRutVendedor(String rut_vendedor) {
+        return obtenerFilasVentaPorCampo("rut_vendedor", rut_vendedor);
     }
 
+    public static List<String[]> getFilasVentaPorFechaVenta(String fecha_venta) {
+        return obtenerFilasVentaPorCampo("fecha_venta", fecha_venta);
+    }
+
+    public static List<String[]> getFilasVentaPorMetodoPago(String metodo_pago) {
+        return obtenerFilasVentaPorCampo("metodo_pago", metodo_pago);
+    }
+
+    public static List<String[]> getFilasVentaPorMonto(String monto) {
+        return obtenerFilasVentaPorCampo("monto", monto);
+    }
 }
