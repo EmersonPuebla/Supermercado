@@ -62,6 +62,7 @@ view\Login$3.class
 view\Bodega$5.class
 view\Bodega.class
 model\Validador.class
+controller\DetalleVentaDAO.class
 view\Reporte$3.class
 view\Caja$3.class
 view\Login$6.class

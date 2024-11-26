@@ -322,9 +322,9 @@ public class Reporte extends javax.swing.JFrame {
                             .addComponent(jLabelDesdeMonto)
                             .addComponent(jLabelHastaMonto))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jSpinnerDesdeMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSpinnerHastaMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSpinnerHastaMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSpinnerDesdeMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelFolio)
@@ -522,12 +522,19 @@ public class Reporte extends javax.swing.JFrame {
                     "Advertencia",
                     JOptionPane.WARNING_MESSAGE);
             return;
-
         }
-        DetalleVenta detalleWindow = new DetalleVenta();
+
+        // Obtener los datos de la fila seleccionada
+        Object folio = modelo.getValueAt(filaSeleccionada, 0);
+        Object rutCliente = modelo.getValueAt(filaSeleccionada, 1);
+        Object rutCajero = modelo.getValueAt(filaSeleccionada, 2);
+        Object fecha = modelo.getValueAt(filaSeleccionada, 3);
+        Object metodoPago = modelo.getValueAt(filaSeleccionada, 4);
+        Object monto = modelo.getValueAt(filaSeleccionada, 5);
+
+        // Crear una instancia de DetalleVenta y pasar los datos
+        DetalleVenta detalleWindow = new DetalleVenta(folio, rutCliente, rutCajero, fecha, metodoPago, monto);
         detalleWindow.setVisible(true);
-
-
     }//GEN-LAST:event_jButtonVerDetalleActionPerformed
 
     /**

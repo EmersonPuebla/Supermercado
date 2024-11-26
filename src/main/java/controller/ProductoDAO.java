@@ -277,9 +277,6 @@ public class ProductoDAO {
         return descuento;
     }
 
-    public void actualizarProducto() {
-    }
-
     public static boolean eliminarProducto(int id_producto) {
         // Consulta para eliminar el producto basado en el id_producto
         String queryDelete = "DELETE FROM producto WHERE id_producto = ?";

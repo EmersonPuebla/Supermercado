@@ -4,13 +4,10 @@
  */
 package view;
 
-import controller.ProductoDAO;
+import controller.DetalleVentaDAO;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author TUTE
- */
 public class DetalleVenta extends javax.swing.JFrame {
 
     /**
@@ -18,18 +15,33 @@ public class DetalleVenta extends javax.swing.JFrame {
      */
     public DetalleVenta() {
         initComponents();
-        
-            int codigo = 1;
-        
-            String descripcion = ProductoDAO.getNombre(codigo) + " " + ProductoDAO.getMarca(codigo) + " " + ProductoDAO.getMedida(codigo) + ProductoDAO.getUnidadMedida(codigo);
-            int precio_unitario = ProductoDAO.getPrecio(codigo);
-        
-            
-            DefaultTableModel detalle = (DefaultTableModel) jTableDetalle.getModel();
-            detalle.addRow(new Object[]{codigo, "?", descripcion, "?", precio_unitario, "%%"});
-        
-        
-        
+        setLocationRelativeTo(null);
+    }
+
+    public DetalleVenta(Object folio, Object rutCliente, Object rutCajero, Object fecha, Object metodoPago, Object monto) {
+        initComponents();
+        setLocationRelativeTo(null);
+
+        // Añadir datos a la tabla de ventas
+        DefaultTableModel modeloVenta = (DefaultTableModel) jTable2.getModel();
+        modeloVenta.addRow(new Object[]{folio, rutCliente, rutCajero, fecha, metodoPago, monto});
+
+        // Obtener los detalles de la venta usando el ID de la venta (folio)
+        List<String[]> detallesVenta = DetalleVentaDAO.obtenerFilasDetalleVentaPorCampo("id_venta", String.valueOf(folio));
+
+        // Añadir datos a la tabla de detalle
+        DefaultTableModel modeloDetalle = (DefaultTableModel) jTableDetalle.getModel();
+
+        // Recorremos los detalles de la venta y los añadimos a la tabla
+        for (String[] detalle : detallesVenta) {
+            modeloDetalle.addRow(new Object[]{
+                detalle[0], // id_venta
+                detalle[1], // id_producto
+                detalle[2], // cantidad
+                detalle[3], // precio_unitario
+                detalle[4] // descuento
+            });
+        }
     }
 
     /**
@@ -92,7 +104,7 @@ public class DetalleVenta extends javax.swing.JFrame {
 
         jLabel1.setText("VENTA");
 
-        jLabel2.setText("DETALLE");
+        jLabel2.setText("DETALLE VENTA");
 
         jButtonCerrar.setText("Cerrar");
         jButtonCerrar.addActionListener(new java.awt.event.ActionListener() {
