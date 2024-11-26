@@ -465,8 +465,8 @@ public class Bodega extends javax.swing.JFrame {
                 marca,
                 Integer.parseInt(medida),
                 unidadMedida,
-                Integer.parseInt(stock),
                 Integer.parseInt(precio),
+                Integer.parseInt(stock),
                 Integer.parseInt(descuento)
         );
         
