@@ -4,10 +4,16 @@
  */
 package view;
 
+import java.awt.Desktop;
 import java.awt.event.KeyEvent;
+import java.net.URI;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import model.LoginSystem;
 
 /**
@@ -198,14 +204,51 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jPasswordFieldPasswordKeyPressed
 
     private void jMenuAcercaDeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuAcercaDeMouseClicked
-        
+        // Crear el mensaje en HTML
+        String message = "<html>"
+            + "<div style='text-align: center;'>"
+            + "<a href='https://github.com/EmersonPuebla/Supermercado'>Supermercado</a> © 2024<br>"
+            + "por Luis Álvarez y Emerson Puebla<br>"
+            + "Este software está bajo la <a href='https://opensource.org/licenses/MIT'>Licencia MIT</a>."
+            + "</div>"
+            + "</html>";
+
+        // Panel principal con diseño vertical
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        // Configurar JEditorPane para mostrar texto HTML
+        JEditorPane textPane = new JEditorPane("text/html", message);
+        textPane.setEditable(false);
+        textPane.setOpaque(false);
+        textPane.addHyperlinkListener(e -> {
+            if (e.getEventType() == javax.swing.event.HyperlinkEvent.EventType.ACTIVATED) {
+                try {
+                    Desktop.getDesktop().browse(new URI(e.getURL().toString()));
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "No se pudo abrir el enlace: " + ex.getMessage());
+                }
+            }
+        });
+
+        // Añadir el texto al panel
+        textPane.setAlignmentX(JPanel.CENTER_ALIGNMENT); // Centrar texto
+        panel.add(textPane);
+
+        // Añadir la imagen al panel
+        JLabel imageLabel = new JLabel(new ImageIcon(getClass().getResource("/image/originqr.png")));
+        imageLabel.setAlignmentX(JPanel.CENTER_ALIGNMENT); // Centrar imagen
+        panel.add(imageLabel);
+
+        // Mostrar el cuadro de diálogo
+        JOptionPane.showMessageDialog(null, panel, "Acerca de", JOptionPane.PLAIN_MESSAGE);
 
     }//GEN-LAST:event_jMenuAcercaDeMouseClicked
 
-/**
- * @param args the command line arguments
- */
-public static void main(String args[]) {
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -217,27 +260,23 @@ public static void main(String args[]) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
 
-}
+                }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class  
+            java.util.logging.Logger.getLogger(Login.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Login.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-} catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class  
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Login.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-} catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Login.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

@@ -4,6 +4,7 @@ C:\Users\tute\Documentos\GitHub\Supermercado\src\main\java\controller\EmpleadoDA
 C:\Users\tute\Documentos\GitHub\Supermercado\src\main\java\controller\ProductoDAO.java
 C:\Users\tute\Documentos\GitHub\Supermercado\src\main\java\controller\ReporteDAO.java
 C:\Users\tute\Documentos\GitHub\Supermercado\src\main\java\controller\VentaDAO.java
+C:\Users\tute\Documentos\GitHub\Supermercado\src\main\java\Main.java
 C:\Users\tute\Documentos\GitHub\Supermercado\src\main\java\model\Boleta.java
 C:\Users\tute\Documentos\GitHub\Supermercado\src\main\java\model\Cliente.java
 C:\Users\tute\Documentos\GitHub\Supermercado\src\main\java\model\Devolucion.java
@@ -20,6 +21,7 @@ C:\Users\tute\Documentos\GitHub\Supermercado\src\main\java\test\TestCliente.java
 C:\Users\tute\Documentos\GitHub\Supermercado\src\main\java\test\TestEmpleado.java
 C:\Users\tute\Documentos\GitHub\Supermercado\src\main\java\test\TestEmpleadoSQL.java
 C:\Users\tute\Documentos\GitHub\Supermercado\src\main\java\test\TestLogin.java
+C:\Users\tute\Documentos\GitHub\Supermercado\src\main\java\view\AboutDialog.java
 C:\Users\tute\Documentos\GitHub\Supermercado\src\main\java\view\AdministrarEmpleados.java
 C:\Users\tute\Documentos\GitHub\Supermercado\src\main\java\view\Bodega.java
 C:\Users\tute\Documentos\GitHub\Supermercado\src\main\java\view\Caja.java
