@@ -132,7 +132,7 @@ INSERT INTO cliente VALUES
 -- Insertar 5 registros Empleado 
 INSERT INTO empleado VALUES 
 -- RUT/ 1rNombre/   2do Nombre/ 1rApellido / 2doApellido/ username/      password/                                                           AdminEm/ Reporte/ Caja/  Bodega/   Habilitado?
-('1-0', 'Cristian', 'Orlando',  'Garcia',   'Gutierrez',  'cgarcia',     'bfc8782c3b9efaf7bdb0363b5f5c92835510ef858de5c59133eb05570ba35dbd', true,    true,    true,  true,     true),
+('1-0', 'Cristian', 'Orlando',  'Garcia',   'Gutierrez',  'cgarcia',     'bfc8782c3b9efaf7bdb0363b5f5c92835510ef858de5c59133eb05570ba35dbd', true,    true,    true,   true,    true),
 ('2-0', 'Luis',     'Antonio',  'Alvarez',  'Requejo',    'lalvarez',    'cb9902e2db5b287fcd53344ded42a79f7bd2271f5488d876851cc80886408737', false,   true,    false, false,    true),
 ('3-0', 'Emerson',  'Flavio',   'Puebla',   'Diaz',       'epuebla',     '9861f2f84d77de92617b630913481d8baf70b6c4cf1fb1724eb56f59b890823e', false,   false,   true,  false,    true),
 ('4-0', 'Joaquin',  'Andres',   'Gonzales', 'Soto',       'jgonzales',   '6422005f97e32c218f04bea4d8639cafb15e3c540221e8bef869e014d73a5e18', false,   false,   true,  false,    true),
@@ -184,7 +184,8 @@ INSERT INTO producto VALUES
 (37,   'Servilletas',     'Noble',           100,  'u',        990,   200,   0),
 (38,   'Lavaloza',        'Quix',            750, 'ml',       1890,   100,  15),
 (39,   'Cloro',           'Clorox',         1000, 'ml',       1490,   120,   0),
-(40,   'Esponjas',        'Virutex',           3,  'u',        890,   150,   0);
+(40,   'Esponjas',        'Virutex',           3,  'u',        890,   150,   0),
+(41,   'Tortillas XL',    'PANCHO VILLA',     10,  'u',       3990,    70,   0);
 
 -- Insertar 10 registros VENTA
 INSERT INTO venta VALUES 
@@ -193,8 +194,13 @@ INSERT INTO venta VALUES
 (2,    '1-4',   '5-0',    '2024-01-19', 'Efectivo',  7180),
 (3,    '0-2',   '6-0',    '2024-01-19', 'Debito',    5242),
 (4,    '2-1',   '6-0',    '2024-01-20', 'Credito',   3411),
-(5,    '1-3',   '4-0',    '2024-01-20', 'Efectivo',  3206);
--- agregar +5 aqui
+(5,    '1-3',   '4-0',    '2024-01-20', 'Efectivo',  3206),
+
+(6,    '1-4',     '3-0',    '2024-01-21', 'Debito',    1980),
+(7,    '1-5',     '5-0',    '2024-01-21', 'Debito',    7232),
+(8,    '1-7',     '6-0',    '2024-01-22', 'Credito',   7111),
+(9,    '1-8',     '4-0',    '2024-01-22', 'Efectivo',  6809‬),
+(10,   '1-4',     '3-0',    '2024-01-22', 'Efectivo',  1290);
 
 -- Insertar registros VENTA_PRODUCTO por cada venta
 INSERT INTO venta_producto VALUES
@@ -214,5 +220,19 @@ INSERT INTO venta_producto VALUES
 (4, 27, 2, 1890, 0),
 
 (5, 31, 1, 1290, 5),
-(5, 32, 2, 990, 0);
--- agregar detalle de +5 ventas aqui
+(5, 32, 2, 990, 0),
+
+(6, 19, 2, 1980, 0),
+
+(7, 28, 1, 4990, 15),
+(7, 30, 1, 2990, 0),
+
+(8, 3, 1, 990, 0),
+(8, 4, 1, 1190, 5),
+(8, 7, 1, 4990, 0),
+
+(9, 2, 2, 2490, 10),
+(9, 5, 1, 890, 0),
+(9, 6, 1, 1690, 15),  
+
+(10, 24, 1, 1290, 0);
