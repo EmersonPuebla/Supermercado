@@ -5,74 +5,110 @@ import controller.BaseDeDatos;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-   
 
 public class EmpleadoDAO {
 
+    public static boolean agregarEmpleado(String rut, String primerNombre, String segundoNombre,
+            String apellidoPaterno, String apellidoMaterno, String username, String password,
+            boolean isAdministrador, boolean isReporte, boolean isCaja, boolean isBodega, boolean isHabilitado) {
 
+        String sql = "INSERT INTO empleado (rut, primerNombre, segundoNombre, apellidoPaterno, apellidoMaterno, username, password, isAdministrador, isReporte, isCaja, isBodega, isHabilitado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        public static boolean actualizarEmpleado(String rut, String primerNombre,
-                String segundoNombre, String apellidoPaterno, String apellidoMaterno,
-                String username, String password, boolean isAdministrador,
-                boolean isReporte, boolean isCaja, boolean isBodega, boolean isHabilitado) {
+        try (Connection conn = BaseDeDatos.conectar(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            String sql = "UPDATE empleado SET "
-                    + "primerNombre = ?, "
-                    + "segundoNombre = ?, "
-                    + "apellidoPaterno = ?, "
-                    + "apellidoMaterno = ?, "
-                    + "username = ?, "
-                    + "password = ?, "
-                    + "isAdministrador = ?, "
-                    + "isReporte = ?, "
-                    + "isCaja = ?, "
-                    + "isBodega = ?, "
-                    + "isHabilitado = ? "
-                    + "WHERE rut = ?";
+            // Configurar los parámetros del PreparedStatement
+            pstmt.setString(1, rut);
+            pstmt.setString(2, primerNombre);
+            pstmt.setString(3, segundoNombre);
+            pstmt.setString(4, apellidoPaterno);
+            pstmt.setString(5, apellidoMaterno);
+            pstmt.setString(6, username);
+            pstmt.setString(7, password);
+            pstmt.setInt(8, isAdministrador ? 1 : 0);
+            pstmt.setInt(9, isReporte ? 1 : 0);
+            pstmt.setInt(10, isCaja ? 1 : 0);
+            pstmt.setInt(11, isBodega ? 1 : 0);
+            pstmt.setInt(12, isHabilitado ? 1 : 0);
 
-            try (Connection conn = BaseDeDatos.conectar(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            // Ejecutar la inserción
+            int filasInsertadas = pstmt.executeUpdate();
 
-                // Establecer los valores en el PreparedStatement
-                pstmt.setString(1, primerNombre);
-                pstmt.setString(2, segundoNombre);
-                pstmt.setString(3, apellidoPaterno);
-                pstmt.setString(4, apellidoMaterno);
-                pstmt.setString(5, username);
-                pstmt.setString(6, password);
-                pstmt.setInt(7, isAdministrador ? 1 : 0);
-                pstmt.setInt(8, isReporte ? 1 : 0);
-                pstmt.setInt(9, isCaja ? 1 : 0);
-                pstmt.setInt(10, isBodega ? 1 : 0);
-                pstmt.setInt(11, isHabilitado ? 1 : 0);
-                pstmt.setString(12, rut);
-
-                // Ejecutar la actualización
-                int filasActualizadas = pstmt.executeUpdate();
-
-                if (filasActualizadas > 0) {
-                    JOptionPane.showMessageDialog(null,
-                            "Empleado actualizado exitosamente",
-                            "Éxito",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    return true;
-                } else {
-                    JOptionPane.showMessageDialog(null,
-                            "No se encontró el empleado para actualizar",
-                            "Advertencia",
-                            JOptionPane.WARNING_MESSAGE);
-                    return false;
-                }
-
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null,
-                        "Error al actualizar: " + e.getMessage(),
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                e.printStackTrace();
+            if (filasInsertadas > 0) {
+                JOptionPane.showMessageDialog(null, "Empleado agregado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo agregar el empleado", "Error", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al agregar empleado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+            return false;
         }
-    
+    }
+
+    public static boolean actualizarEmpleado(String rut, String primerNombre,
+            String segundoNombre, String apellidoPaterno, String apellidoMaterno,
+            String username, String password, boolean isAdministrador,
+            boolean isReporte, boolean isCaja, boolean isBodega, boolean isHabilitado) {
+
+        String sql = "UPDATE empleado SET "
+                + "primerNombre = ?, "
+                + "segundoNombre = ?, "
+                + "apellidoPaterno = ?, "
+                + "apellidoMaterno = ?, "
+                + "username = ?, "
+                + "password = ?, "
+                + "isAdministrador = ?, "
+                + "isReporte = ?, "
+                + "isCaja = ?, "
+                + "isBodega = ?, "
+                + "isHabilitado = ? "
+                + "WHERE rut = ?";
+
+        try (Connection conn = BaseDeDatos.conectar(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            // Establecer los valores en el PreparedStatement
+            pstmt.setString(1, primerNombre);
+            pstmt.setString(2, segundoNombre);
+            pstmt.setString(3, apellidoPaterno);
+            pstmt.setString(4, apellidoMaterno);
+            pstmt.setString(5, username);
+            pstmt.setString(6, password);
+            pstmt.setInt(7, isAdministrador ? 1 : 0);
+            pstmt.setInt(8, isReporte ? 1 : 0);
+            pstmt.setInt(9, isCaja ? 1 : 0);
+            pstmt.setInt(10, isBodega ? 1 : 0);
+            pstmt.setInt(11, isHabilitado ? 1 : 0);
+            pstmt.setString(12, rut);
+
+            // Ejecutar la actualización
+            int filasActualizadas = pstmt.executeUpdate();
+
+            if (filasActualizadas > 0) {
+                JOptionPane.showMessageDialog(null,
+                        "Empleado actualizado exitosamente",
+                        "Éxito",
+                        JOptionPane.INFORMATION_MESSAGE);
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        "No se encontró el empleado para actualizar",
+                        "Advertencia",
+                        JOptionPane.WARNING_MESSAGE);
+                return false;
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Error al actualizar: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     public static List<String[]> obtenerFilasEmpleadoPorCampo(String campoBusqueda, String valorBusqueda) {
         if (valorBusqueda == null || valorBusqueda.isEmpty()) {

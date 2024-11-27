@@ -464,14 +464,14 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
                 // USERNAME
                 valorBusqueda = jTextFieldUsername.getText();
                 break;
-           // default:
-             //   JOptionPane.showMessageDialog(null, "Seleccione un criterio de búsqueda válido", "Error", JOptionPane.ERROR_MESSAGE);
-               // break; // Salir si no se ha seleccionado un filtro válido
+            // default:
+            //   JOptionPane.showMessageDialog(null, "Seleccione un criterio de búsqueda válido", "Error", JOptionPane.ERROR_MESSAGE);
+            // break; // Salir si no se ha seleccionado un filtro válido
         }
 
         // Llamamos al método y obtenemos las filas
         List<String[]> filas = EmpleadoDAO.obtenerFilasEmpleadoPorCampo(campoBusqueda(index), valorBusqueda);
-        
+
         if (valorBusqueda == null || valorBusqueda.trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debe ingresar un valor de búsqueda.", "Advertencia", JOptionPane.WARNING_MESSAGE);
         } else if (filas.isEmpty()) {
@@ -580,8 +580,8 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
     int contador = 0;
 
     private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
-
         if (contador == 0) {
+            // Mostrar confirmación inicial
             int opcion = JOptionPane.showConfirmDialog(null,
                     "¿Seguro que deseas agregar un empleado?",
                     "Confirmación",
@@ -589,9 +589,8 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
             if (opcion == JOptionPane.NO_OPTION || opcion == JOptionPane.CLOSED_OPTION) {
                 return;
             }
-            
+
             contador++;
-            
             jTableSalida.setEnabled(false);
             limpiarFiltros();
             jButtonBuscar.setEnabled(false);
@@ -601,29 +600,43 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
             jPasswordFieldPassword.setEnabled(true);
 
             JOptionPane.showMessageDialog(null,
-                    "Ingresa los datos del empleado a agregar\n y presiona nuevamente el boton",
+                    "Ingresa los datos del empleado a agregar\n y presiona nuevamente el botón",
                     "Info",
                     JOptionPane.INFORMATION_MESSAGE);
 
             jFormattedTextFieldRut.requestFocus();
 
         } else if (contador == 1) {
-            System.out.println("Añadir momento");
-            limpiarFiltros();
-            actualizarEstadoFiltros();
-            jPasswordFieldPassword.setEnabled(false);
-            jComboBoxFiltrarPor.setEnabled(true);
-            jButtonBuscar.setEnabled(true);
-            jTableSalida.setEnabled(true);
-            contador--;
-            JOptionPane.showMessageDialog(null,
-                    "Se han agregado los datos del usuario exitosamente",
-                    "Info",
-                    JOptionPane.INFORMATION_MESSAGE);
+            // Recolectar los datos ingresados
+            String rut = jFormattedTextFieldRut.getText().trim();
+            String nombre = jTextFieldNombre.getText().trim();
+            String username = jTextFieldUsername.getText().trim();
+            String password = new String(jPasswordFieldPassword.getPassword());
+            boolean isAdmin = jCheckBoxAdministrarEmpleados.isSelected();
+            boolean isCaja = jCheckBoxCaja.isSelected();
+            boolean isBodega = jCheckBoxBodega.isSelected();
+            boolean isReporte = jCheckBoxReportes.isSelected();
+            boolean isHabilitado = jCheckBoxHabilitado.isSelected();
 
+            // Validar campos obligatorios
+            if (rut.isEmpty() || nombre.isEmpty() || username.isEmpty() || password.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor, completa todos los campos obligatorios.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Llamar al DAO para insertar los datos
+            boolean exito = EmpleadoDAO.agregarEmpleado(rut, nombre, "", "", "", username, password, isAdmin, isReporte, isCaja, isBodega, isHabilitado);
+
+            if (exito) {
+                limpiarFiltros();
+                actualizarEstadoFiltros();
+                jPasswordFieldPassword.setEnabled(false);
+                jComboBoxFiltrarPor.setEnabled(true);
+                jButtonBuscar.setEnabled(true);
+                jTableSalida.setEnabled(true);
+                contador--;
+            }
         }
-
-
     }//GEN-LAST:event_jButtonAgregarActionPerformed
 
     private void jFormattedTextFieldRutKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextFieldRutKeyTyped
