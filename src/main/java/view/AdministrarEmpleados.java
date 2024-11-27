@@ -464,20 +464,17 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
                 // USERNAME
                 valorBusqueda = jTextFieldUsername.getText();
                 break;
-            default:
-                JOptionPane.showMessageDialog(null, "Seleccione un criterio de búsqueda válido", "Error", JOptionPane.ERROR_MESSAGE);
-                return; // Salir si no se ha seleccionado un filtro válido
-        }
-
-        if (valorBusqueda == null || valorBusqueda.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe ingresar un valor de búsqueda.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            return;
+           // default:
+             //   JOptionPane.showMessageDialog(null, "Seleccione un criterio de búsqueda válido", "Error", JOptionPane.ERROR_MESSAGE);
+               // break; // Salir si no se ha seleccionado un filtro válido
         }
 
         // Llamamos al método y obtenemos las filas
         List<String[]> filas = EmpleadoDAO.obtenerFilasEmpleadoPorCampo(campoBusqueda(index), valorBusqueda);
-
-        if (filas.isEmpty()) {
+        
+        if (valorBusqueda == null || valorBusqueda.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar un valor de búsqueda.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        } else if (filas.isEmpty()) {
             JOptionPane.showMessageDialog(null, "No se encontraron empleados con los valores especificados", "Info", JOptionPane.INFORMATION_MESSAGE);
         } else {
             // Mostramos los resultados en el JTable
@@ -585,7 +582,6 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
     private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
 
         if (contador == 0) {
-            contador++;
             int opcion = JOptionPane.showConfirmDialog(null,
                     "¿Seguro que deseas agregar un empleado?",
                     "Confirmación",
@@ -593,6 +589,8 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
             if (opcion == JOptionPane.NO_OPTION || opcion == JOptionPane.CLOSED_OPTION) {
                 return;
             }
+            
+            contador++;
             
             jTableSalida.setEnabled(false);
             limpiarFiltros();

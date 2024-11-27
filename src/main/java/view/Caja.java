@@ -578,7 +578,7 @@ public class Caja extends javax.swing.JFrame {
                 jFormattedTextFieldRut.setText("");
                 jComboBoxMetodoPago.setSelectedIndex(0);
                 jFormattedTextFieldCodigo.setText("");
-                jSpinnerCantidad.setValue(0);
+                jSpinnerCantidad.setValue(1);
                 modelo.setRowCount(0);
                 JOptionPane.showMessageDialog(null, "Venta realizada con éxito!");
 
@@ -597,65 +597,80 @@ public class Caja extends javax.swing.JFrame {
     }//GEN-LAST:event_jFormattedTextFieldCodigoActionPerformed
 
     private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
-        if (jFormattedTextFieldCodigo.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Porfavor ingresa el codigo del producto",
+    if (jFormattedTextFieldCodigo.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Por favor ingresa el código del producto",
+                "Error agregar producto", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    int codigo = Integer.parseInt(jFormattedTextFieldCodigo.getText());
+
+    if (ProductoDAO.getNombre(codigo) == null) {
+        JOptionPane.showMessageDialog(null, "No se ha encontrado el producto en la base de datos",
+                "Error agregar producto", JOptionPane.ERROR_MESSAGE);
+    } else {
+        int cantidad = (int) jSpinnerCantidad.getValue();
+        int stockDisponible = ProductoDAO.getStock(codigo);
+
+        // Validar stock directamente
+        if (cantidad > stockDisponible) {
+            JOptionPane.showMessageDialog(null,
+                    "La cantidad solicitada supera el stock disponible (" + stockDisponible + ").",
                     "Error agregar producto", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        int codigo = Integer.parseInt(jFormattedTextFieldCodigo.getText());
+        // Obtener el modelo directamente del JTable
+        DefaultTableModel modelo = (DefaultTableModel) jTableDetalle.getModel();
+        boolean productoExistente = false;
 
-        if (ProductoDAO.getNombre(codigo) == null) {
-            JOptionPane.showMessageDialog(null, "No se ha encontrado el producto en la base de datos",
-                    "Error agregar producto", JOptionPane.ERROR_MESSAGE);
-        } else {
-
-            String metodoDePago = (String) jComboBoxMetodoPago.getSelectedItem();
-            int cantidad = (int) jSpinnerCantidad.getValue();
-            String descripcion = ProductoDAO.getNombre(codigo) + " " + ProductoDAO.getMarca(codigo) + " " + ProductoDAO.getMedida(codigo) + ProductoDAO.getUnidadMedida(codigo);
-            int precio_unitario = ProductoDAO.getPrecio(codigo);
-            int porcentaje_descuento = ProductoDAO.getDescuento(codigo);
-            int precio_con_descuento = Boleta.calcularPrecioDescuento(precio_unitario, porcentaje_descuento);
-            int precio_a_descontar = precio_unitario - precio_con_descuento;
-            int precio_fila = (precio_unitario - precio_a_descontar) * cantidad;
-
-            // Obtener el modelo directamente del JTable
-            DefaultTableModel modelo = (DefaultTableModel) jTableDetalle.getModel();
-
-            boolean productoExistente = false;
-
-            // Buscar si el producto ya está en la tabla
-            for (int i = 0; i < modelo.getRowCount(); i++) {
-                int codigoExistente = (int) modelo.getValueAt(i, 0); // Obtener el código del producto existente
-                if (codigoExistente == codigo) {
-                    // Si el producto ya existe, actualizar la cantidad y el precio de la fila
-                    int cantidadExistente = (int) modelo.getValueAt(i, 2); // Obtener la cantidad actual
-                    int nuevaCantidad = cantidadExistente + cantidad;
-                    modelo.setValueAt(nuevaCantidad, i, 2); // Actualizar la cantidad
-                    int nuevoPrecioFila = (precio_unitario - precio_a_descontar) * nuevaCantidad;
-                    modelo.setValueAt(nuevoPrecioFila, i, 5); // Actualizar el precio fila
-                    productoExistente = true;
-                    break;
+        // Validar stock acumulado antes de actualizar la fila
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            int codigoExistente = (int) modelo.getValueAt(i, 0); // Obtener el código del producto existente
+            if (codigoExistente == codigo) {
+                int cantidadExistente = (int) modelo.getValueAt(i, 2); // Obtener la cantidad actual
+                if (cantidad + cantidadExistente > stockDisponible) {
+                    JOptionPane.showMessageDialog(null,
+                            "La cantidad acumulada supera el stock disponible (" + stockDisponible + ").",
+                            "Error agregar producto", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
+                // Si pasa la validación, actualizar cantidad y precio
+                int nuevaCantidad = cantidadExistente + cantidad;
+                modelo.setValueAt(nuevaCantidad, i, 2); // Actualizar la cantidad
+                int precioUnitario = ProductoDAO.getPrecio(codigo);
+                int porcentajeDescuento = ProductoDAO.getDescuento(codigo);
+                int precioConDescuento = Boleta.calcularPrecioDescuento(precioUnitario, porcentajeDescuento);
+                int precioFila = precioConDescuento * nuevaCantidad;
+                modelo.setValueAt(precioFila, i, 5); // Actualizar el precio fila
+                productoExistente = true;
+                break;
             }
-
-            // Si el producto no existe, agregarlo como nueva fila
-            if (!productoExistente) {
-                modelo.addRow(new Object[]{codigo, descripcion, cantidad, precio_unitario, precio_a_descontar, precio_fila});
-            }
-
-            if (codigo == 41 && ProductoDAO.getNombre(codigo).equals("Nacho Taco Chimichanga")) {
-                SoundManager.reproducirSonido("orale");
-            }
-
-            SoundManager.reproducirSonido("addProducto");
-            actualizarDetalleCompra(modelo);
-            switchActivarBotonCobrar(modelo);
-            limpiarFieldCodigo();
-            reiniciarSpinnerCantidad();
-            focusFieldCodigo();
-
         }
+
+        // Si el producto no existe en la tabla, agregarlo como nueva fila
+        if (!productoExistente) {
+            String descripcion = ProductoDAO.getNombre(codigo) + " " + ProductoDAO.getMarca(codigo) + " " +
+                                 ProductoDAO.getMedida(codigo) + ProductoDAO.getUnidadMedida(codigo);
+            int precioUnitario = ProductoDAO.getPrecio(codigo);
+            int porcentajeDescuento = ProductoDAO.getDescuento(codigo);
+            int precioConDescuento = Boleta.calcularPrecioDescuento(precioUnitario, porcentajeDescuento);
+            int precioFila = precioConDescuento * cantidad;
+            modelo.addRow(new Object[]{codigo, descripcion, cantidad, precioUnitario, 
+                                        precioUnitario - precioConDescuento, precioFila});
+        }
+
+        if (codigo == 41 && ProductoDAO.getNombre(codigo).equals("Nacho Taco Chimichanga")) {
+            SoundManager.reproducirSonido("orale");
+        }
+
+        SoundManager.reproducirSonido("addProducto");
+        actualizarDetalleCompra(modelo);
+        switchActivarBotonCobrar(modelo);
+        limpiarFieldCodigo();
+        reiniciarSpinnerCantidad();
+        focusFieldCodigo();
+    }
     }//GEN-LAST:event_jButtonAgregarActionPerformed
 
     private void jFormattedTextFieldCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextFieldCodigoKeyTyped

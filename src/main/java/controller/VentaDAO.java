@@ -195,20 +195,61 @@ public class VentaDAO {
     public static boolean insertarVentaProducto(int folio, String codigo, int cantidad, int precioUnitario, int descuento) {
         String sqlVentaProducto = "INSERT INTO venta_producto (id_venta, id_producto, cantidad, precio_unitario, descuento) "
                 + "VALUES (?, ?, ?, ?, ?)";
+        String sqlUpdateStock = "UPDATE producto SET stock = stock - ? WHERE id_producto = ?";
 
-        try (Connection conn = BaseDeDatos.conectar(); PreparedStatement ps = conn.prepareStatement(sqlVentaProducto)) {
+        try (Connection conn = BaseDeDatos.conectar()) {
+            conn.setAutoCommit(false);
+            try {
+                // First verify if there's enough stock
+                if (!hayStockSuficiente(conn, codigo, cantidad)) {
+                    throw new SQLException("Stock insuficiente para el producto: " + codigo);
+                }
 
-            ps.setInt(1, folio);
-            ps.setString(2, codigo);
-            ps.setInt(3, cantidad);
-            ps.setInt(4, precioUnitario);
-            ps.setInt(5, descuento);
+                // Insert the sale product
+                try (PreparedStatement psVenta = conn.prepareStatement(sqlVentaProducto)) {
+                    psVenta.setInt(1, folio);
+                    psVenta.setString(2, codigo);
+                    psVenta.setInt(3, cantidad);
+                    psVenta.setInt(4, precioUnitario);
+                    psVenta.setInt(5, descuento);
+                    psVenta.executeUpdate();
+                }
 
-            return ps.executeUpdate() > 0;
+                try (PreparedStatement psStock = conn.prepareStatement(sqlUpdateStock)) {
+                    psStock.setInt(1, cantidad);
+                    psStock.setInt(2, Integer.parseInt(codigo));
+                    int filasAfectadas = psStock.executeUpdate();
+                    if (filasAfectadas == 0) {
+                        throw new SQLException("No se pudo actualizar el stock. Verifica el código del producto.");
+                    }
+                }
+
+                conn.commit();
+                return true;
+            } catch (SQLException e) {
+                conn.rollback();
+                throw e;
+            }
         } catch (SQLException e) {
-            System.out.println("ERROR [SQL]: Error al insertar productos de la venta");
+            System.out.println("ERROR [SQL]: Error al insertar productos de la venta o actualizar stock");
             e.printStackTrace();
             return false;
+        }
+    }
+
+    private static boolean hayStockSuficiente(Connection conn, String codigoProducto, int cantidadSolicitada)
+            throws SQLException {
+        String sqlCheckStock = "SELECT stock FROM producto WHERE id_producto = ?";
+
+        try (PreparedStatement ps = conn.prepareStatement(sqlCheckStock)) {
+            ps.setString(1, codigoProducto);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int stockActual = rs.getInt("stock");
+                    return stockActual >= cantidadSolicitada;
+                }
+                return false;
+            }
         }
     }
 }
