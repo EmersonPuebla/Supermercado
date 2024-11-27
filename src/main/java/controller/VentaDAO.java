@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import model.Boleta;
 import model.GeneradorDatos;
 
 public class VentaDAO {
@@ -182,18 +183,13 @@ public class VentaDAO {
 
     private static boolean actualizarPuntosCliente(Connection conn, String rut, int total) throws SQLException {
         String sqlPuntos = "UPDATE cliente SET puntos = puntos + ? WHERE rut = ?";
-        int puntosGanados = calcularPuntosGanados(total);
+        int puntosGanados = Boleta.calcularPuntos(total);
 
         try (PreparedStatement ps = conn.prepareStatement(sqlPuntos)) {
             ps.setInt(1, puntosGanados);
             ps.setString(2, rut);
             return ps.executeUpdate() > 0;
         }
-    }
-
-    private static int calcularPuntosGanados(int total) {
-        // Por ejemplo, 1 punto por cada $1000 gastados
-        return total / 1000;
     }
 
     public static boolean insertarVentaProducto(int folio, String codigo, int cantidad, int precioUnitario, int descuento) {

@@ -90,7 +90,7 @@ public class Caja extends javax.swing.JFrame {
         // Calcular IVA, Total y Puntos
         int iva = Boleta.calcularIVA(neto);
         int total = neto + iva;
-        int puntos = Boleta.calcularPuntos(neto);
+        int puntos = Boleta.calcularPuntos(total);
 
         // Crear el detalle de la compra
         Object[] detalleCompra = new Object[]{
@@ -532,7 +532,6 @@ public class Caja extends javax.swing.JFrame {
             Date now = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String fecha = sdf.format(now);
-            
 
             // FOLIO
             int folio = VentaDAO.obtenerFolio();
@@ -576,7 +575,13 @@ public class Caja extends javax.swing.JFrame {
                         System.out.println("Error al insertar producto: " + codigo);
                     }
                 }
+                jFormattedTextFieldRut.setText("");
+                jComboBoxMetodoPago.setSelectedIndex(0);
+                jFormattedTextFieldCodigo.setText("");
+                jSpinnerCantidad.setValue(0);
+                modelo.setRowCount(0);
                 JOptionPane.showMessageDialog(null, "Venta realizada con éxito!");
+
             } else {
                 JOptionPane.showMessageDialog(null, "Error al insertar la venta.");
             }
