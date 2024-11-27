@@ -660,7 +660,7 @@ public class Caja extends javax.swing.JFrame {
                                         precioUnitario - precioConDescuento, precioFila});
         }
 
-        if (codigo == 41 && ProductoDAO.getNombre(codigo).equals("Nacho Taco Chimichanga")) {
+        if (ProductoDAO.getMarca(codigo).equals("PANCHO VILLA")) {
             SoundManager.reproducirSonido("orale");
         }
 
