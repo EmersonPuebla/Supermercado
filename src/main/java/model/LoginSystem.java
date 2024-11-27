@@ -11,10 +11,15 @@ import java.security.NoSuchAlgorithmException;
 import javax.swing.JOptionPane;
 
 public class LoginSystem {    
+    static String usernameEmpleado = null;
     static String nombreEmpleado = null;
     static String apellidoEmpleado = null;
     static Boolean[] permisos = {false, false, false, false, false};
     
+    public static String getUsernameEmpleado() {
+        return usernameEmpleado;
+    }
+
     public static String getNombreEmpleado() {
         return nombreEmpleado;
     }
@@ -25,6 +30,10 @@ public class LoginSystem {
 
     public static Boolean[] getPermisos() {
         return permisos;
+    }
+    
+    public static void setUsernameEmpleado(String username){
+        LoginSystem.usernameEmpleado = username;
     }
     
     public static void setNombreEmpleado(String nombreEmpleado) {
@@ -59,6 +68,7 @@ public class LoginSystem {
                     return false;
                 }
 
+                setUsernameEmpleado(username);
                 setNombreEmpleado(EmpleadoDAO.getNombre(username)[0]);
                 setApellidoEmpleado(EmpleadoDAO.getNombre(username)[2]);
                 setPermisos(EmpleadoDAO.getPermisos(username)); 

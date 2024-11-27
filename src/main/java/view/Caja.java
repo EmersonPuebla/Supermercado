@@ -34,41 +34,105 @@ public class Caja extends javax.swing.JFrame {
         }
     }
 
-    public void actualizarDetalleCompra(DefaultTableModel modelo) {
-        // Actualizar los totales
+    public void imprimirDatosTabla(DefaultTableModel modelo) {
+        // Obtener los datos de la tabla en un arreglo bidimensional
+        Object[][] datosTabla = obtenerDatosTabla(modelo);
+
+        // Recorrer e imprimir los datos
+        for (int i = 0; i < datosTabla.length; i++) {
+            System.out.print("Fila " + (i + 1) + ": ");
+            for (int j = 0; j < datosTabla[i].length; j++) {
+                // Imprimir el valor de cada columna de la fila
+                System.out.print(datosTabla[i][j] + " ");
+            }
+            System.out.println();  // Nueva línea al final de cada fila
+        }
+    }
+
+    public Object[][] obtenerDatosTabla(DefaultTableModel modelo) {
+        // Crear un arreglo bidimensional para almacenar los datos de las filas
+        int numFilas = modelo.getRowCount();
+        Object[][] datosTabla = new Object[numFilas][6];  // 6 columnas (Código, Descripción, Cantidad, Precio Unitario, Descuento, Precio Fila)
+
+        // Recorrer las filas de la tabla
+        for (int i = 0; i < numFilas; i++) {
+            // Obtener los valores de cada columna en la fila actual
+            datosTabla[i][0] = modelo.getValueAt(i, 0);  // Código
+            datosTabla[i][1] = modelo.getValueAt(i, 1);  // Descripción
+            datosTabla[i][2] = modelo.getValueAt(i, 2);  // Cantidad
+            datosTabla[i][3] = modelo.getValueAt(i, 3);  // Precio Unitario
+            datosTabla[i][4] = modelo.getValueAt(i, 4);  // Descuento
+            datosTabla[i][5] = modelo.getValueAt(i, 5);  // Precio Fila
+        }
+
+        // Devolver el arreglo bidimensional con todos los datos
+        return datosTabla;
+    }
+
+    public Object[] getDetalleCompra(DefaultTableModel modelo) {
+        // Inicializar las variables
         int descuento_total = 0;
         int neto = 0;
+        int cantidad_x = 0;
+        int descuento = 0;
+        int total_fila = 0;
 
         // Recorrer las filas y sumar los valores de "Precio fila"
         for (int i = 0; i < modelo.getRowCount(); i++) {
-            Object cantidad_x = modelo.getValueAt(i, 2);
-            Object descuento = modelo.getValueAt(i, 4);
-            Object total_fila = modelo.getValueAt(i, 5); // Obtener el valor de la celda
-            descuento_total += (int) descuento * (int) cantidad_x;
-            neto += (int) total_fila;    // Convertirlo a double y sumarlo
+            cantidad_x = (int) modelo.getValueAt(i, 2);  // Cantidad
+            descuento = (int) modelo.getValueAt(i, 4);   // Descuento
+            total_fila = (int) modelo.getValueAt(i, 5);  // Total por fila
+
+            descuento_total += descuento * cantidad_x;   // Sumar el descuento total
+            neto += total_fila;                          // Sumar el total neto
         }
+
+        // Calcular IVA, Total y Puntos
         int iva = Boleta.calcularIVA(neto);
         int total = neto + iva;
         int puntos = Boleta.calcularPuntos(neto);
 
+        // Crear el detalle de la compra
+        Object[] detalleCompra = new Object[]{
+            descuento_total, // Descuento total
+            neto, // Monto neto
+            iva, // IVA
+            total, // Total (neto + IVA)
+            puntos // Puntos
+        };
+
+        return detalleCompra;
+    }
+
+    public void actualizarDetalleCompra(DefaultTableModel modelo) {
+        // Llamar al método getDetalleCompra para obtener los detalles
+        Object[] detalleCompra = getDetalleCompra(modelo);
+
+        // Obtener los valores desde el arreglo detalleCompra
+        int descuento_total = (int) detalleCompra[0];
+        int neto = (int) detalleCompra[1];
+        int iva = (int) detalleCompra[2];
+        int total = (int) detalleCompra[3];
+        int puntos = (int) detalleCompra[4];
+
+        // Actualizar las etiquetas con los valores calculados
         jLabelPuntos.setText("Puntos: +" + puntos);
         jLabelDescuento.setText("Descuento: -$" + descuento_total);
         jLabelNeto.setText("Neto: $" + neto);
         jLabelIva.setText("IVA: $" + iva);
         jLabelTotal.setText("TOTAL: $" + total);
-
     }
-    
+
     public void limpiarFieldCodigo() {
         jFormattedTextFieldCodigo.setText("");
     }
-    
-    public void reiniciarSpinnerCantidad(){
-       jSpinnerCantidad.setValue(1);
+
+    public void reiniciarSpinnerCantidad() {
+        jSpinnerCantidad.setValue(1);
     }
-    
+
     public void focusFieldCodigo() {
-        jFormattedTextFieldCodigo.requestFocus(); 
+        jFormattedTextFieldCodigo.requestFocus();
     }
 
     public Caja() {
@@ -93,8 +157,7 @@ public class Caja extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
         jLabelRut = new javax.swing.JLabel();
-        jButtonConfirmar = new javax.swing.JButton();
-        jComboBoxMetodoDePago = new javax.swing.JComboBox<>();
+        jComboBoxMetodoPago = new javax.swing.JComboBox<>();
         jLabelMetodoDePago = new javax.swing.JLabel();
         jLabelRut1 = new javax.swing.JLabel();
         jLabelCantidad = new javax.swing.JLabel();
@@ -133,16 +196,8 @@ public class Caja extends javax.swing.JFrame {
         jLabelRut.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabelRut.setText("RUT");
 
-        jButtonConfirmar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jButtonConfirmar.setText("Confirmar");
-        jButtonConfirmar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonConfirmarActionPerformed(evt);
-            }
-        });
-
-        jComboBoxMetodoDePago.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jComboBoxMetodoDePago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Debito", "Credito", "Efectivo", "Edenred" }));
+        jComboBoxMetodoPago.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jComboBoxMetodoPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Debito", "Credito", "Efectivo", "Edenred" }));
 
         jLabelMetodoDePago.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabelMetodoDePago.setText("Metodo de pago");
@@ -188,7 +243,7 @@ public class Caja extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBoxMetodoDePago, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBoxMetodoPago, javax.swing.GroupLayout.Alignment.TRAILING, 0, 316, Short.MAX_VALUE)
                     .addComponent(jFormattedTextFieldCodigo)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,10 +253,9 @@ public class Caja extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jFormattedTextFieldRut))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelCantidad)
-                    .addComponent(jButtonConfirmar, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                    .addComponent(jSpinnerCantidad))
+                    .addComponent(jSpinnerCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -209,13 +263,11 @@ public class Caja extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabelRut)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonConfirmar, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                    .addComponent(jFormattedTextFieldRut))
+                .addComponent(jFormattedTextFieldRut, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(jLabelMetodoDePago)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBoxMetodoDePago, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBoxMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelRut1)
@@ -470,6 +522,65 @@ public class Caja extends javax.swing.JFrame {
         if (opcion == JOptionPane.YES_OPTION) {
             System.out.println("Seleccionaste Aceptar");
             SoundManager.reproducirSonido("cobrar");
+
+            // RUT
+            String rut = jFormattedTextFieldRut.getText();
+            // METODO PAGO
+            String metodoPago = jComboBoxMetodoPago.getSelectedItem().toString();
+
+            // FECHA 
+            Date now = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String fecha = sdf.format(now);
+            
+
+            // FOLIO
+            int folio = VentaDAO.obtenerFolio();
+
+            DefaultTableModel modelo = (DefaultTableModel) jTableDetalle.getModel();
+            Object[] detalleCompra = getDetalleCompra(modelo);
+
+            // Obtener los valores desde el arreglo detalleCompra
+            // DESCUENTO TOTAL
+            int descuento_total = (int) detalleCompra[0];
+            // NETO
+            int neto = (int) detalleCompra[1];
+
+            // IVA
+            int iva = (int) detalleCompra[2];
+
+            // TOTAL
+            int total = (int) detalleCompra[3];
+            // PUNTOS
+            int puntos = (int) detalleCompra[4];
+
+            // Obtener el username del empleado logueado
+            String username = LoginSystem.getUsernameEmpleado(); // Método que devuelve el username del vendedor
+
+            // Insertar la venta en la tabla venta
+            boolean ventaInsertada = VentaDAO.insertarVenta(folio, rut, metodoPago, fecha, total, username);
+
+            if (ventaInsertada) {
+                // Insertar los productos de la venta en la tabla venta_producto
+                for (int i = 0; i < modelo.getRowCount(); i++) {
+                    String codigo = modelo.getValueAt(i, 0).toString();  // Obtener código
+                    String descripcion = modelo.getValueAt(i, 1).toString(); // Descripción (si lo necesitas)
+                    int cantidad = (int) modelo.getValueAt(i, 2);       // Cantidad
+                    int precioUnitario = (int) modelo.getValueAt(i, 3); // Precio unitario
+                    int descuento = (int) modelo.getValueAt(i, 4);      // Descuento
+
+                    // Insertar cada producto de la venta en la tabla venta_producto
+                    boolean productoInsertado = VentaDAO.insertarVentaProducto(folio, codigo, cantidad, precioUnitario, descuento);
+
+                    if (!productoInsertado) {
+                        System.out.println("Error al insertar producto: " + codigo);
+                    }
+                }
+                JOptionPane.showMessageDialog(null, "Venta realizada con éxito!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al insertar la venta.");
+            }
+
         } else if (opcion == JOptionPane.NO_OPTION) {
             System.out.println("Seleccionaste Cancelar");
         }
@@ -494,7 +605,7 @@ public class Caja extends javax.swing.JFrame {
                     "Error agregar producto", JOptionPane.ERROR_MESSAGE);
         } else {
 
-            String metodoDePago = (String) jComboBoxMetodoDePago.getSelectedItem();
+            String metodoDePago = (String) jComboBoxMetodoPago.getSelectedItem();
             int cantidad = (int) jSpinnerCantidad.getValue();
             String descripcion = ProductoDAO.getNombre(codigo) + " " + ProductoDAO.getMarca(codigo) + " " + ProductoDAO.getMedida(codigo) + ProductoDAO.getUnidadMedida(codigo);
             int precio_unitario = ProductoDAO.getPrecio(codigo);
@@ -528,12 +639,10 @@ public class Caja extends javax.swing.JFrame {
                 modelo.addRow(new Object[]{codigo, descripcion, cantidad, precio_unitario, precio_a_descontar, precio_fila});
             }
 
-            
-            if (codigo == 41 && ProductoDAO.getNombre(codigo).equals("Nacho Taco Chimichanga")){
+            if (codigo == 41 && ProductoDAO.getNombre(codigo).equals("Nacho Taco Chimichanga")) {
                 SoundManager.reproducirSonido("orale");
             }
-            
-            
+
             SoundManager.reproducirSonido("addProducto");
             actualizarDetalleCompra(modelo);
             switchActivarBotonCobrar(modelo);
@@ -543,12 +652,6 @@ public class Caja extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_jButtonAgregarActionPerformed
-
-    private void jButtonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmarActionPerformed
-       
-
-
-    }//GEN-LAST:event_jButtonConfirmarActionPerformed
 
     private void jFormattedTextFieldCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextFieldCodigoKeyTyped
         Validador.bloquearLetras(evt);
@@ -596,7 +699,7 @@ public class Caja extends javax.swing.JFrame {
             limpiarFieldCodigo();
             reiniciarSpinnerCantidad();
             focusFieldCodigo();
-            
+
         } else if (opcionSeleccionada == 1) {
             // Modificar la cantidad del producto
             String cantidadStr = JOptionPane.showInputDialog("Ingresa la cantidad a eliminar:");
@@ -639,7 +742,7 @@ public class Caja extends javax.swing.JFrame {
 
     private void jFormattedTextFieldCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextFieldCodigoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            jSpinnerCantidad.requestFocus(); 
+            jSpinnerCantidad.requestFocus();
         }
     }//GEN-LAST:event_jFormattedTextFieldCodigoKeyPressed
 
@@ -681,10 +784,9 @@ public class Caja extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAgregar;
     private javax.swing.JButton jButtonCobrar;
-    private javax.swing.JButton jButtonConfirmar;
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonVolver;
-    private javax.swing.JComboBox<String> jComboBoxMetodoDePago;
+    private javax.swing.JComboBox<String> jComboBoxMetodoPago;
     private javax.swing.JFormattedTextField jFormattedTextFieldCodigo;
     private javax.swing.JFormattedTextField jFormattedTextFieldRut;
     private javax.swing.JLabel jLabel3;

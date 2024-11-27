@@ -102,7 +102,7 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jComboBoxMetodoDePago" alignment="1" max="32767" attributes="0"/>
+                      <Component id="jComboBoxMetodoPago" alignment="1" pref="316" max="32767" attributes="0"/>
                       <Component id="jFormattedTextFieldCodigo" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -115,10 +115,9 @@
                       <Component id="jFormattedTextFieldRut" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabelCantidad" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButtonConfirmar" pref="130" max="32767" attributes="0"/>
-                      <Component id="jSpinnerCantidad" max="32767" attributes="0"/>
+                      <Component id="jSpinnerCantidad" min="-2" pref="130" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -129,14 +128,11 @@
               <Group type="102" alignment="0" attributes="0">
                   <Component id="jLabelRut" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jButtonConfirmar" pref="50" max="32767" attributes="0"/>
-                      <Component id="jFormattedTextFieldRut" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="jFormattedTextFieldRut" min="-2" pref="50" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                   <Component id="jLabelMetodoDePago" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jComboBoxMetodoDePago" min="-2" pref="50" max="-2" attributes="0"/>
+                  <Component id="jComboBoxMetodoPago" min="-2" pref="50" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabelRut1" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -161,18 +157,7 @@
             <Property name="text" type="java.lang.String" value="RUT"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButtonConfirmar">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Dialog" size="18" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Confirmar"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonConfirmarActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBoxMetodoDePago">
+        <Component class="javax.swing.JComboBox" name="jComboBoxMetodoPago">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Dialog" size="18" style="0"/>
