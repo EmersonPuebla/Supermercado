@@ -487,7 +487,7 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
         if (valorBusqueda == null || valorBusqueda.trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debe ingresar un valor de búsqueda.", "Advertencia", JOptionPane.WARNING_MESSAGE);
         } else if (filas.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No se encontraron empleados con los valores especificados", "Info", JOptionPane.INFORMATION_MESSAGE);
+           // JOptionPane.showMessageDialog(null, "No se encontraron empleados con los valores especificados", "Info", JOptionPane.INFORMATION_MESSAGE);
         } else {
             // Mostramos los resultados en el JTable
             mostrarResultados(filas);
