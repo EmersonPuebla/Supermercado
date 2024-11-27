@@ -16,38 +16,36 @@ public class Bodega extends javax.swing.JFrame {
         jTextFieldCodigo.setText("");
         jTextFieldNombre.setText("");
         jTextFieldMarca.setText("");
-        jTextFieldMedida.setText("");
-        jTextFieldUnidadMedida.setText("");
-        jTextFieldStock.setText("");
-        jTextFieldPrecio.setText("");
-        jTextFieldDescuento.setText("");    
+        jSpinnerMedida.setValue(0);
+
+        jSpinnerStock.setValue(0);
+        jSpinnerPrecio.setValue(0);
+        jSpinnerDescuento.setValue(0);
     }
-    
+
     public void volverEstadoDefault() {
         jTextFieldCodigo.setEnabled(true);
         jTextFieldNombre.setEnabled(false);
         jTextFieldMarca.setEnabled(false);
-        jTextFieldMedida.setEnabled(false);
-        jTextFieldUnidadMedida.setEnabled(false);
-        jTextFieldStock.setEnabled(false);
-        jTextFieldPrecio.setEnabled(false);
-        jTextFieldDescuento.setEnabled(false);
+        jSpinnerMedida.setEnabled(false);
+        jComboBoxUnidadMedida.setEnabled(false);
+        jSpinnerStock.setEnabled(false);
+        jSpinnerPrecio.setEnabled(false);
+        jSpinnerDescuento.setEnabled(false);
         jButtonActualizar.setEnabled(false);
         jButtonEliminar.setEnabled(false);
     }
-    
-    
+
     /**
      * Creates new form Bodega
      */
     int estadoAgregar = 0;
-    
- 
+
     public Bodega() {
         initComponents();
         setLocationRelativeTo(null);
         volverEstadoDefault();
-        
+
     }
 
     /**
@@ -75,17 +73,17 @@ public class Bodega extends javax.swing.JFrame {
         jLabelNombre = new javax.swing.JLabel();
         jLabelCodigo = new javax.swing.JLabel();
         jTextFieldCodigo = new javax.swing.JTextField();
-        jTextFieldDescuento = new javax.swing.JTextField();
         jTextFieldNombre = new javax.swing.JTextField();
-        jTextFieldPrecio = new javax.swing.JTextField();
         jTextFieldMarca = new javax.swing.JTextField();
         jLabelMarca = new javax.swing.JLabel();
         jLabelUnidadMedida = new javax.swing.JLabel();
         jLabelMedida = new javax.swing.JLabel();
-        jTextFieldMedida = new javax.swing.JTextField();
-        jTextFieldUnidadMedida = new javax.swing.JTextField();
-        jTextFieldStock = new javax.swing.JTextField();
         jLabelStock = new javax.swing.JLabel();
+        jComboBoxUnidadMedida = new javax.swing.JComboBox<>();
+        jSpinnerStock = new javax.swing.JSpinner();
+        jSpinnerDescuento = new javax.swing.JSpinner();
+        jSpinnerMedida = new javax.swing.JSpinner();
+        jSpinnerPrecio = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -176,7 +174,7 @@ public class Bodega extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -224,6 +222,16 @@ public class Bodega extends javax.swing.JFrame {
         jLabelStock.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabelStock.setText("Stock");
 
+        jComboBoxUnidadMedida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "mg", "gr", "kg", "l", "ml", "u" }));
+
+        jSpinnerStock.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+
+        jSpinnerDescuento.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 1));
+
+        jSpinnerMedida.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+
+        jSpinnerPrecio.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -237,31 +245,31 @@ public class Bodega extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabelMedida)
                                     .addComponent(jLabelCodigo)
                                     .addComponent(jLabelNombre)
                                     .addComponent(jLabelMarca)
-                                    .addComponent(jTextFieldMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jSpinnerMedida, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(jTextFieldUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextFieldStock, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
                                         .addComponent(jLabelUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabelStock, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(jLabelStock, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jComboBoxUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jSpinnerStock, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabelPrecio))
+                                    .addComponent(jLabelPrecio)
+                                    .addComponent(jSpinnerPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabelDescuento)
-                                    .addComponent(jTextFieldDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, 0))))
+                                    .addComponent(jSpinnerDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(28, 28, 28))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,22 +292,25 @@ public class Bodega extends javax.swing.JFrame {
                     .addComponent(jLabelUnidadMedida)
                     .addComponent(jLabelStock))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldStock, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSpinnerStock)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jSpinnerMedida, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                            .addComponent(jComboBoxUnidadMedida))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelPrecio)
                     .addComponent(jLabelDescuento))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jSpinnerDescuento, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                    .addComponent(jSpinnerPrecio))
                 .addGap(93, 93, 93))
         );
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/logo-mini.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/logo-mini.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -340,125 +351,119 @@ public class Bodega extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldMarcaActionPerformed
-            
+
     }//GEN-LAST:event_jTextFieldMarcaActionPerformed
 
     private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
-        
-        
-        if (estadoAgregar == 0){
-        
-            int opcion = JOptionPane.showConfirmDialog(null, 
-        "¿Seguro que deseas agregar un producto?", 
-        "Confirmación", 
-        JOptionPane.YES_NO_OPTION);
-            if (opcion == JOptionPane.YES_OPTION) {
-                estadoAgregar++;
-            }
-            
-        } else if (estadoAgregar == 1) {
-            vaciarCasillas();        
-            
-            estadoAgregar ++;
+
+        int opcion = JOptionPane.showConfirmDialog(null,
+                "¿Seguro que deseas agregar un producto?",
+                "Confirmación",
+                JOptionPane.YES_NO_OPTION);
+        if (opcion == JOptionPane.NO_OPTION) {
+            return;
+        }
+
+        if (estadoAgregar == 0) {
+            vaciarCasillas();
+
+            estadoAgregar++;
             jTextFieldCodigo.setEnabled(false);
             jTextFieldNombre.setEnabled(true);
             jTextFieldMarca.setEnabled(true);
-            jTextFieldMedida.setEnabled(true);
-            jTextFieldUnidadMedida.setEnabled(true);
-            jTextFieldStock.setEnabled(true);
-            jTextFieldPrecio.setEnabled(true);
-            jTextFieldDescuento.setEnabled(true);
+            jSpinnerMedida.setEnabled(true);
+            jComboBoxUnidadMedida.setEnabled(true);
+            jSpinnerStock.setEnabled(true);
+            jSpinnerPrecio.setEnabled(true);
+            jSpinnerDescuento.setEnabled(true);
 
             jButtonBuscar.setEnabled(false);
             jButtonActualizar.setEnabled(false);
             jButtonEliminar.setEnabled(false);
 
             JOptionPane.showMessageDialog(null, "Ingresa los datos del producto a agregar y presiona nuevamente el boton", "Información", JOptionPane.INFORMATION_MESSAGE);
-        } else if (estadoAgregar == 2) {     
+        } else if (estadoAgregar == 1) {
             try {
-            
-            // Obtiene todos los datos de las casillas
-            String nombre = jTextFieldNombre.getText();
-            String marca = jTextFieldMarca.getText();
-            String medida = jTextFieldMedida.getText();
-            String unidadMedida = jTextFieldUnidadMedida.getText();
-            String stock = jTextFieldStock.getText();
-            String precio = jTextFieldPrecio.getText();
-            String descuento = jTextFieldDescuento.getText();
 
-            
-            // Comprueba si alguno esta vacio
-            boolean faltaDato = nombre.isEmpty() || marca.isEmpty() || medida.isEmpty() || 
-                    unidadMedida.isEmpty() || stock.isEmpty() || precio.isEmpty() || 
-                    descuento.isEmpty();
+                // Obtiene todos los datos de las casillas
+                String nombre = jTextFieldNombre.getText();
+                String marca = jTextFieldMarca.getText();
+                String medida = String.valueOf(jSpinnerMedida.getValue());
+                String unidadMedida = String.valueOf(jComboBoxUnidadMedida.getSelectedItem());
+                String stock = String.valueOf(jSpinnerStock.getValue());
+                String precio = String.valueOf(jSpinnerPrecio.getValue());
+                String descuento = String.valueOf(jSpinnerDescuento.getValue());
 
-            
-            // Si existe alguno vacio lo informa
-            if (faltaDato) {
-                JOptionPane.showMessageDialog(null, "Porfavor rellena los campos faltantes", "Error", JOptionPane.ERROR_MESSAGE);
-                
-            // Confirma si la unidad de medida es valida
-            } else if (!Producto.isUnidadMedidaValido(unidadMedida)) {
-                JOptionPane.showMessageDialog(null, "Información invalida, la unidad de medida es erronea", "Error",
-            JOptionPane.ERROR_MESSAGE);
-            
-            // Pero si no queda ninguno por completar envia la info
-            } else if (Integer.parseInt(medida) > 0 && Integer.parseInt(stock) > 0 && Integer.parseInt(precio) > 0 && Integer.parseInt(descuento) >= 0 && Integer.parseInt(descuento) <= 100) {
-                ProductoDAO.agregarProducto(nombre,marca,Integer.parseInt(medida), unidadMedida,Integer.parseInt(stock),  Integer.parseInt(precio),  Integer.parseInt(descuento));
-                
-                JOptionPane.showMessageDialog(null, "El producto se ha agregado exitosamente!", "Información", JOptionPane.INFORMATION_MESSAGE);
+                // Comprueba si alguno esta vacio
+                boolean faltaDato = nombre.isEmpty() || marca.isEmpty() || medida.isEmpty()
+                        || unidadMedida.isEmpty() || stock.isEmpty() || precio.isEmpty()
+                        || descuento.isEmpty();
 
-                volverEstadoDefault();
-                estadoAgregar = 0;
-                
-            } else {
+                // Si existe alguno vacio lo informa
+                if (faltaDato) {
+                    JOptionPane.showMessageDialog(null, "Porfavor rellena los campos faltantes", "Error", JOptionPane.ERROR_MESSAGE);
+
+                    // Confirma si la unidad de medida es valida
+                } else if (!Producto.isUnidadMedidaValido(unidadMedida)) {
+                    JOptionPane.showMessageDialog(null, "Información invalida, la unidad de medida es erronea", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+
+                    // Pero si no queda ninguno por completar envia la info
+                } else if (Integer.parseInt(medida) > 0 && Integer.parseInt(stock) > 0 && Integer.parseInt(precio) > 0 && Integer.parseInt(descuento) >= 0 && Integer.parseInt(descuento) <= 100) {
+                    ProductoDAO.agregarProducto(nombre, marca, Integer.parseInt(medida), unidadMedida, Integer.parseInt(stock), Integer.parseInt(precio), Integer.parseInt(descuento));
+
+                    JOptionPane.showMessageDialog(null, "El producto se ha agregado exitosamente!", "Información", JOptionPane.INFORMATION_MESSAGE);
+
+                    volverEstadoDefault();
+                    estadoAgregar = 0;
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Información invalida, vuelva a ingresar la información", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+
+            } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Información invalida, vuelva a ingresar la información", "Error",
-            JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.ERROR_MESSAGE);
             }
-        
-         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Información invalida, vuelva a ingresar la información", "Error",
-            JOptionPane.ERROR_MESSAGE);
+
         }
-        
-       }
     }//GEN-LAST:event_jButtonAgregarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-        
-        
+
         try {
-        int codigo = Integer.parseInt(jTextFieldCodigo.getText());
-        
-         int opcion = JOptionPane.showConfirmDialog(null, 
-        "¿Seguro que deseas eliminar este producto?", 
-        "Confirmación", 
-        JOptionPane.YES_NO_OPTION);
+            int codigo = Integer.parseInt(jTextFieldCodigo.getText());
+
+            int opcion = JOptionPane.showConfirmDialog(null,
+                    "¿Seguro que deseas eliminar este producto?",
+                    "Confirmación",
+                    JOptionPane.YES_NO_OPTION);
             if (opcion == JOptionPane.YES_OPTION) {
                 if (ProductoDAO.eliminarProducto(codigo)) {
                     vaciarCasillas();
                     volverEstadoDefault();
                     JOptionPane.showMessageDialog(null, "El producto se ha eliminado exitosamente!", "Información", JOptionPane.INFORMATION_MESSAGE);
-                
+
                 }
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "No hay nada que eliminar", "Error",
-            JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
-         // Obtiene todos los datos de las casillas
+        // Obtiene todos los datos de las casillas
         String id = jTextFieldCodigo.getText();
         String nombre = jTextFieldNombre.getText();
         String marca = jTextFieldMarca.getText();
-        String medida = jTextFieldMedida.getText();
-        String unidadMedida = jTextFieldUnidadMedida.getText();
-        String stock = jTextFieldStock.getText();
-        String precio = jTextFieldPrecio.getText();
-        String descuento = jTextFieldDescuento.getText();
-        
+        String medida = String.valueOf(jSpinnerMedida.getValue());
+        String unidadMedida = String.valueOf(jComboBoxUnidadMedida.getSelectedItem());
+        String stock = String.valueOf(jSpinnerStock.getValue());
+        String precio = String.valueOf(jSpinnerPrecio.getValue());
+        String descuento = String.valueOf(jSpinnerDescuento.getValue());
+
         ProductoDAO.actualizarProducto(
                 Integer.parseInt(id),
                 nombre,
@@ -469,13 +474,8 @@ public class Bodega extends javax.swing.JFrame {
                 Integer.parseInt(stock),
                 Integer.parseInt(descuento)
         );
-        
-        
-        
-        
-        
-        
-        
+
+
     }//GEN-LAST:event_jButtonActualizarActionPerformed
 
     private void jButtonVolverActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonVolverActionPerformed
@@ -491,7 +491,6 @@ public class Bodega extends javax.swing.JFrame {
 
             String nombre = ProductoDAO.getNombre(codigo);
 
-            
             String marca = ProductoDAO.getMarca(codigo);
 
             int medida = ProductoDAO.getMedida(codigo);
@@ -500,7 +499,7 @@ public class Bodega extends javax.swing.JFrame {
             int precio = ProductoDAO.getPrecio(codigo);
             int stock = ProductoDAO.getStock(codigo);
             int descuento = ProductoDAO.getDescuento(codigo);
-            
+
             if (nombre == null) {
                 JOptionPane.showMessageDialog(null, "No se ha encontrado el producto en los registros", "Error",
                         JOptionPane.ERROR_MESSAGE);
@@ -509,27 +508,24 @@ public class Bodega extends javax.swing.JFrame {
                 // Coloca la info en las casillas
                 jTextFieldNombre.setText(nombre);
                 jTextFieldMarca.setText(marca);
-                jTextFieldMedida.setText(String.valueOf(medida));
-                jTextFieldUnidadMedida.setText(unidadMedida);
-                jTextFieldStock.setText(String.valueOf(stock));
-                jTextFieldPrecio.setText(String.valueOf(precio));
-                jTextFieldDescuento.setText(String.valueOf(descuento));
-                
+                jSpinnerMedida.setValue(medida);
+                jComboBoxUnidadMedida.setSelectedItem(unidadMedida);
+                jSpinnerStock.setValue(stock);
+                jSpinnerPrecio.setValue(precio);
+                jSpinnerDescuento.setValue(descuento);
 
                 // Habilita las casillas
                 jTextFieldNombre.setEnabled(true);
                 jTextFieldMarca.setEnabled(true);
-                jTextFieldMedida.setEnabled(true);
-                jTextFieldUnidadMedida.setEnabled(true);
-                jTextFieldStock.setEnabled(true);
-                jTextFieldPrecio.setEnabled(true);
-                jTextFieldDescuento.setEnabled(true);
+                jSpinnerMedida.setEnabled(true);
+                jComboBoxUnidadMedida.setEnabled(true);
+                jSpinnerStock.setEnabled(true);
+                jSpinnerPrecio.setEnabled(true);
+                jSpinnerDescuento.setEnabled(true);
                 jButtonActualizar.setEnabled(true);
                 jButtonEliminar.setEnabled(true);
-                
-                
-            }
 
+            }
 
             // Obtener el modelo directamente del JTable
             DefaultTableModel modelo = (DefaultTableModel) jTableSalida.getModel();
@@ -546,11 +542,7 @@ public class Bodega extends javax.swing.JFrame {
             modelo.setValueAt("$" + precio, fila, 5); // Columna "Precio"
             modelo.setValueAt(stock, fila, 6); // Columna "Stock"
             modelo.setValueAt(descuento + "%", fila, 7); // Columna "Descuento"
-            
-           
-            
-            
-            
+
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Porfavor ingrese el codigo del producto", "Error",
                     JOptionPane.ERROR_MESSAGE);
@@ -608,6 +600,7 @@ public class Bodega extends javax.swing.JFrame {
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonVolver;
+    private javax.swing.JComboBox<String> jComboBoxUnidadMedida;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelCodigo;
     private javax.swing.JLabel jLabelDescuento;
@@ -622,14 +615,13 @@ public class Bodega extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSpinner jSpinnerDescuento;
+    private javax.swing.JSpinner jSpinnerMedida;
+    private javax.swing.JSpinner jSpinnerPrecio;
+    private javax.swing.JSpinner jSpinnerStock;
     private javax.swing.JTable jTableSalida;
     private javax.swing.JTextField jTextFieldCodigo;
-    private javax.swing.JTextField jTextFieldDescuento;
     private javax.swing.JTextField jTextFieldMarca;
-    private javax.swing.JTextField jTextFieldMedida;
     private javax.swing.JTextField jTextFieldNombre;
-    private javax.swing.JTextField jTextFieldPrecio;
-    private javax.swing.JTextField jTextFieldStock;
-    private javax.swing.JTextField jTextFieldUnidadMedida;
     // End of variables declaration//GEN-END:variables
 }
