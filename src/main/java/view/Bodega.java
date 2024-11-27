@@ -20,9 +20,9 @@ public class Bodega extends javax.swing.JFrame {
         jTextFieldUnidadMedida.setText("");
         jTextFieldStock.setText("");
         jTextFieldPrecio.setText("");
-        jTextFieldDescuento.setText("");    
+        jTextFieldDescuento.setText("");
     }
-    
+
     public void volverEstadoDefault() {
         jTextFieldCodigo.setEnabled(true);
         jTextFieldNombre.setEnabled(false);
@@ -35,19 +35,17 @@ public class Bodega extends javax.swing.JFrame {
         jButtonActualizar.setEnabled(false);
         jButtonEliminar.setEnabled(false);
     }
-    
-    
+
     /**
      * Creates new form Bodega
      */
     int estadoAgregar = 0;
-    
- 
+
     public Bodega() {
         initComponents();
         setLocationRelativeTo(null);
         volverEstadoDefault();
-        
+
     }
 
     /**
@@ -340,26 +338,23 @@ public class Bodega extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldMarcaActionPerformed
-            
+
     }//GEN-LAST:event_jTextFieldMarcaActionPerformed
 
     private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
-        
-        
-        if (estadoAgregar == 0){
-        
-            int opcion = JOptionPane.showConfirmDialog(null, 
-        "¿Seguro que deseas agregar un producto?", 
-        "Confirmación", 
-        JOptionPane.YES_NO_OPTION);
-            if (opcion == JOptionPane.YES_OPTION) {
-                estadoAgregar++;
-            }
-            
-        } else if (estadoAgregar == 1) {
-            vaciarCasillas();        
-            
-            estadoAgregar ++;
+
+        int opcion = JOptionPane.showConfirmDialog(null,
+                "¿Seguro que deseas agregar un producto?",
+                "Confirmación",
+                JOptionPane.YES_NO_OPTION);
+        if (opcion == JOptionPane.NO_OPTION) {
+            return;
+        }
+
+        if (estadoAgregar == 0) {
+            vaciarCasillas();
+
+            estadoAgregar++;
             jTextFieldCodigo.setEnabled(false);
             jTextFieldNombre.setEnabled(true);
             jTextFieldMarca.setEnabled(true);
@@ -374,82 +369,79 @@ public class Bodega extends javax.swing.JFrame {
             jButtonEliminar.setEnabled(false);
 
             JOptionPane.showMessageDialog(null, "Ingresa los datos del producto a agregar y presiona nuevamente el boton", "Información", JOptionPane.INFORMATION_MESSAGE);
-        } else if (estadoAgregar == 2) {     
+        } else if (estadoAgregar == 1) {
             try {
-            
-            // Obtiene todos los datos de las casillas
-            String nombre = jTextFieldNombre.getText();
-            String marca = jTextFieldMarca.getText();
-            String medida = jTextFieldMedida.getText();
-            String unidadMedida = jTextFieldUnidadMedida.getText();
-            String stock = jTextFieldStock.getText();
-            String precio = jTextFieldPrecio.getText();
-            String descuento = jTextFieldDescuento.getText();
 
-            
-            // Comprueba si alguno esta vacio
-            boolean faltaDato = nombre.isEmpty() || marca.isEmpty() || medida.isEmpty() || 
-                    unidadMedida.isEmpty() || stock.isEmpty() || precio.isEmpty() || 
-                    descuento.isEmpty();
+                // Obtiene todos los datos de las casillas
+                String nombre = jTextFieldNombre.getText();
+                String marca = jTextFieldMarca.getText();
+                String medida = jTextFieldMedida.getText();
+                String unidadMedida = jTextFieldUnidadMedida.getText();
+                String stock = jTextFieldStock.getText();
+                String precio = jTextFieldPrecio.getText();
+                String descuento = jTextFieldDescuento.getText();
 
-            
-            // Si existe alguno vacio lo informa
-            if (faltaDato) {
-                JOptionPane.showMessageDialog(null, "Porfavor rellena los campos faltantes", "Error", JOptionPane.ERROR_MESSAGE);
-                
-            // Confirma si la unidad de medida es valida
-            } else if (!Producto.isUnidadMedidaValido(unidadMedida)) {
-                JOptionPane.showMessageDialog(null, "Información invalida, la unidad de medida es erronea", "Error",
-            JOptionPane.ERROR_MESSAGE);
-            
-            // Pero si no queda ninguno por completar envia la info
-            } else if (Integer.parseInt(medida) > 0 && Integer.parseInt(stock) > 0 && Integer.parseInt(precio) > 0 && Integer.parseInt(descuento) >= 0 && Integer.parseInt(descuento) <= 100) {
-                ProductoDAO.agregarProducto(nombre,marca,Integer.parseInt(medida), unidadMedida,Integer.parseInt(stock),  Integer.parseInt(precio),  Integer.parseInt(descuento));
-                
-                JOptionPane.showMessageDialog(null, "El producto se ha agregado exitosamente!", "Información", JOptionPane.INFORMATION_MESSAGE);
+                // Comprueba si alguno esta vacio
+                boolean faltaDato = nombre.isEmpty() || marca.isEmpty() || medida.isEmpty()
+                        || unidadMedida.isEmpty() || stock.isEmpty() || precio.isEmpty()
+                        || descuento.isEmpty();
 
-                volverEstadoDefault();
-                estadoAgregar = 0;
-                
-            } else {
+                // Si existe alguno vacio lo informa
+                if (faltaDato) {
+                    JOptionPane.showMessageDialog(null, "Porfavor rellena los campos faltantes", "Error", JOptionPane.ERROR_MESSAGE);
+
+                    // Confirma si la unidad de medida es valida
+                } else if (!Producto.isUnidadMedidaValido(unidadMedida)) {
+                    JOptionPane.showMessageDialog(null, "Información invalida, la unidad de medida es erronea", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+
+                    // Pero si no queda ninguno por completar envia la info
+                } else if (Integer.parseInt(medida) > 0 && Integer.parseInt(stock) > 0 && Integer.parseInt(precio) > 0 && Integer.parseInt(descuento) >= 0 && Integer.parseInt(descuento) <= 100) {
+                    ProductoDAO.agregarProducto(nombre, marca, Integer.parseInt(medida), unidadMedida, Integer.parseInt(stock), Integer.parseInt(precio), Integer.parseInt(descuento));
+
+                    JOptionPane.showMessageDialog(null, "El producto se ha agregado exitosamente!", "Información", JOptionPane.INFORMATION_MESSAGE);
+
+                    volverEstadoDefault();
+                    estadoAgregar = 0;
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Información invalida, vuelva a ingresar la información", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+
+            } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Información invalida, vuelva a ingresar la información", "Error",
-            JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.ERROR_MESSAGE);
             }
-        
-         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Información invalida, vuelva a ingresar la información", "Error",
-            JOptionPane.ERROR_MESSAGE);
+
         }
-        
-       }
     }//GEN-LAST:event_jButtonAgregarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-        
-        
+
         try {
-        int codigo = Integer.parseInt(jTextFieldCodigo.getText());
-        
-         int opcion = JOptionPane.showConfirmDialog(null, 
-        "¿Seguro que deseas eliminar este producto?", 
-        "Confirmación", 
-        JOptionPane.YES_NO_OPTION);
+            int codigo = Integer.parseInt(jTextFieldCodigo.getText());
+
+            int opcion = JOptionPane.showConfirmDialog(null,
+                    "¿Seguro que deseas eliminar este producto?",
+                    "Confirmación",
+                    JOptionPane.YES_NO_OPTION);
             if (opcion == JOptionPane.YES_OPTION) {
                 if (ProductoDAO.eliminarProducto(codigo)) {
                     vaciarCasillas();
                     volverEstadoDefault();
                     JOptionPane.showMessageDialog(null, "El producto se ha eliminado exitosamente!", "Información", JOptionPane.INFORMATION_MESSAGE);
-                
+
                 }
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "No hay nada que eliminar", "Error",
-            JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
-         // Obtiene todos los datos de las casillas
+        // Obtiene todos los datos de las casillas
         String id = jTextFieldCodigo.getText();
         String nombre = jTextFieldNombre.getText();
         String marca = jTextFieldMarca.getText();
@@ -458,7 +450,7 @@ public class Bodega extends javax.swing.JFrame {
         String stock = jTextFieldStock.getText();
         String precio = jTextFieldPrecio.getText();
         String descuento = jTextFieldDescuento.getText();
-        
+
         ProductoDAO.actualizarProducto(
                 Integer.parseInt(id),
                 nombre,
@@ -469,13 +461,8 @@ public class Bodega extends javax.swing.JFrame {
                 Integer.parseInt(stock),
                 Integer.parseInt(descuento)
         );
-        
-        
-        
-        
-        
-        
-        
+
+
     }//GEN-LAST:event_jButtonActualizarActionPerformed
 
     private void jButtonVolverActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonVolverActionPerformed
@@ -491,7 +478,6 @@ public class Bodega extends javax.swing.JFrame {
 
             String nombre = ProductoDAO.getNombre(codigo);
 
-            
             String marca = ProductoDAO.getMarca(codigo);
 
             int medida = ProductoDAO.getMedida(codigo);
@@ -500,7 +486,7 @@ public class Bodega extends javax.swing.JFrame {
             int precio = ProductoDAO.getPrecio(codigo);
             int stock = ProductoDAO.getStock(codigo);
             int descuento = ProductoDAO.getDescuento(codigo);
-            
+
             if (nombre == null) {
                 JOptionPane.showMessageDialog(null, "No se ha encontrado el producto en los registros", "Error",
                         JOptionPane.ERROR_MESSAGE);
@@ -514,7 +500,6 @@ public class Bodega extends javax.swing.JFrame {
                 jTextFieldStock.setText(String.valueOf(stock));
                 jTextFieldPrecio.setText(String.valueOf(precio));
                 jTextFieldDescuento.setText(String.valueOf(descuento));
-                
 
                 // Habilita las casillas
                 jTextFieldNombre.setEnabled(true);
@@ -526,10 +511,8 @@ public class Bodega extends javax.swing.JFrame {
                 jTextFieldDescuento.setEnabled(true);
                 jButtonActualizar.setEnabled(true);
                 jButtonEliminar.setEnabled(true);
-                
-                
-            }
 
+            }
 
             // Obtener el modelo directamente del JTable
             DefaultTableModel modelo = (DefaultTableModel) jTableSalida.getModel();
@@ -546,11 +529,7 @@ public class Bodega extends javax.swing.JFrame {
             modelo.setValueAt("$" + precio, fila, 5); // Columna "Precio"
             modelo.setValueAt(stock, fila, 6); // Columna "Stock"
             modelo.setValueAt(descuento + "%", fila, 7); // Columna "Descuento"
-            
-           
-            
-            
-            
+
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Porfavor ingrese el codigo del producto", "Error",
                     JOptionPane.ERROR_MESSAGE);

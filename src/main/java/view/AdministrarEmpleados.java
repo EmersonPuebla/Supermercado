@@ -6,15 +6,80 @@
 package view;
 
 import controller.EmpleadoDAO;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
+import model.LoginSystem;
+import model.SoundManager;
 
 public class AdministrarEmpleados extends javax.swing.JFrame {
 
     /**
      * Creates new form AdministrarEmpleados
      */
+    public static void limpiarTabla(DefaultTableModel modelo) {
+        modelo.setRowCount(0);
+    }
+
+    public void limpiarFiltros() {
+        jFormattedTextFieldRut.setText("");
+        jTextFieldNombre.setText("");
+        jTextFieldUsername.setText("");
+        jCheckBoxHabilitado.setSelected(false);
+        jCheckBoxCaja.setSelected(false);
+        jCheckBoxBodega.setSelected(false);
+        jCheckBoxReportes.setSelected(false);
+        jCheckBoxAdministrarEmpleados.setSelected(false);
+    }
+
+    public void actualizarEstadoFiltros() {
+        // Deshabilitar todos los campos por defecto
+        Map<JComponent, Boolean> fields = new HashMap<>();
+        fields.put(jFormattedTextFieldRut, false);
+        fields.put(jTextFieldNombre, false);
+        fields.put(jTextFieldUsername, false);
+
+        int index = jComboBoxFiltrarPor.getSelectedIndex();
+
+        switch (index) {
+            case 0:
+                fields.put(jFormattedTextFieldRut, true);
+                jFormattedTextFieldRut.requestFocus();
+                jFormattedTextFieldRut.setText("");
+                break;
+            case 1:
+                fields.put(jTextFieldNombre, true);
+                jTextFieldNombre.requestFocus();
+                jTextFieldNombre.setText("");
+                break;
+            case 2:
+                fields.put(jTextFieldUsername, true);
+                jTextFieldUsername.requestFocus();
+                jTextFieldUsername.setText("");
+                break;
+
+        }
+        for (Map.Entry<JComponent, Boolean> entry : fields.entrySet()) {
+            entry.getKey().setEnabled(entry.getValue());
+        }
+    }
+
+    ;
+
     public AdministrarEmpleados() {
         initComponents();
         setLocationRelativeTo(null);
+
+        jToggleButtonActualizar.setEnabled(false);
+        jButtonLimpiar.setEnabled(false);
+        jPasswordFieldPassword.setEnabled(false);
+        actualizarEstadoFiltros();
+
     }
 
     /**
@@ -27,28 +92,32 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
 
         jButtonVolver = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        jPanel1 = new javax.swing.JPanel();
-        jButtonActualizar = new javax.swing.JButton();
-        jButtonBuscar = new javax.swing.JButton();
-        jButtonAgregar = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        jLabelDescuento = new javax.swing.JLabel();
-        jLabelNombre = new javax.swing.JLabel();
-        jLabelRut = new javax.swing.JLabel();
-        jTextFieldUsername = new javax.swing.JTextField();
-        jTextFieldNombre = new javax.swing.JTextField();
-        jLabelDescuento1 = new javax.swing.JLabel();
-        jPasswordFieldPassword = new javax.swing.JPasswordField();
-        jFormattedTextFieldRut = new javax.swing.JFormattedTextField();
-        jPanel4 = new javax.swing.JPanel();
-        jCheckBoxHabilitado = new javax.swing.JCheckBox();
-        jCheckBoxCaja = new javax.swing.JCheckBox();
-        jCheckBoxBodega = new javax.swing.JCheckBox();
-        jCheckBoxAdministrarEmpleados = new javax.swing.JCheckBox();
-        jCheckBoxReportes = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableSalida = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        jButtonAgregar = new javax.swing.JButton();
+        jButtonBuscar = new javax.swing.JButton();
+        jToggleButtonActualizar = new javax.swing.JToggleButton();
+        jButtonLimpiar = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jCheckBoxHabilitado = new javax.swing.JCheckBox();
+        jCheckBoxAdministrarEmpleados = new javax.swing.JCheckBox();
+        jCheckBoxReportes = new javax.swing.JCheckBox();
+        jCheckBoxCaja = new javax.swing.JCheckBox();
+        jCheckBoxBodega = new javax.swing.JCheckBox();
+        jLabelAccesoA = new javax.swing.JLabel();
+        jComboBoxFiltrarPor = new javax.swing.JComboBox<>();
+        jLabelFiltrarPor = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jFormattedTextFieldRut = new javax.swing.JFormattedTextField();
+        jLabelRut = new javax.swing.JLabel();
+        jLabelNombre = new javax.swing.JLabel();
+        jTextFieldNombre = new javax.swing.JTextField();
+        jLabelUsername = new javax.swing.JLabel();
+        jTextFieldUsername = new javax.swing.JTextField();
+        jLabelPassword = new javax.swing.JLabel();
+        jPasswordFieldPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Administrar Empleados");
@@ -60,150 +129,6 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
                 jButtonVolverActionPerformed(evt);
             }
         });
-
-        jButtonActualizar.setText("Actualizar");
-
-        jButtonBuscar.setText("Buscar");
-        jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonBuscarActionPerformed(evt);
-            }
-        });
-
-        jButtonAgregar.setText("Agregar");
-        jButtonAgregar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAgregarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButtonBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonAgregar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonActualizar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(55, 55, 55)
-                .addComponent(jButtonAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
-        );
-
-        jLabelDescuento.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabelDescuento.setText("Username");
-
-        jLabelNombre.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabelNombre.setText("Nombre");
-
-        jLabelRut.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabelRut.setText("RUT");
-
-        jLabelDescuento1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabelDescuento1.setText("Password");
-
-        try {
-            jFormattedTextFieldRut.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#-#")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jFormattedTextFieldRut)
-                    .addComponent(jPasswordFieldPassword)
-                    .addComponent(jTextFieldNombre)
-                    .addComponent(jTextFieldUsername)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelRut)
-                            .addComponent(jLabelNombre)
-                            .addComponent(jLabelDescuento)
-                            .addComponent(jLabelDescuento1))
-                        .addContainerGap(253, Short.MAX_VALUE))))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelRut)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jFormattedTextFieldRut, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelNombre)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelDescuento)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelDescuento1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jCheckBoxHabilitado.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jCheckBoxHabilitado.setText("Habilitado");
-
-        jCheckBoxCaja.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jCheckBoxCaja.setText("Acceso Caja");
-
-        jCheckBoxBodega.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jCheckBoxBodega.setText("Acceso Bodega");
-
-        jCheckBoxAdministrarEmpleados.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jCheckBoxAdministrarEmpleados.setText("Acceso Admin. Empleados");
-
-        jCheckBoxReportes.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jCheckBoxReportes.setText("Acceso Reportes");
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBoxAdministrarEmpleados, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
-                    .addComponent(jCheckBoxBodega, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jCheckBoxCaja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jCheckBoxHabilitado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jCheckBoxReportes, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jCheckBoxHabilitado)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBoxCaja)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBoxBodega)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBoxAdministrarEmpleados)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBoxReportes)
-                .addContainerGap(33, Short.MAX_VALUE))
-        );
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/logo-mini.png"))); // NOI18N
 
@@ -224,18 +149,204 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
             }
         });
         jTableSalida.getTableHeader().setReorderingAllowed(false);
+        jTableSalida.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTableSalidaFocusGained(evt);
+            }
+        });
+        jTableSalida.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableSalidaMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTableSalida);
+
+        jButtonAgregar.setText("Agregar");
+        jButtonAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarActionPerformed(evt);
+            }
+        });
+
+        jButtonBuscar.setText("Buscar");
+        jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarActionPerformed(evt);
+            }
+        });
+
+        jToggleButtonActualizar.setText("Actualizar");
+        jToggleButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButtonActualizarActionPerformed(evt);
+            }
+        });
+
+        jButtonLimpiar.setText("Limpiar");
+        jButtonLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLimpiarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButtonAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToggleButtonActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonAgregar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jToggleButtonActualizar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
+        );
+
+        jCheckBoxHabilitado.setText("Habilitado");
+        jCheckBoxHabilitado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxHabilitadoActionPerformed(evt);
+            }
+        });
+
+        jCheckBoxAdministrarEmpleados.setText("Admin Empleados");
+
+        jCheckBoxReportes.setText("Reportes");
+        jCheckBoxReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxReportesActionPerformed(evt);
+            }
+        });
+
+        jCheckBoxCaja.setText("Caja");
+
+        jCheckBoxBodega.setText("Bodega");
+
+        jLabelAccesoA.setText("Tiene acceso a:");
+
+        jComboBoxFiltrarPor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "RUT", "Nombre", "Username" }));
+        jComboBoxFiltrarPor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxFiltrarPorActionPerformed(evt);
+            }
+        });
+
+        jLabelFiltrarPor.setText("Filtrar por");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBoxFiltrarPor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jCheckBoxHabilitado)
+                            .addComponent(jCheckBoxAdministrarEmpleados)
+                            .addComponent(jCheckBoxReportes)
+                            .addComponent(jCheckBoxCaja)
+                            .addComponent(jCheckBoxBodega)
+                            .addComponent(jLabelAccesoA))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabelFiltrarPor)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(11, Short.MAX_VALUE)
+                .addComponent(jLabelFiltrarPor)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBoxFiltrarPor, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(jCheckBoxHabilitado)
+                .addGap(18, 18, 18)
+                .addComponent(jLabelAccesoA)
+                .addGap(7, 7, 7)
+                .addComponent(jCheckBoxCaja)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBoxBodega)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBoxReportes)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBoxAdministrarEmpleados)
+                .addGap(16, 16, 16))
+        );
+
+        jLabelRut.setText("RUT");
+
+        jLabelNombre.setText("Nombre");
+
+        jLabelUsername.setText("Username");
+
+        jLabelPassword.setText("Contraseña");
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPasswordFieldPassword)
+                    .addComponent(jTextFieldUsername, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jFormattedTextFieldRut)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelRut)
+                            .addComponent(jLabelNombre)
+                            .addComponent(jLabelUsername)
+                            .addComponent(jLabelPassword))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabelRut)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jFormattedTextFieldRut, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelNombre)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelUsername)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelPassword)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPasswordFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
             .addComponent(jSeparator1)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -243,31 +354,32 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
                     .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 241, Short.MAX_VALUE)
-                        .addComponent(jLabel3)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonVolver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -275,27 +387,253 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverActionPerformed
-        Hub hubWindow = new Hub(); 
+        Hub hubWindow = new Hub();
         hubWindow.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButtonVolverActionPerformed
 
-    private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
+    private void jCheckBoxHabilitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxHabilitadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBoxHabilitadoActionPerformed
+
+    private void jCheckBoxReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxReportesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBoxReportesActionPerformed
+
+    private void jToggleButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonActualizarActionPerformed
+        jToggleButtonActualizar.setEnabled(false);
+
+        String nombreCompleto = jTextFieldNombre.getText();
+        String[] nombreSeparado = nombreCompleto.split(" ");
+        String password = EmpleadoDAO.getPassword(jTextFieldUsername.getText()); //Contraseña de la base de datos
         
+        if (jPasswordFieldPassword.getPassword().length > 0) {
+            password = LoginSystem.hashString(new String(jPasswordFieldPassword.getPassword()));
+  
+        }
         
-        
-        
-        
-        
-        
-        
-    }//GEN-LAST:event_jButtonAgregarActionPerformed
+        EmpleadoDAO.actualizarEmpleado(
+                jFormattedTextFieldRut.getText(),
+                nombreSeparado[0],
+                nombreSeparado[1],
+                nombreSeparado[2],
+                nombreSeparado[3],
+                jTextFieldUsername.getText(),
+               
+                password,
+                jCheckBoxAdministrarEmpleados.isSelected(),
+                jCheckBoxReportes.isSelected(),
+                jCheckBoxCaja.isSelected(),
+                jCheckBoxBodega.isSelected(),
+                jCheckBoxHabilitado.isSelected());
+
+    }//GEN-LAST:event_jToggleButtonActualizarActionPerformed
+
+    private void jComboBoxFiltrarPorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFiltrarPorActionPerformed
+        actualizarEstadoFiltros();
+
+    }//GEN-LAST:event_jComboBoxFiltrarPorActionPerformed
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
-        
+        int index = jComboBoxFiltrarPor.getSelectedIndex();
 
-            
+        String valorBusqueda = ""; // Variable para almacenar el valor de búsqueda
+
+        switch (index) {
+            case 0:
+                // RUT
+                valorBusqueda = jFormattedTextFieldRut.getText();
+                break;
+            case 1:
+                // NOMBRE
+                valorBusqueda = jTextFieldNombre.getText();
+                break;
+            case 2:
+                // USERNAME
+                valorBusqueda = jTextFieldUsername.getText();
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Seleccione un criterio de búsqueda válido", "Error", JOptionPane.ERROR_MESSAGE);
+                return; // Salir si no se ha seleccionado un filtro válido
+        }
+
+        if (valorBusqueda == null || valorBusqueda.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar un valor de búsqueda.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Llamamos al método y obtenemos las filas
+        List<String[]> filas = EmpleadoDAO.obtenerFilasEmpleadoPorCampo(campoBusqueda(index), valorBusqueda);
+
+        if (filas.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No se encontraron empleados con los valores especificados", "Info", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            // Mostramos los resultados en el JTable
+            mostrarResultados(filas);
+            jButtonLimpiar.setEnabled(true);
+        }
+    }
+
+// Método para obtener el nombre del campo según el índice seleccionado
+    private String campoBusqueda(int index) {
+        switch (index) {
+            case 0:
+                return "rut";
+            case 1:
+                return "primerNombre";
+            case 2:
+                return "username";
+            default:
+                return ""; // En caso de un índice inesperado
+        }
+    }
+
+// Método para mostrar los resultados en el JTable
+    private void mostrarResultados(List<String[]> filas) {
+        // Definir las columnas de la tabla
+        String[] columnas = {"RUT", "Nombre Completo", "Username", "Acceso Administrar Empleados", "Acceso Reportes", "Acceso Caja", "Acceso Bodega", "Está Habilitado"};
+
+        // Crear el modelo de la tabla y asignárselo al JTable
+        DefaultTableModel modelo = new DefaultTableModel(null, columnas);
+        jTableSalida.setModel(modelo);
+
+        // Llenar el modelo con los datos obtenidos
+        for (String[] fila : filas) {
+            // Suponiendo que el orden de las columnas en 'fila' es:
+            // [0] RUT, [1] Primer Nombre, [2] Segundo Nombre, [3] Apellido Paterno, 
+            // [4] Apellido Materno, [5] Username, [6] Password, [7] Acceso Admin, 
+            // [8] Acceso Reportes, [9] Acceso Caja, [10] Acceso Bodega, [11] Habilitado
+
+            // Concatenamos los nombres en una sola cadena: "Primer Nombre Segundo Nombre Apellido Paterno Apellido Materno"
+            String nombreCompleto = fila[1] + " " + fila[2] + " " + fila[3] + " " + fila[4];
+
+            // Creamos un array con la información que queremos mostrar en la tabla
+            String[] filaTabla = {
+                fila[0], // RUT
+                nombreCompleto, // Nombre Completo
+                fila[5], // Username
+                fila[7], // Acceso Administrar Empleados
+                fila[8], // Acceso Reportes
+                fila[9], // Acceso Caja
+                fila[10], // Acceso Bodega
+                fila[11] // Está Habilitado
+            };
+
+            // Agregamos la fila al modelo
+            modelo.addRow(filaTabla);
+        }
+
+
     }//GEN-LAST:event_jButtonBuscarActionPerformed
+
+    private void jTableSalidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableSalidaMouseClicked
+
+    }//GEN-LAST:event_jTableSalidaMouseClicked
+
+    private void jTableSalidaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableSalidaFocusGained
+        try {
+            // Obtener la fila seleccionada
+            int selectedRow = jTableSalida.getSelectedRow();
+
+            // Si no hay fila seleccionada, salir del método
+            if (selectedRow == -1) {
+                return;
+            }
+
+            // Convertir el índice de fila del view al modelo en caso de que la tabla esté ordenada
+            int modelRow = jTableSalida.convertRowIndexToModel(selectedRow);
+
+            // Actualizar checkboxes usando un método separado
+            updateCheckBoxesFromTableRow(modelRow);
+
+        } catch (Exception e) {
+            // Loggear el error y mostrar mensaje al usuario
+            System.out.println("Error al procesar la fila seleccionada: " + e.getMessage());
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Error al procesar la fila seleccionada: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }//GEN-LAST:event_jTableSalidaFocusGained
+
+    private void jButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarActionPerformed
+        limpiarFiltros();
+        DefaultTableModel modelo = (DefaultTableModel) jTableSalida.getModel();
+        limpiarTabla(modelo);
+        actualizarEstadoFiltros();
+        jButtonLimpiar.setEnabled(false);
+        SoundManager.reproducirSonido("clean");
+
+    }//GEN-LAST:event_jButtonLimpiarActionPerformed
+
+    private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonAgregarActionPerformed
+
+    private void updateCheckBoxesFromTableRow(int modelRow) {
+        // Definir las columnas como constantes para mejor mantenimiento
+        final int RUT_COLUMN = 0;
+        final int FULLNAME = 1;
+        final int USERNAME = 2;
+        final int ADMIN_COLUMN = 3;
+        final int REPORTS_COLUMN = 4;
+        final int CASHIER_COLUMN = 5;
+        final int WAREHOUSE_COLUMN = 6;
+        final int ENABLED_COLUMN = 7;
+
+        // Obtener los valores usando un método auxiliar que maneja valores nulos
+        String rut = getStringValueFromCell(modelRow, RUT_COLUMN);
+        String fullname = getStringValueFromCell(modelRow, FULLNAME);
+        String username = getStringValueFromCell(modelRow, USERNAME);
+        boolean adminAccess = getBooleanValueFromCell(modelRow, ADMIN_COLUMN);
+        boolean reportsAccess = getBooleanValueFromCell(modelRow, REPORTS_COLUMN);
+        boolean cashierAccess = getBooleanValueFromCell(modelRow, CASHIER_COLUMN);
+        boolean warehouseAccess = getBooleanValueFromCell(modelRow, WAREHOUSE_COLUMN);
+        boolean isEnabled = getBooleanValueFromCell(modelRow, ENABLED_COLUMN);
+
+        // Actualizar los checkboxes
+        SwingUtilities.invokeLater(() -> {
+            jFormattedTextFieldRut.setText(rut);
+            jTextFieldNombre.setText(fullname);
+            jTextFieldUsername.setText(username);
+            jCheckBoxAdministrarEmpleados.setSelected(adminAccess);
+            jCheckBoxReportes.setSelected(reportsAccess);
+            jCheckBoxCaja.setSelected(cashierAccess);
+            jCheckBoxBodega.setSelected(warehouseAccess);
+            jCheckBoxHabilitado.setSelected(isEnabled);
+
+            jFormattedTextFieldRut.setEnabled(true);
+            jTextFieldNombre.setEnabled(true);
+            jTextFieldUsername.setEnabled(true);
+            jToggleButtonActualizar.setEnabled(true);
+            jPasswordFieldPassword.setEnabled(true);
+
+        });
+    }
+
+    private boolean getBooleanValueFromCell(int row, int column) {
+        Object value = jTableSalida.getModel().getValueAt(row, column);
+        if (value == null) {
+            return false;
+        }
+
+        String stringValue = value.toString().trim().toLowerCase();
+        return "true".equals(stringValue) || "1".equals(stringValue) || "yes".equals(stringValue);
+    }
+
+    private String getStringValueFromCell(int row, int column) {
+        String stringValue = null;
+
+        Object value = jTableSalida.getModel().getValueAt(row, column);
+        if (value != null) {
+            stringValue = value.toString();
+
+        }
+
+        return stringValue;
+    }
 
     /**
      * @param args the command line arguments
@@ -325,37 +663,39 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AdministrarEmpleados().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new AdministrarEmpleados().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonActualizar;
     private javax.swing.JButton jButtonAgregar;
     private javax.swing.JButton jButtonBuscar;
+    private javax.swing.JButton jButtonLimpiar;
     private javax.swing.JButton jButtonVolver;
     private javax.swing.JCheckBox jCheckBoxAdministrarEmpleados;
     private javax.swing.JCheckBox jCheckBoxBodega;
     private javax.swing.JCheckBox jCheckBoxCaja;
     private javax.swing.JCheckBox jCheckBoxHabilitado;
     private javax.swing.JCheckBox jCheckBoxReportes;
+    private javax.swing.JComboBox<String> jComboBoxFiltrarPor;
     private javax.swing.JFormattedTextField jFormattedTextFieldRut;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabelDescuento;
-    private javax.swing.JLabel jLabelDescuento1;
+    private javax.swing.JLabel jLabelAccesoA;
+    private javax.swing.JLabel jLabelFiltrarPor;
     private javax.swing.JLabel jLabelNombre;
+    private javax.swing.JLabel jLabelPassword;
     private javax.swing.JLabel jLabelRut;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabelUsername;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPasswordField jPasswordFieldPassword;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTableSalida;
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JTextField jTextFieldUsername;
+    private javax.swing.JToggleButton jToggleButtonActualizar;
     // End of variables declaration//GEN-END:variables
 }
