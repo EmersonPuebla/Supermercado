@@ -32,6 +32,7 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
         jTextFieldNombre.setText("");
         jTextFieldUsername.setText("");
         jPasswordFieldPassword.setText("");
+        
         jCheckBoxHabilitado.setSelected(false);
         jCheckBoxCaja.setSelected(false);
         jCheckBoxBodega.setSelected(false);
@@ -78,6 +79,7 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
         setLocationRelativeTo(null);
 
         jToggleButtonActualizar.setEnabled(false);
+        jButtonEliminar.setEnabled(false);
         jButtonLimpiar.setEnabled(false);
         jPasswordFieldPassword.setEnabled(false);
         actualizarEstadoFiltros();
@@ -102,6 +104,7 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
         jButtonBuscar = new javax.swing.JButton();
         jToggleButtonActualizar = new javax.swing.JToggleButton();
         jButtonLimpiar = new javax.swing.JButton();
+        jButtonEliminar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jCheckBoxHabilitado = new javax.swing.JCheckBox();
         jCheckBoxAdministrarEmpleados = new javax.swing.JCheckBox();
@@ -191,19 +194,28 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
             }
         });
 
+        jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButtonAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButtonActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jToggleButtonActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -211,12 +223,11 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
                     .addComponent(jButtonAgregar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jToggleButtonActualizar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jToggleButtonActualizar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonLimpiar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(23, 23, 23))
         );
 
@@ -364,7 +375,7 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -415,6 +426,7 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
 
     private void jToggleButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonActualizarActionPerformed
         jToggleButtonActualizar.setEnabled(false);
+        jButtonEliminar.setEnabled(false);
 
         String nombreCompleto = jTextFieldNombre.getText();
         String[] nombreSeparado = nombreCompleto.split(" ");
@@ -574,6 +586,8 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
         actualizarEstadoFiltros();
         jButtonLimpiar.setEnabled(false);
         jPasswordFieldPassword.setEnabled(false);
+        jButtonEliminar.setEnabled(true);
+        jToggleButtonActualizar.setEnabled(true);
         SoundManager.reproducirSonido("clean");
 
     }//GEN-LAST:event_jButtonLimpiarActionPerformed
@@ -643,6 +657,35 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jFormattedTextFieldRutKeyTyped
 
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+        String rut = jFormattedTextFieldRut.getText().trim();
+
+        if (rut.isEmpty()) {
+            JOptionPane.showMessageDialog(null,
+                    "Por favor, ingresa el RUT del empleado que deseas eliminar.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int opcion = JOptionPane.showConfirmDialog(null,
+                "¿Seguro que deseas eliminar al empleado con RUT " + rut + "?",
+                "Confirmación",
+                JOptionPane.YES_NO_OPTION);
+
+        if (opcion == JOptionPane.YES_OPTION) {
+            boolean exito = EmpleadoDAO.eliminarEmpleado(rut);
+
+            if (exito) {
+                limpiarFiltros();
+                actualizarEstadoFiltros();
+                jPasswordFieldPassword.setEnabled(false);
+                jToggleButtonActualizar.setEnabled(false);
+                jButtonEliminar.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
+
     private void updateCheckBoxesFromTableRow(int modelRow) {
         // Definir las columnas como constantes para mejor mantenimiento
         final int RUT_COLUMN = 0;
@@ -679,6 +722,7 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
             jTextFieldNombre.setEnabled(true);
             jTextFieldUsername.setEnabled(true);
             jToggleButtonActualizar.setEnabled(true);
+            jButtonEliminar.setEnabled(true);
             jPasswordFieldPassword.setEnabled(true);
 
         });
@@ -742,6 +786,7 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAgregar;
     private javax.swing.JButton jButtonBuscar;
+    private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonLimpiar;
     private javax.swing.JButton jButtonVolver;
     private javax.swing.JCheckBox jCheckBoxAdministrarEmpleados;

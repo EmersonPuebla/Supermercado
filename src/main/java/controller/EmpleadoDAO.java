@@ -110,6 +110,39 @@ public class EmpleadoDAO {
         }
     }
 
+    public static boolean eliminarEmpleado(String rut) {
+        String sql = "DELETE FROM empleado WHERE rut = ?";
+
+        try (Connection conn = BaseDeDatos.conectar(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, rut); // Establece el RUT en el query
+
+            // Ejecutar la eliminación
+            int filasEliminadas = pstmt.executeUpdate();
+
+            if (filasEliminadas > 0) {
+                JOptionPane.showMessageDialog(null,
+                        "Empleado eliminado exitosamente",
+                        "Éxito",
+                        JOptionPane.INFORMATION_MESSAGE);
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        "No se encontró el empleado con el RUT especificado.",
+                        "Advertencia",
+                        JOptionPane.WARNING_MESSAGE);
+                return false;
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Error al eliminar empleado: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public static List<String[]> obtenerFilasEmpleadoPorCampo(String campoBusqueda, String valorBusqueda) {
         if (valorBusqueda == null || valorBusqueda.isEmpty()) {
             JOptionPane.showMessageDialog(null,
