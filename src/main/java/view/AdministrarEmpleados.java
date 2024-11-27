@@ -6,6 +6,7 @@
 package view;
 
 import controller.EmpleadoDAO;
+import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +31,7 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
         jFormattedTextFieldRut.setText("");
         jTextFieldNombre.setText("");
         jTextFieldUsername.setText("");
+        jPasswordFieldPassword.setText("");
         jCheckBoxHabilitado.setSelected(false);
         jCheckBoxCaja.setSelected(false);
         jCheckBoxBodega.setSelected(false);
@@ -293,6 +295,17 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
                 .addGap(16, 16, 16))
         );
 
+        try {
+            jFormattedTextFieldRut.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#-#")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jFormattedTextFieldRut.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jFormattedTextFieldRutKeyTyped(evt);
+            }
+        });
+
         jLabelRut.setText("RUT");
 
         jLabelNombre.setText("Nombre");
@@ -406,12 +419,12 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
         String nombreCompleto = jTextFieldNombre.getText();
         String[] nombreSeparado = nombreCompleto.split(" ");
         String password = EmpleadoDAO.getPassword(jTextFieldUsername.getText()); //Contraseña de la base de datos
-        
+
         if (jPasswordFieldPassword.getPassword().length > 0) {
             password = LoginSystem.hashString(new String(jPasswordFieldPassword.getPassword()));
-  
+
         }
-        
+
         EmpleadoDAO.actualizarEmpleado(
                 jFormattedTextFieldRut.getText(),
                 nombreSeparado[0],
@@ -419,7 +432,6 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
                 nombreSeparado[2],
                 nombreSeparado[3],
                 jTextFieldUsername.getText(),
-               
                 password,
                 jCheckBoxAdministrarEmpleados.isSelected(),
                 jCheckBoxReportes.isSelected(),
@@ -564,13 +576,61 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
         limpiarTabla(modelo);
         actualizarEstadoFiltros();
         jButtonLimpiar.setEnabled(false);
+        jPasswordFieldPassword.setEnabled(false);
         SoundManager.reproducirSonido("clean");
 
     }//GEN-LAST:event_jButtonLimpiarActionPerformed
+    int contador = 0;
 
     private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
-        // TODO add your handling code here:
+
+        if (contador == 0) {
+            contador++;
+            int opcion = JOptionPane.showConfirmDialog(null,
+                    "¿Seguro que deseas agregar un empleado?",
+                    "Confirmación",
+                    JOptionPane.YES_NO_OPTION);
+            if (opcion == JOptionPane.NO_OPTION || opcion == JOptionPane.CLOSED_OPTION) {
+                return;
+            }
+            
+            jTableSalida.setEnabled(false);
+            limpiarFiltros();
+            jButtonBuscar.setEnabled(false);
+            jComboBoxFiltrarPor.setEnabled(false);
+            jTextFieldNombre.setEnabled(true);
+            jTextFieldUsername.setEnabled(true);
+            jPasswordFieldPassword.setEnabled(true);
+
+            JOptionPane.showMessageDialog(null,
+                    "Ingresa los datos del empleado a agregar\n y presiona nuevamente el boton",
+                    "Info",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+            jFormattedTextFieldRut.requestFocus();
+
+        } else if (contador == 1) {
+            System.out.println("Añadir momento");
+            limpiarFiltros();
+            actualizarEstadoFiltros();
+            jPasswordFieldPassword.setEnabled(false);
+            jComboBoxFiltrarPor.setEnabled(true);
+            jButtonBuscar.setEnabled(true);
+            jTableSalida.setEnabled(true);
+            contador--;
+            JOptionPane.showMessageDialog(null,
+                    "Se han agregado los datos del usuario exitosamente",
+                    "Info",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+        }
+
+
     }//GEN-LAST:event_jButtonAgregarActionPerformed
+
+    private void jFormattedTextFieldRutKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextFieldRutKeyTyped
+
+    }//GEN-LAST:event_jFormattedTextFieldRutKeyTyped
 
     private void updateCheckBoxesFromTableRow(int modelRow) {
         // Definir las columnas como constantes para mejor mantenimiento
