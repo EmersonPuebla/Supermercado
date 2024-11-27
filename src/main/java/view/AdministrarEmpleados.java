@@ -623,9 +623,9 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
         } else if (contador == 1) {
             // Recolectar los datos ingresados
             String rut = jFormattedTextFieldRut.getText().trim();
-            String nombre = jTextFieldNombre.getText().trim();
+            String nombreCompleto = jTextFieldNombre.getText().trim();
             String username = jTextFieldUsername.getText().trim();
-            String password = new String(jPasswordFieldPassword.getPassword());
+            String password = LoginSystem.hashString(new String(jPasswordFieldPassword.getPassword()));
             boolean isAdmin = jCheckBoxAdministrarEmpleados.isSelected();
             boolean isCaja = jCheckBoxCaja.isSelected();
             boolean isBodega = jCheckBoxBodega.isSelected();
@@ -633,13 +633,15 @@ public class AdministrarEmpleados extends javax.swing.JFrame {
             boolean isHabilitado = jCheckBoxHabilitado.isSelected();
 
             // Validar campos obligatorios
-            if (rut.isEmpty() || nombre.isEmpty() || username.isEmpty() || password.isEmpty()) {
+            if (rut.isEmpty() || nombreCompleto.isEmpty() || username.isEmpty() || password.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Por favor, completa todos los campos obligatorios.", "Advertencia", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
+            String[] nombre = nombreCompleto.split(" ");
+       
             // Llamar al DAO para insertar los datos
-            boolean exito = EmpleadoDAO.agregarEmpleado(rut, nombre, "", "", "", username, password, isAdmin, isReporte, isCaja, isBodega, isHabilitado);
+            boolean exito = EmpleadoDAO.agregarEmpleado(rut, nombre[0], nombre[1], nombre[2], nombre[3], username, password, isAdmin, isReporte, isCaja, isBodega, isHabilitado);
 
             if (exito) {
                 limpiarFiltros();
